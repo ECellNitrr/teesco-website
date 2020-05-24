@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { initialStateData } from './LoginForm.stories'
 
+
 const classes = {
     form_input: {
         margin: "10px 0px"
@@ -28,7 +29,7 @@ export default class LoginForm extends Component {
             [e.target.name]: e.target.value,
             error: {
                 ...this.state.error,
-                [e.target.name]: null
+                [e.target.name]: null // if user start typing on an err field clear the error
             }
         })
     }
@@ -39,8 +40,11 @@ export default class LoginForm extends Component {
 
         if (this.state.error) {
             const err = this.state.error
-            email_err = err['email'] && err['email'][0]
-            password_err = err['password'] && err['password'][0]
+
+            // as backend provided errors as list of string for each field 
+            // we can join then with a ampersand for the case of multiple errors per field
+            email_err = err['email'] && err['email'].join(' & ')
+            password_err = err['password'] && err['password'].join(' & ')
         }
 
         return (
