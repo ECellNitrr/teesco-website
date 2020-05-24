@@ -43,9 +43,15 @@ const loadingStateData = {
     loading: true
 }
 
+const edgeCaseErrStateData = {
+    ...beforeRequestStateData,
+    loading: false,
+    edgeCaseErr: 'Credentials did not match'
+}
 
 // creating the stories
 export const initialState = () => <LoginForm stateData={object('state',initialStateData)} />
 export const errorState = () => <LoginForm stateData={object('state',errorStateData)} />
 export const loadingState = () => <LoginForm stateData={object('state',loadingStateData)} />
 export const beforeRequestState = () => <LoginForm stateData={object('state',beforeRequestStateData)} />
+export const edgeCaseErrState = () => <LoginForm stateData={object('state',edgeCaseErrStateData)} />
