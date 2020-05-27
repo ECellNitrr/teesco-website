@@ -7,8 +7,8 @@ const classes = {
     card_style: {
         margin: '10px 0px',
         textAlign: 'center',
-        width: '500px',
-        fontSize: '20px',
+        width: '400px',
+        fontSize: '18px',
     },
 };
 
