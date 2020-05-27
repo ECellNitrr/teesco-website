@@ -16,7 +16,7 @@ export const initialStateData = {
     loading: false,
 };
 
-//Loading state of the story with loading false
+//Loading state of the story with loading true
 export const loadingStateData = {
     role: '',
     loading: true,
