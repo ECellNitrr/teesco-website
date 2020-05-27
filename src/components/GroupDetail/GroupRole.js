@@ -1,13 +1,14 @@
 import React, { Fragment } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid, Card } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 
 const classes = {
     card_style: {
         margin: '10px 0px',
+        padding: '20px 20px',
         textAlign: 'center',
-        width: '400px',
+        width: '500px',
         fontSize: '18px',
     },
 };
@@ -16,7 +17,7 @@ const GroupRole = ({ stateData: { loading, role } }) => {
     return (
         <Grid container direction='column' justify='center' alignItems='center'>
             <Grid item>
-                <div style={classes.card_style}>
+                <Card style={classes.card_style}>
                     <h2>Role</h2>
                     {loading ? (
                         <Fragment>
@@ -29,7 +30,7 @@ const GroupRole = ({ stateData: { loading, role } }) => {
                             <p>{role}</p>
                         </Fragment>
                     )}
-                </div>
+                </Card>
             </Grid>
         </Grid>
     );
