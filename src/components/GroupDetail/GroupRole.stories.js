@@ -5,8 +5,8 @@ import { withKnobs, object } from '@storybook/addon-knobs/react';
 export default {
     component: GroupRole,
     title: 'GroupRole',
-    decorators: [withKnobs],
-    excludeStories: /.*Data$/,
+    decorators: [withKnobs], // use to display state in storybook
+    excludeStories: /.*Data$/, // export ending with Data wont be treated as a story
 };
 
 // Initial State of the story with the role
