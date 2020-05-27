@@ -35,6 +35,7 @@ const GroupRole = ({ stateData: { loading, role } }) => {
     );
 };
 
+//Prop types for checking the props passed. This would throw an error when no props are passed
 GroupRole.propTypes = {
     stateData: PropTypes.shape({
         role: PropTypes.string.isRequired,
