@@ -23,7 +23,6 @@ const GroupRole = ({ stateData: { loading, role } }) => {
                         <Fragment>
                             <Skeleton variant='text' animation='wave' />
                             <Skeleton variant='text' animation='wave' />
-                            <Skeleton variant='text' animation='wave' />
                         </Fragment>
                     ) : (
                         <Fragment>
