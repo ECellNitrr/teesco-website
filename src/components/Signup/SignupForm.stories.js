@@ -16,6 +16,7 @@ const initialStateData={
     email:'',
     password:'',
     phoneNumber:'',
+    checkedB:false
 }
 
 const beforeRequestStateData={
@@ -24,6 +25,7 @@ const beforeRequestStateData={
     email:'johnDoe@dummyMail.com',
     password:'SomePass',
     phoneNumber:'9878942662',
+    checkedB:true
 }
 
 const loadingCase={
