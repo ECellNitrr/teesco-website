@@ -26,32 +26,23 @@ const classes = {
 const GroupRole = ({ stateData: { loading, role, edit }, setEdit }) => {
     return (
         <Card style={classes.card_style}>
+            <Button
+                style={{ 'margin-left': '400px' }}
+                disabled={loading}
+                variant='contained'
+                color='primary'
+                onClick={() => setEdit(edit)}>
+                {edit ? 'Save' : 'Edit'}
+            </Button>
             <Grid
                 container
                 direction='column'
                 justify='center'
                 alignItems='center'>
                 <Grid item style={{ width: '100%' }}>
-                    <Box
-                        display='flex'
-                        flexDirection='row'
-                        p={1}
-                        justifyContent='center'>
-                        <Box flexGrow={1}>
-                            <Typography align='center' variant='h5'>
-                                Role
-                            </Typography>
-                        </Box>
-                        <Box>
-                            <Button
-                                disabled={loading}
-                                variant='contained'
-                                color='primary'
-                                onClick={() => setEdit(edit)}>
-                                {edit ? 'Save' : 'Edit'}
-                            </Button>
-                        </Box>
-                    </Box>
+                    <Typography align='center' variant='h5'>
+                        Role
+                    </Typography>
                 </Grid>
 
                 <Grid item style={{ width: '100%' }}>
