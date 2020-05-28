@@ -8,6 +8,8 @@ import { Skeleton, Alert, AlertTitle } from "@material-ui/lab";
 import { Button } from "@material-ui/core";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import { CircularProgress } from "@material-ui/core";
+import { LinearProgress } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 
 import FormControl from "@material-ui/core/FormControl";
@@ -15,6 +17,7 @@ import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
 
 import Checkbox from "@material-ui/core/Checkbox";
+import { AlteredPermissions } from "./PermissionsUI.stories";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
+  greenBtn: {
+    marginTop: "0px",
+    backgroundColor: "#4caf50",
+    color: "#fff",
+  },
 }));
 
 export default function PermissionsUI(props) {
@@ -48,7 +56,7 @@ export default function PermissionsUI(props) {
   const {
     isAdmin,
     checkbox_name,
-    permissionSet,
+    permissionAltered,
     userTypes,
   } = props.defaultData;
 
@@ -57,30 +65,55 @@ export default function PermissionsUI(props) {
 
   //push usertype from dropdown to coming state
 
-  isAdmin && userTypes.push(userType);
+  //permissionAltered ? userTypes.push(userType) : userTypes.push("");
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
-  const handleDropdownChange = (event) => {
-    setUserType(event.target.value);
-  };
+  // const handleDropdownChange = (event) => {
+  //   setUserType(event.target.value);
+  // };
   console.log(userType);
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        {permissionSet ? (
-          <Alert severity="success">
+        {permissionAltered ? (
+          <Alert style={{ marginBottom: "10px" }} severity="success">
             <strong>Changes have been saved successfully!</strong>
           </Alert>
         ) : null}
 
-        <Typography align="center" variant="h5">
-          Group Permissions
-        </Typography>
+        <Grid container spacing={7} justify="center">
+          <Grid item></Grid>
+          <Grid item></Grid>
+          <Grid item></Grid>
+          <Grid item>
+            <Typography align="center" variant="h5">
+              Group Permissions
+            </Typography>
+          </Grid>
 
-        {isAdmin ? (
+          <Grid item></Grid>
+
+          <Grid item>
+            <Button
+              className={classes.greenBtn}
+              variant="contained"
+              disabled={!props.defaultData.permissionAltered}
+            >
+              {permissionAltered ? (
+                <CircularProgress
+                  style={{ color: "#fff", marginLeft: -5, marginRight: 5 }}
+                  size={22}
+                />
+              ) : null}
+              {isAdmin ? "Save" : "Edit"}
+            </Button>
+          </Grid>
+        </Grid>
+
+        {/* {isAdmin ? (
           <Grid container spacing={3} justify="center">
             <Grid item>
               <FormControl className={classes.formControl}>
@@ -103,18 +136,8 @@ export default function PermissionsUI(props) {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item>
-              <Button
-                style={{ marginTop: "20px" }}
-                variant="contained"
-                color="primary"
-                disabled={!props.defaultData.isAdmin}
-              >
-                {isAdmin ? "Save" : "Edit"}
-              </Button>
-            </Grid>
           </Grid>
-        ) : null}
+        ) : null} */}
 
         {props.defaultData.loading ? (
           <div>
@@ -251,15 +274,6 @@ export default function PermissionsUI(props) {
             </Grid>
           </div>
         )}
-        <div className={classes.middle}>
-          <Button
-            variant="contained"
-            color="secondary"
-            disabled={!props.defaultData.isAdmin}
-          >
-            Edit
-          </Button>
-        </div>
       </Paper>
     </div>
   );

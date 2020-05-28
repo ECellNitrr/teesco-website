@@ -23,6 +23,7 @@ const initialState = {
   },
   loading: false,
   isAdmin: false,
+  permissionAltered: false,
 };
 
 const loadingState = {
@@ -42,8 +43,23 @@ const adminPermissions = {
   },
   loading: false,
   isAdmin: true,
-  permissionSet: true,
-  userTypes: [],
+  permissionAltered: false,
+  // userTypes: [],
+};
+
+const alteredPermissions = {
+  checkbox_name: {
+    checkedA: true,
+    checkedB: false,
+    checkedC: true,
+    checkedD: true,
+    checkedE: true,
+    checkedF: true,
+    checkedG: false,
+    checkedH: true,
+  },
+  isAdmin: true,
+  permissionAltered: true,
 };
 
 export const UserPermissions = () => (
@@ -55,6 +71,6 @@ export const LoadingPermissions = () => (
 export const AdminPermissions = () => (
   <PermissionsUI defaultData={object("state", adminPermissions)} />
 );
-// export const SetPermissions = () => (
-//   <PermissionsUI defaultData={object("state", adminPermissions)} />
-// );
+export const AlteredPermissions = () => (
+  <PermissionsUI defaultData={object("state", alteredPermissions)} />
+);
