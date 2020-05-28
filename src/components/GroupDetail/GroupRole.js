@@ -1,37 +1,80 @@
 import React, { Fragment } from 'react';
-import { Grid, Card } from '@material-ui/core';
+import { Grid, Card, Button, TextareaAutosize, Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 
 const classes = {
     card_style: {
-        margin: '10px 0px',
+        margin: '10px auto',
         padding: '20px 20px',
         textAlign: 'center',
         width: '500px',
         fontSize: '18px',
     },
+    text_area: {
+        width: '450px',
+    },
 };
 
-const GroupRole = ({ stateData: { loading, role } }) => {
+const GroupRole = ({ stateData: { loading, role, edit }, setEdit }) => {
     return (
-        <Grid container direction='column' justify='center' alignItems='center'>
-            <Grid item>
-                <Card style={classes.card_style}>
-                    <h2>Role</h2>
+        <Card style={classes.card_style}>
+            <Grid
+                container
+                direction='column'
+                justify='center'
+                alignItems='center'>
+                <Grid item style={{ width: '100%' }}>
+                    <Box
+                        display='flex'
+                        flexDirection='row'
+                        p={1}
+                        justifyContent='center'>
+                        <Box flexGrow={1}>
+                            <h2>Role</h2>
+                        </Box>
+                        <Box>
+                            <Button
+                                disabled={loading}
+                                variant='contained'
+                                color='primary'
+                                onClick={() => setEdit(edit)}>
+                                {edit ? 'Save' : 'Edit'}
+                            </Button>
+                        </Box>
+                    </Box>
+                </Grid>
+
+                <Grid item style={{ width: '100%' }}>
                     {loading ? (
                         <Fragment>
-                            <Skeleton variant='text' animation='wave' />
-                            <Skeleton variant='text' animation='wave' />
+                            <Skeleton
+                                variant='text'
+                                animation='wave'
+                                style={{ width: '100%' }}
+                            />
+                            <Skeleton
+                                variant='text'
+                                animation='wave'
+                                style={{ width: '100%' }}
+                            />
                         </Fragment>
                     ) : (
                         <Fragment>
-                            <p>{role}</p>
+                            {edit ? (
+                                <TextareaAutosize
+                                    style={classes.text_area}
+                                    defaultValue={role}
+                                    rowsMin={4}
+                                />
+                            ) : (
+                                <p>{role}</p>
+                            )}
                         </Fragment>
                     )}
-                </Card>
+                </Grid>
             </Grid>
-        </Grid>
+        </Card>
     );
 };
 
@@ -40,7 +83,9 @@ GroupRole.propTypes = {
     stateData: PropTypes.shape({
         role: PropTypes.string.isRequired,
         loading: PropTypes.bool.isRequired,
+        edit: PropTypes.bool.isRequired,
     }),
+    setEdit: PropTypes.func.isRequired,
 };
 
 export default GroupRole;
