@@ -1,5 +1,12 @@
 import React, { Fragment } from 'react';
-import { Grid, Card, Button, TextareaAutosize, Box } from '@material-ui/core';
+import {
+    Grid,
+    Card,
+    Button,
+    TextareaAutosize,
+    Box,
+    Typography,
+} from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 
@@ -31,7 +38,9 @@ const GroupRole = ({ stateData: { loading, role, edit }, setEdit }) => {
                         p={1}
                         justifyContent='center'>
                         <Box flexGrow={1}>
-                            <h2>Role</h2>
+                            <Typography align='center' variant='h5'>
+                                Role
+                            </Typography>
                         </Box>
                         <Box>
                             <Button
