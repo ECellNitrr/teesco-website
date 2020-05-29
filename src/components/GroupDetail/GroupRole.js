@@ -4,9 +4,9 @@ import {
     Card,
     Button,
     TextareaAutosize,
-    Box,
     Typography,
 } from '@material-ui/core';
+import LockIcon from '@material-ui/icons/Lock';
 import { Skeleton } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 
@@ -23,7 +23,10 @@ const classes = {
     },
 };
 
-const GroupRole = ({ stateData: { loading, role, edit }, setEdit }) => {
+const GroupRole = ({
+    stateData: { loading, role, edit, isAdmin },
+    setEdit,
+}) => {
     return (
         <Card style={classes.card_style}>
             <Button
@@ -32,7 +35,20 @@ const GroupRole = ({ stateData: { loading, role, edit }, setEdit }) => {
                 variant='contained'
                 color='primary'
                 onClick={() => setEdit(edit)}>
-                {edit ? 'Save' : 'Edit'}
+                {isAdmin ? (
+                    edit ? (
+                        <div>Save</div>
+                    ) : (
+                        <div>Edit</div>
+                    )
+                ) : (
+                    <div>
+                        Edit
+                        <span style={{ margin: 5 }}>
+                            <LockIcon style={{ fontSize: 12 }} />
+                        </span>
+                    </div>
+                )}
             </Button>
             <Grid
                 container
@@ -61,12 +77,16 @@ const GroupRole = ({ stateData: { loading, role, edit }, setEdit }) => {
                         </Fragment>
                     ) : (
                         <Fragment>
-                            {edit ? (
-                                <TextareaAutosize
-                                    style={classes.text_area}
-                                    defaultValue={role}
-                                    rowsMin={4}
-                                />
+                            {isAdmin ? (
+                                edit ? (
+                                    <TextareaAutosize
+                                        style={classes.text_area}
+                                        defaultValue={role}
+                                        rowsMin={4}
+                                    />
+                                ) : (
+                                    <p>{role}</p>
+                                )
                             ) : (
                                 <p>{role}</p>
                             )}
@@ -84,6 +104,7 @@ GroupRole.propTypes = {
         role: PropTypes.string.isRequired,
         loading: PropTypes.bool.isRequired,
         edit: PropTypes.bool.isRequired,
+        isAdmin: PropTypes.bool.isRequired,
     }),
     setEdit: PropTypes.func.isRequired,
 };

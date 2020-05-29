@@ -10,23 +10,34 @@ export default {
     excludeStories: /.*Data$/, // export ending with Data wont be treated as a story
 };
 
-// Initial State of the story with the role
-export const initialStateData = {
+// Initial State of the story with the role for user
+export const initialStateUserData = {
     role:
         'Managing the sub-ordinates. Supervising the work in the respective domains. Interaction with other domains...',
     loading: false,
     edit: false,
+    isAdmin: false,
+};
+// Initial State of the story with the role for admin
+export const initialStateAdminData = {
+    role:
+        'Managing the sub-ordinates. Supervising the work in the respective domains. Interaction with other domains...',
+    loading: false,
+    edit: false,
+    isAdmin: true,
 };
 
 //Loading state of the story with loading true
 export const loadingStateData = {
+    isAdmin: false,
     role: '',
     loading: true,
     edit: false,
 };
+
 //export const editStateData
 export const editStateData = {
-    ...initialStateData,
+    ...initialStateAdminData,
     edit: true,
 };
 
@@ -36,12 +47,21 @@ export const actionsData = {
 };
 
 //Creating stories
-export const initialState = () => (
-    <GroupRole stateData={object('state', initialStateData)} {...actionsData} />
+export const initialStateUser = () => (
+    <GroupRole
+        stateData={object('state', initialStateUserData)}
+        {...actionsData}
+    />
+);
+export const initialStateAdmin = () => (
+    <GroupRole
+        stateData={object('state', initialStateAdminData)}
+        {...actionsData}
+    />
 );
 export const loadingState = () => (
     <GroupRole stateData={object('state', loadingStateData)} {...actionsData} />
 );
-export const editState = () => (
+export const editStateAdmin = () => (
     <GroupRole stateData={object('state', editStateData)} {...actionsData} />
 );
