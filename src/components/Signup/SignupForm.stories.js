@@ -41,7 +41,7 @@ const errorCase={
 }
 
 const errorSpecialCase={
-    ...initialStateData,
+    ...beforeRequestStateData,
     error:{
         nullCase:"This field is required",
         specialCase:"This email is already registered"
