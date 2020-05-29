@@ -51,7 +51,7 @@ export default class SignupForm extends Component{
 
         return <Fragment>
             <Dialog open={true} maxWidth >
-                <Container style={{ width: '55vw', height:'auto', paddingTop:'30px', paddingBottom:'30px' }}>
+                <Container style={{ width: '45vw', height:'auto', paddingTop:'30px', paddingBottom:'30px' }}>
                     
                     <Box mx={8} my={3}>
                         <Grid container direction="column" spacing={3} >
