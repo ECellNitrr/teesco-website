@@ -52,12 +52,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PermissionsUI(props) {
   const classes = useStyles();
-  const initialState = props.defaultData;
+
   const {
     isAdmin,
     checkbox_name,
     permissionAltered,
     userTypes,
+    editable,
   } = props.defaultData;
 
   const [state, setState] = useState(checkbox_name);
@@ -97,19 +98,21 @@ export default function PermissionsUI(props) {
           <Grid item></Grid>
 
           <Grid item>
-            <Button
-              className={classes.greenBtn}
-              variant="contained"
-              disabled={!props.defaultData.permissionAltered}
-            >
-              {permissionAltered ? (
-                <CircularProgress
-                  style={{ color: "#fff", marginLeft: -5, marginRight: 5 }}
-                  size={22}
-                />
-              ) : null}
-              {isAdmin ? "Save" : "Edit"}
-            </Button>
+            {isAdmin ? (
+              <Button
+                className={classes.greenBtn}
+                variant="contained"
+                disabled={!isAdmin}
+              >
+                {permissionAltered ? (
+                  <CircularProgress
+                    style={{ color: "#fff", marginLeft: -5, marginRight: 5 }}
+                    size={22}
+                  />
+                ) : null}
+                {permissionAltered ? "Save" : "Edit"}
+              </Button>
+            ) : null}
           </Grid>
         </Grid>
 

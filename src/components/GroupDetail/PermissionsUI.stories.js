@@ -43,11 +43,12 @@ const adminPermissions = {
   },
   loading: false,
   isAdmin: true,
+
   permissionAltered: false,
   // userTypes: [],
 };
 
-const alteredPermissions = {
+const successState = {
   checkbox_name: {
     checkedA: true,
     checkedB: false,
@@ -71,6 +72,6 @@ export const LoadingPermissions = () => (
 export const AdminPermissions = () => (
   <PermissionsUI defaultData={object("state", adminPermissions)} />
 );
-export const AlteredPermissions = () => (
-  <PermissionsUI defaultData={object("state", alteredPermissions)} />
+export const SuccessState = () => (
+  <PermissionsUI defaultData={object("state", successState)} />
 );
