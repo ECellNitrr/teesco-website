@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { Typography, Grid, Paper, Button } from '@material-ui/core';
 import { Facebook, Share, CloudUpload, WhatsApp, Instagram, Twitter } from '@material-ui/icons';
 import { Skeleton } from "@material-ui/lab";
