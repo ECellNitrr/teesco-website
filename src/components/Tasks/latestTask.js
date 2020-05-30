@@ -14,53 +14,49 @@ const classes={
     }
 }
 
-export default class LatestTask extends Component{
-    constructor(props){
-        super(props);
-        this.state=this.props.stateData;
-    }
+const LatestTasks=({
+    stateData:{ tasks, loading }
+}) =>{
 
-    render(){
+    var taskComponent=(props)=>(
+        <Paper style={ classes.taskComponentWrap }>
+            <Grid container direction="row" justify="flex-start" alignItems="stretch" style={{height:"100%"}} >
+                <Grid container direction="row" xs={1} justify="center" alignItems="center">
+                    <Typography variant="subtitle2">
+                        { props.index }
+                    </Typography>
+                </Grid>
 
+                <Grid container direction="row" xs={1} justify="center" alignItems="center">
+                    <div style={{ textAlign:"center" }}>
+                        { props.icon }
+                    </div>
+                </Grid>
 
-        var taskComponent=(props)=>(
-            <Paper style={ classes.taskComponentWrap }>
-                <Grid container direction="row" justify="flex-start" alignItems="stretch" style={{height:"100%"}} >
-                    <Grid container direction="row" xs={1} justify="center" alignItems="center">
-                        <Typography variant="subtitle2">
-                            { props.index }
-                        </Typography>
+                <Grid container direction="row" xs={6} justify="flex-start" alignItems="center" >
+                    <Typography variant="caption" >
+                        { props.title }
+                    </Typography>
+                </Grid>
+
+                <Grid container direction="row" xs={4} justify="space-evenly" alignItems="center">
+                    <Grid item >
+                        <Button variant="contained" size="small" color="primary">
+                            <Share style={{ fontSize:"15px" }}></Share> <span style={{ paddingLeft:"5px" }}>Share</span>
+                        </Button>
                     </Grid>
-
-                    <Grid container direction="row" xs={1} justify="center" alignItems="center">
-                        <div style={{ textAlign:"center" }}>
-                            { props.icon }
-                        </div>
-                    </Grid>
-
-                    <Grid container direction="row" xs={6} justify="flex-start" alignItems="center" >
-                        <Typography variant="caption" >
-                            { props.title }
-                        </Typography>
-                    </Grid>
-
-                    <Grid container direction="row" xs={4} justify="space-evenly" alignItems="center">
-                        <Grid item >
-                            <Button variant="contained" size="small" color="primary">
-                                <Share style={{ fontSize:"15px" }}></Share> <span style={{ paddingLeft:"5px" }}>Share</span>
-                            </Button>
-                        </Grid>
-                        <Grid item >
-                            <Button variant="contained" size="small" color="primary">
-                                <CloudUpload style={{ fontSize:"15px" }}></CloudUpload> <span style={{ paddingLeft:"5px" }}>Upload</span>
-                            </Button>
-                        </Grid>
+                    <Grid item >
+                        <Button variant="contained" size="small" color="primary">
+                            <CloudUpload style={{ fontSize:"15px" }}></CloudUpload> <span style={{ paddingLeft:"5px" }}>Upload</span>
+                        </Button>
                     </Grid>
                 </Grid>
-            </Paper>
-        );
+            </Grid>
+        </Paper>
+    );
 
-        return <div style={{ paddingLeft:"20%" ,width:"60%", minWidth:"600px"}}>
+    return (
+        <div style={{ paddingLeft:"20%" ,width:"60%", minWidth:"600px"}}>
             <Fragment>
                 <div style={{ padding:"0px 30px"}}>
                     <Typography variant="h6">
@@ -97,7 +93,7 @@ export default class LatestTask extends Component{
                     </div>
                 </Paper>    
 
-                { ( this.state.loading ) ? 
+                { ( loading ) ? 
                     <Grid container direction="column" align-item="stretch">
                         <Skeleton style={ classes.taskSkeleton }></Skeleton>
                         <Skeleton style={ classes.taskSkeleton }></Skeleton>
@@ -106,7 +102,7 @@ export default class LatestTask extends Component{
                         <Skeleton style={ classes.taskSkeleton }></Skeleton>
                         <Skeleton style={ classes.taskSkeleton }></Skeleton>
                     </Grid> :
-                    this.state.tasks.map((task, index)=>{
+                    tasks.map((task, index)=>{
                         var icon;
                         switch(task.site){
                             case "facebook": icon=<Facebook style={{ fontSize:"27.5px", paddingTop:"5px" }}></Facebook>;
@@ -133,6 +129,8 @@ export default class LatestTask extends Component{
                 
             </Fragment>
         </div>
-    }
-
+    
+    );
 }
+
+export default LatestTasks;
