@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
+import "./drawerStyle.css";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
@@ -11,10 +12,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Collapse from "@material-ui/core/Collapse";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarBorder from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -24,20 +25,17 @@ import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import Logo from "./logo.png";
+import Logo from "./logo-white.png";
 
 const useStyles = makeStyles({
-  card: {
-    width: 275,
-    marginLeft: 10,
-    marginTop: 10,
-    marginRight: 10,
-  },
   list: {
     width: 300,
+    //height: "auto",
   },
+
   fullList: {
     width: "60px",
+    height: "auto",
   },
   logo: {
     width: "130px",
@@ -50,11 +48,6 @@ const useStyles = makeStyles({
     textAlign: "center",
   },
 
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
-  },
   title: {
     fontSize: 14,
   },
@@ -97,10 +90,11 @@ export default function SwipeableTemporaryDrawer(props) {
         [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
+      id="drawer"
     >
       <div className="drawerHeader">
         <img src={Logo} alt="ecell-logo" className={classes.logo} />
-        <Typography variant="h4" className={classes.center}>
+        <Typography variant="h4" className="teesco">
           teesco
         </Typography>
       </div>
@@ -108,7 +102,7 @@ export default function SwipeableTemporaryDrawer(props) {
       <Divider />
 
       {!orgs ? (
-        <Card className={classes.card} variant="outlined">
+        <Card id="card" variant="outlined">
           <CardContent>
             <Typography className={classes.center} variant="h6" component="h2">
               No Organisations Found
@@ -117,25 +111,25 @@ export default function SwipeableTemporaryDrawer(props) {
           <CardActions>
             <Grid container spacing={3} justify="center">
               <Grid item>
-                <Button>Create</Button>
+                <Button className="golden">Create</Button>
               </Grid>
               <Grid item>
-                <Button>Join</Button>
+                <Button className="golden">Join</Button>
               </Grid>
             </Grid>
           </CardActions>
         </Card>
       ) : (
-        <Card className={classes.card} variant="outlined">
+        <Card id="card" variant="outlined">
           <CardContent>
             <Typography className={classes.center} variant="h6" component="h2">
-              Organisations Found
+              Organisations
             </Typography>
           </CardContent>
-          <div className="expansionPanel">
-            <ExpansionPanel>
+          <div>
+            <ExpansionPanel id="expansionPanel">
               <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon className="expand" />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
@@ -150,6 +144,7 @@ export default function SwipeableTemporaryDrawer(props) {
                   aria-label="org groups"
                 >
                   <ListItem
+                    className="listItem"
                     onClick={toggleDrawer(anchor, false)}
                     onKeyDown={toggleDrawer(anchor, false)}
                     button
@@ -161,9 +156,9 @@ export default function SwipeableTemporaryDrawer(props) {
             </ExpansionPanel>
 
             {/* ---------------------------- Org-2 ---------------------------- */}
-            <ExpansionPanel>
+            <ExpansionPanel id="expansionPanel">
               <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon className="expand" />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
@@ -178,6 +173,7 @@ export default function SwipeableTemporaryDrawer(props) {
                   aria-label="org groups"
                 >
                   <ListItem
+                    className="listItem"
                     onClick={toggleDrawer(anchor, false)}
                     onKeyDown={toggleDrawer(anchor, false)}
                     button
@@ -188,9 +184,9 @@ export default function SwipeableTemporaryDrawer(props) {
               </ExpansionPanelDetails>
             </ExpansionPanel>
             {/* ---------------------------- Org-3 ---------------------------- */}
-            <ExpansionPanel>
+            <ExpansionPanel id="expansionPanel">
               <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
+                expandIcon={<ExpandMoreIcon className="expand" />}
                 aria-controls="panel1a-content"
                 id="panel1a-header"
               >
@@ -205,6 +201,7 @@ export default function SwipeableTemporaryDrawer(props) {
                   aria-label="org groups"
                 >
                   <ListItem
+                    className="listItem"
                     onClick={toggleDrawer(anchor, false)}
                     onKeyDown={toggleDrawer(anchor, false)}
                     button
@@ -222,14 +219,18 @@ export default function SwipeableTemporaryDrawer(props) {
       <List
         component="nav"
         aria-labelledby="nested-list-subheader"
-        className={classes.root}
+        className={classes.height}
       >
         <ListItem button onClick={handleClick}>
           {/* <ListItemIcon>
             <InboxIcon />
           </ListItemIcon> */}
-          <ListItemText primary="Actions" />
-          {open ? <ExpandLess /> : <ExpandMore />}
+          <ListItemText style={{ color: "#fff" }} primary="Actions" />
+          {open ? (
+            <ExpandLess className="expand" />
+          ) : (
+            <ExpandMore className="expand" />
+          )}
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           {["Tasks", "People", "LB Settings", "Statistics", "Certificate"].map(
@@ -240,11 +241,10 @@ export default function SwipeableTemporaryDrawer(props) {
                   onClick={toggleDrawer(anchor, false)}
                   onKeyDown={toggleDrawer(anchor, false)}
                   button
-                  button
-                  className={classes.nested}
+                  className="listItem"
                 >
                   <ListItemIcon>
-                    <StarBorder />
+                    <StarIcon className="starIcon" />
                   </ListItemIcon>
                   <ListItemText primary={el} />
                 </ListItem>
