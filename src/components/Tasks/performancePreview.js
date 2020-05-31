@@ -6,6 +6,7 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import GroupIcon from '@material-ui/icons/Group';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import { Skeleton } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@material-ui/lab';
 
 const styles = {
     root: {
@@ -70,12 +71,27 @@ const styles = {
         width: '200px',
         padding: 10,
     },
+    alert: {
+        width: '80%',
+        margin: '20px auto',
+    },
 };
 
 const performancePreview = ({
     stateData: { tasks, points, leaderBoard, error, loading },
     classes,
 }) => {
+    if (error && !loading) {
+        return (
+            <Alert severity='error' className={classes.alert}>
+                <AlertTitle>Error</AlertTitle>
+                <Typography align='center' variant='h6'>
+                    Something Went Wrong <strong>Please try again later</strong>
+                </Typography>
+            </Alert>
+        );
+    }
+
     return (
         <div>
             <Typography align='center' variant='h5'>
