@@ -27,7 +27,7 @@ export const errorStateData = {
     error: true,
 };
 
-export const initiState = () => (
+export const initialState = () => (
     <PerformancePreview stateData={object('state', initialStateData)} />
 );
 
