@@ -10,9 +10,12 @@ export default {
 };
 
 export const initialStateData = {
-    tasks: 10,
+    tasksCompleted: 10,
+    totalTasks: 20,
     points: 20,
-    leaderBoard: 140,
+    totalPoints: 180,
+    rank: 140,
+    totalVolunteers: 200,
     loading: false,
     error: false,
 };

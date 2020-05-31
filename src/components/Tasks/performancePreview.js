@@ -78,7 +78,16 @@ const styles = {
 };
 
 const performancePreview = ({
-    stateData: { tasks, points, leaderBoard, error, loading },
+    stateData: {
+        tasksCompleted,
+        totalTasks,
+        points,
+        totalPoints,
+        rank,
+        totalVolunteers,
+        error,
+        loading,
+    },
     classes,
 }) => {
     if (error && !loading) {
@@ -126,13 +135,13 @@ const performancePreview = ({
                                         Tasks
                                     </Typography>
                                     <Typography align='right' variant='h4'>
-                                        {tasks}
+                                        {tasksCompleted}
                                     </Typography>
                                 </div>
                                 <Divider light style={{ margin: '2px' }} />
                                 <div>
                                     <Typography align='left' variant='h6'>
-                                        Total Tasks: 48
+                                        Total Tasks: {totalTasks}
                                     </Typography>
                                 </div>
                             </div>
@@ -170,7 +179,7 @@ const performancePreview = ({
                                 <Divider light style={{ margin: '2px' }} />
                                 <div>
                                     <Typography align='left' variant='h6'>
-                                        Max points: 48
+                                        Max points: {totalPoints}
                                     </Typography>
                                 </div>
                             </div>
@@ -198,16 +207,16 @@ const performancePreview = ({
                             <div className={classes.content}>
                                 <div>
                                     <Typography align='right' variant='h6'>
-                                        LeaderBoard
+                                        Rank
                                     </Typography>
                                     <Typography align='right' variant='h4'>
-                                        {leaderBoard}
+                                        {rank}
                                     </Typography>
                                 </div>
                                 <Divider light style={{ margin: '2px' }} />
                                 <div>
                                     <Typography align='left' variant='h6'>
-                                        Season: Summer
+                                        Total Volunteers: {totalVolunteers}
                                     </Typography>
                                 </div>
                             </div>
@@ -223,9 +232,12 @@ const performancePreview = ({
 
 performancePreview.propTypes = {
     stateData: PropTypes.shape({
-        tasks: PropTypes.number.isRequired,
+        tasksCompleted: PropTypes.number.isRequired,
+        totalTasks: PropTypes.number.isRequired,
         points: PropTypes.number.isRequired,
-        leaderBoard: PropTypes.number.isRequired,
+        totalPoints: PropTypes.number.isRequired,
+        rank: PropTypes.number.isRequired,
+        totalVolunteers: PropTypes.number.isRequired,
         loading: PropTypes.bool.isRequired,
         error: PropTypes.bool.isRequired,
     }),
