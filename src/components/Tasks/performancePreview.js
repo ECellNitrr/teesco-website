@@ -1,12 +1,17 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { Grid, Card, Typography, Divider } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import { Grid, Card, Typography, Divider, Box } from '@material-ui/core';
+
+//Loading and alerts
+import { Skeleton } from '@material-ui/lab';
+import { Alert, AlertTitle } from '@material-ui/lab';
+
+//Icons
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import GroupIcon from '@material-ui/icons/Group';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-import { Skeleton } from '@material-ui/lab';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
 const styles = {
     root: {
@@ -14,62 +19,28 @@ const styles = {
         textAlign: 'center',
     },
 
-    icon_box_task: {
+    icon_box: {
         position: 'absolute',
         margin: '-40px 0',
         zIndex: +1,
         height: '60px',
         width: '60px',
         border: 0,
-        boxShadow: '4px 4px 8px rgba(111, 111, 255, 0.1)',
-    },
-    icon_box_points: {
-        position: 'absolute',
-        margin: '-40px 0',
-        zIndex: +1,
-        height: '60px',
-        width: '60px',
-        border: 0,
-        boxShadow: '4px 4px 8px rgba(111, 111, 255, 0.1)',
-    },
-    icon_box_leaderBoard: {
-        position: 'absolute',
-        margin: '-40px 0',
-        zIndex: +1,
-        height: '60px',
-        width: '60px',
-        border: 0,
-        boxShadow: '4px 4px 8px rgba(111, 111, 255, 0.1)',
-    },
-    card_tasks: {
-        border: 0,
-        borderRadius: 5,
-        boxShadow: '4px 4px 8px rgba(111, 111, 255, 0.1)',
-        color: 'black',
-        height: '100px',
-        width: '200px',
-        padding: 10,
+        borderRadius: '5px 5px 5px 5px',
     },
 
-    card_points: {
+    cards: {
         border: 0,
         borderRadius: 5,
-        boxShadow: '4px 4px 8px rgba(111, 111, 255, 0.1)',
         color: 'black',
         height: '100px',
         width: '200px',
-        textAlign: 'center',
         padding: 10,
     },
-
-    card_leaderBoard: {
-        border: 0,
-        borderRadius: 5,
-        boxShadow: '4px 4px 8px rgba(111, 111, 255, 0.1)',
-        color: 'black',
-        height: '100px',
-        width: '200px',
-        padding: 10,
+    icons: {
+        margin: '20px auto',
+        color: 'white',
+        fontSize: 20,
     },
     alert: {
         width: '80%',
@@ -90,142 +61,152 @@ const performancePreview = ({
     },
     classes,
 }) => {
+    //If an error occurs and the page is not set to loading
     if (error && !loading) {
         return (
-            <Alert severity='error' className={classes.alert}>
-                <AlertTitle>Error</AlertTitle>
-                <Typography align='center' variant='h6'>
-                    Something Went Wrong <strong>Please try again later</strong>
-                </Typography>
-            </Alert>
+            <Box className={classes.alert}>
+                <Grid
+                    container
+                    spacing={1}
+                    direction='coloumn'
+                    justify='center'
+                    alignItems='center'
+                    className={classes.root}>
+                    <Grid item>
+                        <SentimentVeryDissatisfiedIcon
+                            style={{ fontSize: 100 }}
+                        />
+                    </Grid>
+                    <Grid item>
+                        <Typography align='center' variant='h6'>
+                            Something Went Wrong{' '}
+                            <strong>Please try again later</strong>
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Box>
         );
     }
-
+    //Else return the normal state accordingly
     return (
         <div>
             <Typography align='center' variant='h5'>
                 Performance
             </Typography>
-            <Grid
-                container
-                spacing={5}
-                direction='row'
-                justify='center'
-                alignItems='center'
-                className={classes.root}>
-                <Grid item>
-                    {!loading ? (
-                        <Card className={classes.card_tasks}>
-                            <div
-                                className={classes.icon_box_task}
-                                style={{
-                                    'background-color': 'rgb(58, 127, 240)',
-                                }}>
-                                <AssignmentIcon
-                                    style={{
-                                        margin: '20px auto',
-                                        color: 'white',
-                                        fontSize: 20,
-                                    }}
-                                />
-                            </div>
-                            <div className={classes.content}>
-                                <div>
-                                    <Typography align='right' variant='h5'>
-                                        Tasks
-                                    </Typography>
-                                    <Typography align='right' variant='h4'>
-                                        {tasksCompleted}
-                                    </Typography>
-                                </div>
-                                <Divider light style={{ margin: '2px' }} />
-                                <div>
-                                    <Typography align='left' variant='h6'>
-                                        Total Tasks: {totalTasks}
-                                    </Typography>
-                                </div>
-                            </div>
+
+            {!loading ? (
+                <Grid
+                    container
+                    spacing={5}
+                    direction='row'
+                    justify='center'
+                    alignItems='center'
+                    className={classes.root}>
+                    <Grid item>
+                        {/* Tasks */}
+                        <Card className={classes.cards} boxShadow={1}>
+                            <Box
+                                className={classes.icon_box}
+                                bgcolor='success.main'
+                                alignItems='center'
+                                boxShadow={1}>
+                                <AssignmentIcon className={classes.icons} />
+                            </Box>
+
+                            <Typography align='right' variant='h6' color=''>
+                                <strong>Tasks</strong>
+                            </Typography>
+                            <Typography align='right' variant='h4'>
+                                {tasksCompleted}
+                            </Typography>
+
+                            <Divider light />
+
+                            <Typography
+                                align='left'
+                                variant='body1'
+                                color='text.secondary'>
+                                <Box p={1}>Total Tasks: {totalTasks}</Box>
+                            </Typography>
                         </Card>
-                    ) : (
-                        <Skeleton variant='rect' width={200} height={100} />
-                    )}
-                </Grid>
-                <Grid item>
-                    {!loading ? (
-                        <Card className={classes.card_points}>
-                            <div
-                                className={classes.icon_box_points}
-                                style={{
-                                    'background-color': 'rgb(232, 51, 54)',
-                                }}>
-                                <EqualizerIcon
-                                    style={{
-                                        margin: '20px auto',
-                                        color: 'white',
-                                        fontSize: 20,
-                                    }}
-                                />
-                            </div>
-                            <div className={classes.content}>
-                                <div>
-                                    {' '}
-                                    <Typography align='right' variant='h6'>
-                                        Points
-                                    </Typography>
-                                    <Typography align='right' variant='h4'>
-                                        {points}
-                                    </Typography>
-                                </div>
-                                <Divider light style={{ margin: '2px' }} />
-                                <div>
-                                    <Typography align='left' variant='h6'>
-                                        Max points: {totalPoints}
-                                    </Typography>
-                                </div>
-                            </div>
+                    </Grid>
+                    <Grid item>
+                        {/* Points */}
+                        <Card className={classes.cards} boxShadow={1}>
+                            <Box
+                                className={classes.icon_box}
+                                bgcolor='secondary.main'
+                                boxShadow={1}>
+                                <EqualizerIcon className={classes.icons} />
+                            </Box>
+
+                            <Typography align='right' variant='h6'>
+                                <strong>Points</strong>
+                            </Typography>
+                            <Typography align='right' variant='h4'>
+                                {points}
+                            </Typography>
+
+                            <Divider light />
+
+                            <Typography
+                                align='left'
+                                variant='body1'
+                                color='text.secondary'>
+                                <Box p={1}>Max points: {totalPoints}</Box>
+                            </Typography>
                         </Card>
-                    ) : (
-                        <Skeleton variant='rect' width={200} height={100} />
-                    )}
-                </Grid>
-                <Grid item>
-                    {!loading ? (
-                        <Card className={classes.card_leaderBoard}>
-                            <div
-                                className={classes.icon_box_leaderBoard}
-                                style={{
-                                    'background-color': 'rgb(46, 232, 121)',
-                                }}>
-                                <GroupIcon
-                                    style={{
-                                        margin: '20px auto',
-                                        color: 'white',
-                                        fontSize: 20,
-                                    }}
-                                />
-                            </div>
-                            <div className={classes.content}>
-                                <div>
-                                    <Typography align='right' variant='h6'>
-                                        Rank
-                                    </Typography>
-                                    <Typography align='right' variant='h4'>
-                                        {rank}
-                                    </Typography>
-                                </div>
-                                <Divider light style={{ margin: '2px' }} />
-                                <div>
-                                    <Typography align='left' variant='h6'>
-                                        Total Volunteers: {totalVolunteers}
-                                    </Typography>
-                                </div>
-                            </div>
+                    </Grid>
+                    <Grid item>
+                        {/* Leader Board */}
+                        <Card className={classes.cards} boxShadow={1}>
+                            <Box
+                                className={classes.icon_box}
+                                bgcolor='info.main'
+                                boxShadow={1}>
+                                <GroupIcon className={classes.icons} />
+                            </Box>
+
+                            <Typography align='right' variant='h6'>
+                                <strong>Rank</strong>
+                            </Typography>
+                            <Typography align='right' variant='h4'>
+                                {rank}
+                            </Typography>
+
+                            <Divider light />
+
+                            <Typography
+                                align='left'
+                                variant='body1'
+                                color='text.secondary'>
+                                <Box p={1}>
+                                    Total Volunteers: {totalVolunteers}
+                                </Box>
+                            </Typography>
                         </Card>
-                    ) : (
-                        <Skeleton variant='rect' width={200} height={100} />
-                    )}
+                    </Grid>
                 </Grid>
-            </Grid>
+            ) : (
+                //Loading State
+                <Grid
+                    container
+                    spacing={5}
+                    direction='row'
+                    justify='center'
+                    alignItems='center'
+                    className={classes.root}>
+                    <Grid item>
+                        <Skeleton variant='rect' width={200} height={100} />
+                    </Grid>
+                    <Grid item>
+                        <Skeleton variant='rect' width={200} height={100} />
+                    </Grid>
+                    <Grid item>
+                        <Skeleton variant='rect' width={200} height={100} />
+                    </Grid>
+                </Grid>
+            )}
         </div>
     );
 };
