@@ -9,6 +9,7 @@ export default {
     excludeStories: /.*Data$/, // export ending with Data wont be treated as a story
 };
 
+//State Data
 export const initialStateData = {
     tasksCompleted: 10,
     totalTasks: 20,
@@ -30,6 +31,7 @@ export const errorStateData = {
     error: true,
 };
 
+//Create Stories
 export const initialState = () => (
     <PerformancePreview stateData={object('state', initialStateData)} />
 );

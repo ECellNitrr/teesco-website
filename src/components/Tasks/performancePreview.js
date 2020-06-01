@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Card, Typography, Divider, Box } from '@material-ui/core';
 
-//Loading and alerts
+//Loading
 import { Skeleton } from '@material-ui/lab';
-import { Alert, AlertTitle } from '@material-ui/lab';
 
 //Icons
 import AssignmentIcon from '@material-ui/icons/Assignment';
@@ -32,7 +31,6 @@ const styles = {
     cards: {
         border: 0,
         borderRadius: 5,
-        color: 'black',
         height: '100px',
         width: '200px',
         padding: 10,
@@ -42,7 +40,7 @@ const styles = {
         color: 'white',
         fontSize: 20,
     },
-    alert: {
+    error_alert: {
         width: '80%',
         margin: '20px auto',
     },
@@ -64,7 +62,7 @@ const performancePreview = ({
     //If an error occurs and the page is not yet loading
     if (error && !loading) {
         return (
-            <Box className={classes.alert}>
+            <Box className={classes.error_alert}>
                 <Grid
                     container
                     spacing={1}
@@ -105,8 +103,8 @@ const performancePreview = ({
                     justify='center'
                     alignItems='center'
                     className={classes.root}>
+                    {/* Tasks */}
                     <Grid item>
-                        {/* Tasks */}
                         <Card className={classes.cards} boxShadow={1}>
                             <Box
                                 className={classes.icon_box}
@@ -130,8 +128,8 @@ const performancePreview = ({
                             </Typography>
                         </Card>
                     </Grid>
+                    {/* Points */}
                     <Grid item>
-                        {/* Points */}
                         <Card className={classes.cards} boxShadow={1}>
                             <Box
                                 className={classes.icon_box}
@@ -154,8 +152,8 @@ const performancePreview = ({
                             </Typography>
                         </Card>
                     </Grid>
+                    {/* Leader Board */}
                     <Grid item>
-                        {/* Leader Board */}
                         <Card className={classes.cards} boxShadow={1}>
                             <Box
                                 className={classes.icon_box}
