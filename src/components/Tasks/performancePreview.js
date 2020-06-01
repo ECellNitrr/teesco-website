@@ -61,7 +61,7 @@ const performancePreview = ({
     },
     classes,
 }) => {
-    //If an error occurs and the page is not set to loading
+    //If an error occurs and the page is not yet loading
     if (error && !loading) {
         return (
             <Box className={classes.alert}>
@@ -74,13 +74,16 @@ const performancePreview = ({
                     className={classes.root}>
                     <Grid item>
                         <SentimentVeryDissatisfiedIcon
+                            color='secondary'
                             style={{ fontSize: 100 }}
                         />
                     </Grid>
                     <Grid item>
                         <Typography align='center' variant='h6'>
-                            Something Went Wrong{' '}
-                            <strong>Please try again later</strong>
+                            <Box>
+                                Something Went Wrong{' '}
+                                <strong>Please try again later</strong>
+                            </Box>
                         </Typography>
                     </Grid>
                 </Grid>
@@ -113,7 +116,7 @@ const performancePreview = ({
                                 <AssignmentIcon className={classes.icons} />
                             </Box>
 
-                            <Typography align='right' variant='h6' color=''>
+                            <Typography align='right' variant='h6'>
                                 <strong>Tasks</strong>
                             </Typography>
                             <Typography align='right' variant='h4'>
@@ -122,10 +125,7 @@ const performancePreview = ({
 
                             <Divider light />
 
-                            <Typography
-                                align='left'
-                                variant='body1'
-                                color='text.secondary'>
+                            <Typography align='left' variant='body1'>
                                 <Box p={1}>Total Tasks: {totalTasks}</Box>
                             </Typography>
                         </Card>
@@ -149,10 +149,7 @@ const performancePreview = ({
 
                             <Divider light />
 
-                            <Typography
-                                align='left'
-                                variant='body1'
-                                color='text.secondary'>
+                            <Typography align='left' variant='body1'>
                                 <Box p={1}>Max points: {totalPoints}</Box>
                             </Typography>
                         </Card>
@@ -176,10 +173,7 @@ const performancePreview = ({
 
                             <Divider light />
 
-                            <Typography
-                                align='left'
-                                variant='body1'
-                                color='text.secondary'>
+                            <Typography align='left' variant='body1'>
                                 <Box p={1}>
                                     Total Volunteers: {totalVolunteers}
                                 </Box>
