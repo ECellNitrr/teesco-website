@@ -7,7 +7,8 @@ import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissa
 /*Component requires
 error => Error to be displayed(string)
 width => Total width of the box in % (string)
-direction => Direction of the grid {column, row} (string) */
+direction => Direction of the grid {column, row} (string) 
+iconSize => size of the SentimentVeryDissatisfiedIcon (number)*/
 
 const Error = ({ stateData: { error, width, direction, iconSize } }) => {
     return (
