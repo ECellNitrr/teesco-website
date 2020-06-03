@@ -1,0 +1,35 @@
+.card {
+  height: 225px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  position: relative;
+}
+
+.menu {
+  position: absolute !important;
+  top: 0;
+  left: 80%;
+}
+.menuCard {
+  width: 300px;
+  height: 260px;
+  margin-bottom: -8px;
+  margin-top: -8px;
+  /* background-color: hotpink !important; */
+  overflow-y: auto !important;
+
+  text-align: center;
+}
+.listItem {
+  background-color: hotpink !important;
+  margin-bottom: 10px !important;
+  border-radius: 10px !important;
+  height: 35px !important;
+}
+.create {
+  width: 100% !important;
+  background-color: indigo !important;
+  color: #fff !important;
+}

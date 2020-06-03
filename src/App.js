@@ -1,11 +1,7 @@
-import React from 'react';
+import React from "react";
 
 function App() {
-  return (
-    <div className="App">
-      Teesco
-    </div>
-  );
+  return <div className="App">Teesco</div>;
 }
 
 export default App;

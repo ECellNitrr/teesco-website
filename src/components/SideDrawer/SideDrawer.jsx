@@ -1,276 +1,263 @@
 import React from "react";
 import clsx from "clsx";
-import { makeStyles } from "@material-ui/core/styles";
-import "./drawerStyle.css";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import Button from "@material-ui/core/Button";
-import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Collapse from "@material-ui/core/Collapse";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import StarIcon from "@material-ui/icons/Star";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
+import {
+  Typography,
+  Card,
+  CardActions,
+  CardContent,
+  Divider,
+  IconButton,
+  Drawer,
+  AppBar,
+  Toolbar,
+  Avatar,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+} from "@material-ui/core";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import { deepOrange, deepPurple } from "@material-ui/core/colors";
+
+import MenuIcon from "@material-ui/icons/Menu";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+
 import Grid from "@material-ui/core/Grid";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
-import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
 import Logo from "./logo-white.png";
+import LogoDark from "./logo.png";
+import "./Drawer.css";
 
-const useStyles = makeStyles({
-  list: {
-    width: 300,
-    //height: "auto",
-  },
+const drawerWidth = 300;
 
-  fullList: {
-    width: "60px",
-    height: "auto",
+const ITEM_HEIGHT = 36;
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
   },
-  logo: {
-    width: "130px",
-    display: "block",
-    marginLeft: "auto",
-    marginRight: "auto",
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(["margin", "width"], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: "none",
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+  },
+  drawerHeader: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: "flex-end",
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  orange: {
+    color: theme.palette.getContrastText(deepOrange[500]),
+    backgroundColor: deepOrange[500],
+  },
+  purple: {
+    color: theme.palette.getContrastText(deepPurple[500]),
+    backgroundColor: deepPurple[500],
+  },
+}));
 
-  center: {
-    textAlign: "center",
-  },
-
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  groups: {
-    marginTop: -30,
-    width: 275,
-  },
-});
-
-export default function SwipeableTemporaryDrawer(props) {
+export default function PersistentDrawerLeft(props) {
+  const { orgs } = props.defaultData;
+  console.log(orgs);
   const classes = useStyles();
-  const { actions, orgs, organisations } = props.defaultData;
-  console.log(organisations);
-  const [state, setState] = React.useState({
-    left: false,
-  });
-  const [open, setOpen] = React.useState(true);
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenu = Boolean(anchorEl);
 
-    setState({ ...state, [anchor]: open });
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
   };
 
-  const list = (anchor) => (
-    <div
-      className={clsx(classes.list, {
-        [classes.fullList]: anchor === "top" || anchor === "bottom",
-      })}
-      role="presentation"
-      id="drawer"
-    >
-      <div className="drawerHeader">
-        <img src={Logo} alt="ecell-logo" className={classes.logo} />
-        <Typography variant="h4" className="teesco">
-          teesco
-        </Typography>
-      </div>
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-      <Divider />
+  const handleDrawerOpen = () => {
+    setOpen(true);
+    let logo = document.querySelector(".imgBox");
+    logo.style.display = "none";
+  };
 
-      {!orgs ? (
-        <Card id="card" variant="outlined">
-          <CardContent>
-            <Typography className={classes.center} variant="h6" component="h2">
-              No Organisations Found
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Grid container spacing={3} justify="center">
-              <Grid item>
-                <Button className="golden">Create</Button>
-              </Grid>
-              <Grid item>
-                <Button className="golden">Join</Button>
-              </Grid>
-            </Grid>
-          </CardActions>
-        </Card>
-      ) : (
-        <Card id="card" variant="outlined">
-          <CardContent>
-            <Typography className={classes.center} variant="h6" component="h2">
-              Organisations
-            </Typography>
-          </CardContent>
-          <div>
-            <ExpansionPanel id="expansionPanel">
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon className="expand" />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={classes.heading}>
-                  {organisations.org1.name}
-                </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <List
-                  component="nav"
-                  className={classes.groups}
-                  aria-label="org groups"
-                >
-                  <ListItem
-                    className="listItem"
-                    onClick={toggleDrawer(anchor, false)}
-                    onKeyDown={toggleDrawer(anchor, false)}
-                    button
-                  >
-                    <ListItemText primary={organisations.org1.group1.name} />
-                  </ListItem>
-                </List>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-
-            {/* ---------------------------- Org-2 ---------------------------- */}
-            <ExpansionPanel id="expansionPanel">
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon className="expand" />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={classes.heading}>
-                  {organisations.org2.name}
-                </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <List
-                  component="nav"
-                  className={classes.groups}
-                  aria-label="org groups"
-                >
-                  <ListItem
-                    className="listItem"
-                    onClick={toggleDrawer(anchor, false)}
-                    onKeyDown={toggleDrawer(anchor, false)}
-                    button
-                  >
-                    <ListItemText primary={organisations.org2.group1.name} />
-                  </ListItem>
-                </List>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-            {/* ---------------------------- Org-3 ---------------------------- */}
-            <ExpansionPanel id="expansionPanel">
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon className="expand" />}
-                aria-controls="panel1a-content"
-                id="panel1a-header"
-              >
-                <Typography className={classes.heading}>
-                  {organisations.org3.name}
-                </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <List
-                  component="nav"
-                  className={classes.groups}
-                  aria-label="org groups"
-                >
-                  <ListItem
-                    className="listItem"
-                    onClick={toggleDrawer(anchor, false)}
-                    onKeyDown={toggleDrawer(anchor, false)}
-                    button
-                  >
-                    <ListItemText primary={organisations.org3.group1.name} />
-                  </ListItem>
-                </List>
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-          </div>
-        </Card>
-      )}
-
-      {/* ----------------- LIST ------------------------------ */}
-      <List
-        component="nav"
-        aria-labelledby="nested-list-subheader"
-        className={classes.height}
-      >
-        <ListItem button onClick={handleClick}>
-          {/* <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon> */}
-          <ListItemText style={{ color: "#fff" }} primary="Actions" />
-          {open ? (
-            <ExpandLess className="expand" />
-          ) : (
-            <ExpandMore className="expand" />
-          )}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          {["Tasks", "People", "LB Settings", "Statistics", "Certificate"].map(
-            (el) => (
-              <List component="div" disablePadding>
-                <ListItem
-                  disabled={actions ? false : true}
-                  onClick={toggleDrawer(anchor, false)}
-                  onKeyDown={toggleDrawer(anchor, false)}
-                  button
-                  className="listItem"
-                >
-                  <ListItemIcon>
-                    <StarIcon className="starIcon" />
-                  </ListItemIcon>
-                  <ListItemText primary={el} />
-                </ListItem>
-              </List>
-            )
-          )}
-        </Collapse>
-      </List>
-    </div>
-  );
+  const handleDrawerClose = () => {
+    setOpen(false);
+    let logo = document.querySelector(".imgBox");
+    logo.style.display = "block";
+  };
 
   return (
-    <div>
-      {["left"].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>Open</Button>
-          <SwipeableDrawer
-            anchor={anchor}
-            open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
-            onOpen={toggleDrawer(anchor, true)}
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <img
+            className="imgBox"
+            src={Logo}
+            width="55px"
+            style={{ marginLeft: "-15px", marginRight: "22px" }}
+          />
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
           >
-            {list(anchor)}
-          </SwipeableDrawer>
-        </React.Fragment>
-      ))}
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            Persistent drawer
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <Grid container spacing={3} justify="center">
+            <Grid item>
+              <img
+                src={LogoDark}
+                width="55px"
+                alt="ecell logo"
+                style={{ padding: 0 }}
+              />
+            </Grid>
+            <Grid item>
+              <Typography align="center" variant="h5" style={{ marginTop: 12 }}>
+                teesco
+              </Typography>
+            </Grid>
+            {/* <Grid item></Grid> */}
+          </Grid>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider />
+        <Card className="card">
+          <CardContent className="center">
+            <Typography
+              variant="h6"
+              style={{ textAlign: "center" }}
+              className={classes.title}
+              gutterBottom
+            >
+              E-Cell NITRR
+            </Typography>
+
+            <Typography
+              style={{ textAlign: "center" }}
+              className={classes.pos}
+              color="textSecondary"
+            >
+              non-profit organisation
+            </Typography>
+          </CardContent>
+          <IconButton
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+            className="menu"
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={openMenu}
+            onClose={handleClose}
+          >
+            <Card className="menuCard">
+              <CardContent>
+                <Typography variant="h5">Switch Orgs</Typography>
+                <List>
+                  {orgs.map((el) => (
+                    <ListItem button className="listItem">
+                      <ListItemText
+                        primary={el}
+                        style={{ textAlign: "center" }}
+                      />
+                    </ListItem>
+                  ))}
+                </List>
+                <Button className="create">Create or Join orgs</Button>
+              </CardContent>
+            </Card>
+          </Menu>
+        </Card>
+      </Drawer>
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        <div className={classes.drawerHeader} />
+      </main>
     </div>
   );
 }
