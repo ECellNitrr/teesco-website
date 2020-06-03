@@ -14,7 +14,7 @@ export const initialStateData = {
     error: 'Something Went Wrong Please try again later or try refreshing',
     width: '80%',
     direction: 'column',
-    iconSize: 20,
+    iconSize: 40,
 };
 
 //Create Stories
