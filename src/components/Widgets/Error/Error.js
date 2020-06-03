@@ -47,4 +47,13 @@ Error.propTypes = {
     }),
 };
 
+Error.defaultProps = {
+    stateData: {
+        error: 'Something Went Wrong Please try again later or try refreshing',
+        width: '80%',
+        direction: 'column',
+        iconSize: 20,
+    },
+};
+
 export default Error;
