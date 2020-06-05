@@ -89,7 +89,7 @@ export default class SignupForm extends Component{
         }
 
         //Password Validation
-        let passwordFormat=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        let passwordFormat=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
         if((this.state.password===null)||(this.state.password==="")){
             if(error!==null){
                 passwordValidationError=error.nullCase;
