@@ -1,3 +1,8 @@
-export default(state,action)=>{
-    return null;
+let initialState={
+    loading:false,
+    error:false
+}
+
+export default(state=initialState,action)=>{
+    return state;
 }

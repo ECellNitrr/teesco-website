@@ -66,13 +66,24 @@ export const errorStateData={
     error:true
 }
 
+export const NotAdminStateData={
+    ...initialStateData,
+    permissions:{
+        cancreategroups:false
+    }
+}
+
 //Create Stories
-export const successState = () =>(
+export const AdminState = () =>(
     <MemberTile StateData={object('state',initialStateData)} />
 )
 
 export const loadingState = () =>(
     <MemberTile StateData={object('state',loadingStateData)} />
+)
+
+export const notAdminState = () =>(
+    <MemberTile StateData={object('state',NotAdminStateData)} />
 )
 
 export const errorState = () =>(

@@ -61,6 +61,7 @@ const performancePreview = ({
 }) => {
     //If an error occurs and the page is not yet loading
     if (error && !loading) {
+        console.log("running")
         return (
             <Box className={classes.error_alert}>
                 <Grid
