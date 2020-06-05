@@ -18,10 +18,9 @@ export default class SignupForm extends Component{
     }
 
     inputChangeHandler=(event)=>{
-        console.log(event.target.value);
         this.setState({
             [event.target.name]:event.target.value
-        })
+        });
     }
 
     showPasswordClick=()=>{
@@ -33,6 +32,8 @@ export default class SignupForm extends Component{
     render(){
         let error=null;
         let emailError=null;
+        let emailValidationError=null;
+
         if(this.state.error){
             error=this.state.error;
 
@@ -47,6 +48,20 @@ export default class SignupForm extends Component{
                     emailError=null;
                 }
             }
+        }
+
+        let mailFormat= /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if((this.state.email===null)||(this.state.email==="")||(this.state.email.match(mailFormat))){
+            emailValidationError=emailError;
+        }
+        else{
+            emailValidationError="Enter a valid email address.";
+        }
+
+        //Phone Number Validation
+        let phoneNumberFormat=/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+        if((this.state.phoneNumber==null)||(this.state.phoneNumber=="")||this.state.phoneNumber.match(phoneNumberFormat)){
+            
         }
 
         return <Fragment>
@@ -69,7 +84,7 @@ export default class SignupForm extends Component{
                                         <TextField
                                             fullWidth 
                                             variant="outlined"
-                                            label="First Name" 
+                                            label="First Name*" 
                                             name="firstName"
                                             error={(this.state.firstName==="" && error!==null) ? true : false}
                                             helperText={(this.state.firstName==="" && error!==null) ? error.nullCase : null}
@@ -86,7 +101,7 @@ export default class SignupForm extends Component{
                                             error={(this.state.lastName==="" && error!==null) ? true : false}
                                             helperText={(this.state.lastName==="" && error!==null) ? error.nullCase : null}
                                             value={this.state.lastName}
-                                            label="Last Name" />
+                                            label="Last Name*" />
                                     </Grid>       
                                 </Grid>
                             </Grid>
@@ -98,11 +113,12 @@ export default class SignupForm extends Component{
                                     variant="outlined"
                                     name="email"
                                     type="email"
-                                    error={(emailError!==null) ? true: false}
-                                    helperText={emailError}
+                                    error={(emailValidationError!==null) ? true: false}
+                                    helperText={emailValidationError}
                                     onChange={this.inputChangeHandler} 
+                                    autoComplete="false"
                                     value={this.state.email}
-                                    label="Email" />
+                                    label="Email*" />
                             </Grid>
     
                             <Grid item xs={12}>
@@ -115,7 +131,7 @@ export default class SignupForm extends Component{
                                     error={(this.state.password==="" && error!==null) ? true : false}
                                     helperText={(this.state.password==="" && error!==null) ? error.nullCase : null}
                                     type={this.state.showPassword ? "text" : "password"} 
-                                    label="Password" 
+                                    label="Password*" 
                                     InputProps={{
                                         endAdornment:<InputAdornment position="end">
                                             <IconButton onClick={this.showPasswordClick} edge="end">
@@ -135,7 +151,7 @@ export default class SignupForm extends Component{
                                     error={(this.state.password==="" && error!==null) ? true : false}
                                     helperText={(this.state.password==="" && error!==null) ? error.nullCase : null}
                                     type={this.state.showPassword ? "text" : "password"} 
-                                    label="Confirm Password" />
+                                    label="Confirm Password*" />
                             </Grid>
     
                             <Grid item xs={12}>
