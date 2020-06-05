@@ -4,6 +4,7 @@ import { Box, Grid, Typography } from '@material-ui/core';
 //Icon
 import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
+<<<<<<< HEAD
 /*Component requires an object with following key value pairs
 stateData = {
     error : Error to be displayed(string)
@@ -13,6 +14,13 @@ stateData = {
 }
 
 */
+=======
+/*Component requires
+error => Error to be displayed(string)
+width => Total width of the box in % (string)
+direction => Direction of the grid {column, row} (string) 
+iconSize => size of the SentimentVeryDissatisfiedIcon (number)*/
+>>>>>>> 5ffe119dd93c301e8c72323a5439731af5b864ee
 
 const Error = ({ stateData: { error, width, direction, iconSize } }) => {
     return (
