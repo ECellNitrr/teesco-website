@@ -136,7 +136,7 @@ function MemberTile({StateData:{
         error:"Something went wrong, refresh or try again later.",
         width:"80%",
         direction:"column",
-        iconSize:600
+        iconSize:60
     }
 
     //Returning the UI and Loading state declared above
@@ -154,7 +154,7 @@ function MemberTile({StateData:{
 
             <Grid item container justify="center" alignItems="center" direction="column">
                 {error && !loading?
-                    <Err StateData={errData} />:
+                    <Err stateData={errData} />:
                     loading?loadingTile:mapMembers
                 }
             </Grid>
