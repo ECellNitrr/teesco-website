@@ -18,10 +18,15 @@ export default class SignupForm extends Component{
     }
 
     inputChangeHandler=(event)=>{
-        console.log(event.target.value);
         this.setState({
             [event.target.name]:event.target.value
-        })
+        });
+
+        if(event.target.name==="checkedB"){
+            this.setState({
+                "checkedB":!this.state.checkedB
+            });
+        }
     }
 
     showPasswordClick=()=>{
@@ -33,6 +38,12 @@ export default class SignupForm extends Component{
     render(){
         let error=null;
         let emailError=null;
+        
+        let confirmPasswordValidationError=null;
+        let passwordValidationError=null;
+        let phNoValidationError=null;
+        let emailValidationError=null;
+
         if(this.state.error){
             error=this.state.error;
 
@@ -46,6 +57,71 @@ export default class SignupForm extends Component{
                 else{
                     emailError=null;
                 }
+            }
+        }
+
+        //Email Validation
+        let mailFormat= /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if((this.state.email===null)||(this.state.email==="")||(this.state.email.match(mailFormat))){
+            emailValidationError=emailError;
+        }
+        else{
+            emailValidationError="Enter a valid email address.";
+        }
+
+        //Phone Number Validation
+        let phoneNumberFormat= /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
+        if((this.state.phoneNumber==null)||(this.state.phoneNumber==="")){
+            if(error!==null){
+                phNoValidationError=error.nullCase;
+            }
+            else{
+                phNoValidationError=null; 
+            }
+        }
+        else{
+            if(!this.state.phoneNumber.match(phoneNumberFormat)){
+                phNoValidationError="Enter valid Phone Number.";
+            }
+            else{
+                phNoValidationError=null;
+            }
+        }
+
+        //Password Validation
+        let passwordFormat=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+        if((this.state.password===null)||(this.state.password==="")){
+            if(error!==null){
+                passwordValidationError=error.nullCase;
+            }
+            else{
+                passwordValidationError=null;
+            }
+        }
+        else{
+            if(!this.state.password.match(passwordFormat)){
+                passwordValidationError="Password must be between 6 to 20 characters which contain at least one numeric digit, one uppercase and one lowercase letter";
+            }
+            else{
+                passwordValidationError=null;
+            }
+        }
+
+        //Confirm Password
+        if((this.state.confirmPassword===null)||(this.state.confirmPassword==="")){
+            if(error!=null){
+                confirmPasswordValidationError=error.nullCase;
+            }
+            else{
+                confirmPasswordValidationError=null;
+            }
+        }
+        else{
+            if(this.state.confirmPassword!==this.state.password){
+                confirmPasswordValidationError="Passwords didn't match"
+            }
+            else{
+                confirmPasswordValidationError=null;
             }
         }
 
@@ -69,7 +145,7 @@ export default class SignupForm extends Component{
                                         <TextField
                                             fullWidth 
                                             variant="outlined"
-                                            label="First Name" 
+                                            label="First Name*" 
                                             name="firstName"
                                             error={(this.state.firstName==="" && error!==null) ? true : false}
                                             helperText={(this.state.firstName==="" && error!==null) ? error.nullCase : null}
@@ -86,7 +162,7 @@ export default class SignupForm extends Component{
                                             error={(this.state.lastName==="" && error!==null) ? true : false}
                                             helperText={(this.state.lastName==="" && error!==null) ? error.nullCase : null}
                                             value={this.state.lastName}
-                                            label="Last Name" />
+                                            label="Last Name*" />
                                     </Grid>       
                                 </Grid>
                             </Grid>
@@ -98,11 +174,12 @@ export default class SignupForm extends Component{
                                     variant="outlined"
                                     name="email"
                                     type="email"
-                                    error={(emailError!==null) ? true: false}
-                                    helperText={emailError}
+                                    error={(emailValidationError!==null) ? true: false}
+                                    helperText={emailValidationError}
                                     onChange={this.inputChangeHandler} 
+                                    autoComplete="false"
                                     value={this.state.email}
-                                    label="Email" />
+                                    label="Email*" />
                             </Grid>
     
                             <Grid item xs={12}>
@@ -112,10 +189,10 @@ export default class SignupForm extends Component{
                                     name="password"
                                     onChange={this.inputChangeHandler} 
                                     value={this.state.password}
-                                    error={(this.state.password==="" && error!==null) ? true : false}
-                                    helperText={(this.state.password==="" && error!==null) ? error.nullCase : null}
+                                    error={(passwordValidationError!==null) ? true : false}
+                                    helperText={(passwordValidationError!==null) ? passwordValidationError : null}
                                     type={this.state.showPassword ? "text" : "password"} 
-                                    label="Password" 
+                                    label="Password*" 
                                     InputProps={{
                                         endAdornment:<InputAdornment position="end">
                                             <IconButton onClick={this.showPasswordClick} edge="end">
@@ -129,13 +206,13 @@ export default class SignupForm extends Component{
                                 <TextField 
                                     fullWidth 
                                     variant="outlined"
-                                    name="password"
+                                    name="confirmPassword"
                                     onChange={this.inputChangeHandler} 
-                                    value={this.state.password}
-                                    error={(this.state.password==="" && error!==null) ? true : false}
-                                    helperText={(this.state.password==="" && error!==null) ? error.nullCase : null}
+                                    value={this.state.confirmPassword}
+                                    error={(confirmPasswordValidationError!==null) ? true : false}
+                                    helperText={(confirmPasswordValidationError!==null) ? confirmPasswordValidationError : null}
                                     type={this.state.showPassword ? "text" : "password"} 
-                                    label="Confirm Password" />
+                                    label="Confirm Password*" />
                             </Grid>
     
                             <Grid item xs={12}>
@@ -144,11 +221,31 @@ export default class SignupForm extends Component{
                                     variant="outlined"
                                     value={this.state.phoneNumber}
                                     type="tel" 
-                                    error={(this.state.phoneNumber==="" && error!==null) ? true : false}
-                                    helperText={(this.state.phoneNumber==="" && error!==null) ? error.nullCase : null}
+                                    error={(phNoValidationError!==null) ? true : false}
+                                    helperText={(phNoValidationError!==null) ? phNoValidationError : null}
                                     name="phoneNumber"
                                     onChange={this.inputChangeHandler} 
-                                    label="Phone Number" />
+                                    label="Phone Number"
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <Typography>+91</Typography>
+                                            </InputAdornment>
+                                        ),
+                                    }} />
+                            </Grid>
+    
+                            <Grid item xs={12}>
+                                
+                                <TextField 
+                                    fullWidth 
+                                    variant="outlined"
+                                    name="institution"
+                                    type="text"
+                                    onChange={this.inputChangeHandler} 
+                                    autoComplete="false"
+                                    value={this.state.institution}
+                                    label="Institution / Working at" />
                             </Grid>
 
                             <Grid item xs={12} direction="row">
@@ -167,7 +264,7 @@ export default class SignupForm extends Component{
                                     <Button 
                                         variant="contained" 
                                         color="primary"
-                                        disabled={this.state.loading} 
+                                        disabled={(this.state.loading)||(!this.state.checkedB)} 
                                     >
                                         <span>Sign Up</span>
                                         {this.state.loading ? <span style={{ paddingLeft:'15px', paddingTop:'5px', paddingBottom:'0px'}}><CircularProgress color="white" size={15} /></span> : null}

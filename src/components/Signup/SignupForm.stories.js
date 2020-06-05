@@ -15,7 +15,9 @@ const initialStateData={
     lastName:'',
     email:'',
     password:'',
+    confirmPassword:'',
     phoneNumber:'',
+    institution:'',
     checkedB:false
 }
 
@@ -23,8 +25,10 @@ const beforeRequestStateData={
     firstName:'John',
     lastName:'Doe',
     email:'johnDoe@dummyMail.com',
-    password:'SomePass',
+    password:'SomePass@12',
+    confirmPassword:'SomePass@12',
     phoneNumber:'9878942662',
+    institution:'NITRR',
     checkedB:true
 }
 
