@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Card, Typography, Divider, Box } from '@material-ui/core';
 
+//Error Component
+import Error from '../Widgets/Error/Error';
 //Loading
 import { Skeleton } from '@material-ui/lab';
 
@@ -10,7 +12,6 @@ import { Skeleton } from '@material-ui/lab';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import GroupIcon from '@material-ui/icons/Group';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 
 const styles = {
     root: {
@@ -40,10 +41,6 @@ const styles = {
         color: 'white',
         fontSize: 20,
     },
-    error_alert: {
-        width: '80%',
-        margin: '20px auto',
-    },
 };
 
 const performancePreview = ({
@@ -61,33 +58,14 @@ const performancePreview = ({
 }) => {
     //If an error occurs and the page is not yet loading
     if (error && !loading) {
-        console.log("running")
-        return (
-            <Box className={classes.error_alert}>
-                <Grid
-                    container
-                    spacing={1}
-                    direction='coloumn'
-                    justify='center'
-                    alignItems='center'
-                    className={classes.root}>
-                    <Grid item>
-                        <SentimentVeryDissatisfiedIcon
-                            color='secondary'
-                            style={{ fontSize: 100 }}
-                        />
-                    </Grid>
-                    <Grid item>
-                        <Typography align='center' variant='h6'>
-                            <Box>
-                                Something Went Wrong{' '}
-                                <strong>Please try again later</strong>
-                            </Box>
-                        </Typography>
-                    </Grid>
-                </Grid>
-            </Box>
-        );
+        const stateData = {
+            error:
+                'Something Went Wrong Please try again later or try refreshing',
+            width: '80%',
+            direction: 'column',
+            iconSize: 40,
+        };
+        return <Error stateData={stateData} />;
     }
     //Else return the normal state accordingly
     return (
