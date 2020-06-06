@@ -6,7 +6,10 @@ export default class SignupForm extends Component{
     constructor(props) {
         super(props)
         this.state = props.stateData ;
-        this.state.showPassword=false;
+        this.setState({
+            ...this.state,
+            showPassword:false
+        })
     }
 
     classes={
