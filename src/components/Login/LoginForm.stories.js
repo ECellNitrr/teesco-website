@@ -1,8 +1,7 @@
 import React from 'react'
 
-import LoginForm from './LoginForm'
+import LoginForm, { initialStateData } from './LoginForm'
 import { withKnobs, object } from '@storybook/addon-knobs/react'
-
 
 // attaches component to the story book
 export default {
@@ -14,12 +13,6 @@ export default {
 
 
 // states for stories
-export const initialStateData = {
-    email: '',
-    password: '',
-    loading: false
-}
-
 const beforeRequestStateData = {
     ...initialStateData,
     email: 'crash.test.dummy@gmail.com',
@@ -50,8 +43,8 @@ const edgeCaseErrStateData = {
 }
 
 // creating the stories
-export const initialState = () => <LoginForm stateData={object('state',initialStateData)} />
-export const errorState = () => <LoginForm stateData={object('state',errorStateData)} />
-export const loadingState = () => <LoginForm stateData={object('state',loadingStateData)} />
-export const beforeRequestState = () => <LoginForm stateData={object('state',beforeRequestStateData)} />
-export const edgeCaseErrState = () => <LoginForm stateData={object('state',edgeCaseErrStateData)} />
+export const initialState = () => <LoginForm stateData={object('state', initialStateData)} />
+export const errorState = () => <LoginForm stateData={object('state', errorStateData)} />
+export const loadingState = () => <LoginForm stateData={object('state', loadingStateData)} />
+export const beforeRequestState = () => <LoginForm stateData={object('state', beforeRequestStateData)} />
+export const edgeCaseErrState = () => <LoginForm stateData={object('state', edgeCaseErrStateData)} />

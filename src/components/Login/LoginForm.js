@@ -6,8 +6,6 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Alert from "@material-ui/lab/Alert";
 
-import { initialStateData } from "./LoginForm.stories";
-
 const classes = {
   form_input: {
     margin: "10px 0px",
@@ -16,6 +14,12 @@ const classes = {
     marginRight: "10px",
   },
 };
+
+const initialStateData = {
+  email: '',
+  password: '',
+  loading: false
+}
 
 export default class LoginForm extends Component {
   constructor(props) {

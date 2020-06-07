@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
-import success from './reducers/SuccessReducer';
+import AuthReducer from './reducers/AuthReducer'
 
 export default combineReducers({
-    success
+    AuthReducer
 })

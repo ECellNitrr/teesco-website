@@ -1,9 +1,10 @@
 import React from 'react';
+import LoginPage from './pages/Auth/Login'
 
 function App() {
   return (
     <div className="App">
-      Teesco
+      <LoginPage/>
     </div>
   );
 }
