@@ -8,3 +8,5 @@ export const findByTestAtrr = (component,attr)=>{
 export const checkProps = (component,expexctedProps)=>{
     const propsErr = checkPropTypes(component.propTypes,expexctedProps,'props',component.name);
 }
+
+export const baseURL = "http://159.65.158.103:5555/";
