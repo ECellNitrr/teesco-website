@@ -1,11 +1,16 @@
 import React, { Component } from "react";
-
+// redux
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { loginUser } from '../../actions/AuthActions'
+// ui
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Alert from "@material-ui/lab/Alert";
 
+// styles
 const classes = {
   form_input: {
     margin: "10px 0px",
@@ -15,13 +20,14 @@ const classes = {
   },
 };
 
+// initial state
 const initialStateData = {
   email: '',
   password: '',
   loading: false
 }
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
   constructor(props) {
     super(props);
     // initial state comes from storybook else provide the default initial state
@@ -66,7 +72,7 @@ export default class LoginForm extends Component {
             value={this.state.email}
             disabled={this.state.loading}
             onChange={this.inputChangeHandler}
-            error={email_err}
+            error={!(email_err === null)}
             helperText={email_err}
             variant="outlined"
           />
@@ -80,7 +86,7 @@ export default class LoginForm extends Component {
             disabled={this.state.loading}
             value={this.state.password}
             onChange={this.inputChangeHandler}
-            error={password_err}
+            error={!(password_err === null)}
             helperText={password_err}
             variant="outlined"
           />
@@ -91,7 +97,7 @@ export default class LoginForm extends Component {
             variant="contained"
             style={classes.form_input}
             color="primary"
-            onClick={this.props.loginUserHandler}
+            onClick={this.props.loginUser}
           >
             <span style={this.state.loading ? classes.login_button_text : {}}>
               Login
@@ -103,3 +109,13 @@ export default class LoginForm extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  ...state.auth
+})
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  loginUser
+},dispatch)
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)
