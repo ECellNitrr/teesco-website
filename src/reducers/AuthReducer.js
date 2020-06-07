@@ -2,7 +2,7 @@ import { LOGIN_USER } from '../ActionTypes'
 
 
 const initialState = {
-    token: null
+    token: "token redux"
 }
 
 export default (state = initialState, action) => {

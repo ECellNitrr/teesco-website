@@ -91,6 +91,7 @@ export default class LoginForm extends Component {
             variant="contained"
             style={classes.form_input}
             color="primary"
+            onClick={this.props.loginUserHandler}
           >
             <span style={this.state.loading ? classes.login_button_text : {}}>
               Login
