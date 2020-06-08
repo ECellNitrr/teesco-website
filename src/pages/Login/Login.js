@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Alert from '@material-ui/lab/Alert';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -14,6 +13,7 @@ import Container from '@material-ui/core/Container';
 import { useUserDispatch, loginUser } from "../../actions/AuthActions";
 import {Link} from 'react-router-dom';
 
+// design to be changed later on
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -37,12 +37,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Login(props) {
   const classes = useStyles();
 
-  var userDispatch = useUserDispatch();
-  var [isLoading, setIsLoading] = useState(false);
-  var [error, setError] = useState(null);
-  var [email, setEmail] = useState("");
-  var [password, setPassword] = useState("");
-  var [validation,setValidation] =useState({});
+  var userDispatch = useUserDispatch(); 
+  var [isLoading, setIsLoading] = useState(false); // for the loader of submit button and disbaling the input fields
+  var [error, setError] = useState(null); // for alerting the error messages
+  var [email, setEmail] = useState(""); // email value
+  var [password, setPassword] = useState(""); // password value
+  var [validation,setValidation] =useState({}); // for the list fo string provided by the backend
 
   let email_err=""
   let password_err=""

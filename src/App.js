@@ -8,7 +8,7 @@ import Register from './pages/Register/Register';
 import { useUserState } from "./actions/AuthActions";
 
 export default function App() {
-  var { isAuthenticated } = useUserState();
+  var { isAuthenticated } = useUserState(); // bool value which tells whether the user is registered or not
 
   return (
     <HashRouter>
