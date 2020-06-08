@@ -13,10 +13,9 @@ export default function App() {
   return (
     <HashRouter>
       <Switch>
-        {/* for the landing page of the website */}
         <Route exact path="/" render={() => <Redirect to="/home" />} />
         <Route exact path="/home" component={Home} />
-        {/* for the main app */}
+        {/* for the landing page of main app */}
         <Route exact path="/app" render={() => <Redirect to="/app/dashboard" />} />
         {/* considering entire app and all of its functionalities will be private and only login register and landing page will be public  */}
         <PrivateRoute path="/app" component={Layout} />
