@@ -61,54 +61,57 @@ export class LoginForm extends Component {
     }
 
     return (
-      <Grid container direction="column" alignItems="center">
-        {this.props.specialError ? (
-          <Alert severity="error">{this.props.specialError}</Alert>
-        ) : null}
+      <form>
+        <Grid container direction="column" alignItems="center">
+          {this.props.specialError ? (
+            <Alert severity="error">{this.props.specialError}</Alert>
+          ) : null}
 
-        <Grid item style={classes.form_input}>
-          <TextField
-            id="login-form-email"
-            label="Email"
-            type="email"
-            name="email"
-            value={this.state.email}
-            disabled={this.state.loading}
-            onChange={this.inputChangeHandler}
-            error={email_err ? true : false}
-            helperText={email_err}
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item>
-          <TextField
-            id="login-form-password"
-            label="Password"
-            type="password"
-            name="password"
-            disabled={this.state.loading}
-            value={this.state.password}
-            onChange={this.inputChangeHandler}
-            error={password_err ? true : false}
-            helperText={password_err}
-            variant="outlined"
-          />
-        </Grid>
-        <Grid item>
-          <Button
-            disabled={this.props.loading}
-            variant="contained"
-            style={classes.form_input}
-            color="primary"
-            onClick={this.userLoginHandler}
-          >
-            <span style={this.state.loading ? classes.login_button_text : {}}>
-              Login
+          <Grid item style={classes.form_input}>
+            <TextField
+              id="login-form-email"
+              label="Email"
+              type="email"
+              name="email"
+              value={this.state.email}
+              disabled={this.state.loading}
+              onChange={this.inputChangeHandler}
+              error={email_err ? true : false}
+              helperText={email_err}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item>
+            <TextField
+              id="login-form-password"
+              label="Password"
+              type="password"
+              name="password"
+              disabled={this.state.loading}
+              value={this.state.password}
+              onChange={this.inputChangeHandler}
+              error={password_err ? true : false}
+              helperText={password_err}
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item>
+            <Button
+              type='submit'
+              disabled={this.props.loading}
+              variant="contained"
+              style={classes.form_input}
+              color="primary"
+              onClick={this.userLoginHandler}
+            >
+              <span style={this.state.loading ? classes.login_button_text : {}}>
+                Login
             </span>
-            {this.props.loading ? <CircularProgress size={20} /> : null}
-          </Button>
+              {this.props.loading ? <CircularProgress size={20} /> : null}
+            </Button>
+          </Grid>
         </Grid>
-      </Grid>
+      </form>
     );
   }
 }

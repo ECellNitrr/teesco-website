@@ -1,5 +1,5 @@
 import ApiClient from '../utils/ApiClient'
-import customHistory from '../utils/CustomHistory'
+import CustomHistory from '../utils/CustomHistory'
 import { makeErrorDict } from '../utils/APIUtils'
 
 
@@ -55,7 +55,7 @@ export const loginUser = (email, password) => dispatch => {
         type: LOGIN_FORM_SET_LOADING,
     })
 
-    ApiClient.post('/users/login/', {
+    ApiClient().post('/users/login/', {
         email, password
     })
         .then(response => {
@@ -63,7 +63,7 @@ export const loginUser = (email, password) => dispatch => {
                 type: LOGIN_FORM_LOGIN_SUCCESS,
                 payload: response.data['token']
             })
-            customHistory.push('/searchOrgs')
+            CustomHistory.push('/searchOrgs')
         }).catch(err => {
             const { statusCode, errorDict } = makeErrorDict(err)
 
@@ -97,5 +97,5 @@ export const logoutUser = () => dispatch => {
     dispatch({
         type: LOGOUT_USER
     })
-    customHistory.push('/login/')
+    CustomHistory.push('/login/')
 }
