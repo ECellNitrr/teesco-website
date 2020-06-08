@@ -1,5 +1,6 @@
 import ApiClient from '../utils/ApiClient'
 import CustomHistory from '../utils/CustomHistory'
+import { storeToken, eraseToken, getToken } from '../utils/Token'
 import { makeErrorDict } from '../utils/APIUtils'
 
 
@@ -31,16 +32,12 @@ export default (state = initialState, action) => {
                 ...initialState,
                 loading: true
             }
-        case LOGIN_FORM_LOGIN_SUCCESS:
-            return {
-                ...initialState,
-                token: action.payload
-            }
         case LOGIN_USER_SPECIAL_ERROR:
             return {
                 ...initialState,
                 specialError: action.payload
             }
+        case LOGIN_FORM_LOGIN_SUCCESS:
         case LOGOUT_USER:
             return initialState
         default:
@@ -59,9 +56,9 @@ export const loginUser = (email, password) => dispatch => {
         email, password
     })
         .then(response => {
+            storeToken(response.data['token'])
             dispatch({
                 type: LOGIN_FORM_LOGIN_SUCCESS,
-                payload: response.data['token']
             })
             CustomHistory.push('/searchOrgs')
         }).catch(err => {
@@ -94,6 +91,7 @@ export const loginUser = (email, password) => dispatch => {
 }
 
 export const logoutUser = () => dispatch => {
+    eraseToken()
     dispatch({
         type: LOGOUT_USER
     })
