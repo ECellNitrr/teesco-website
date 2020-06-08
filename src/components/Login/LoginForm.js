@@ -27,7 +27,7 @@ const initialStateData = {
   loading: false
 }
 
-class LoginForm extends Component {
+export class LoginForm extends Component {
   constructor(props) {
     super(props);
     // initial state comes from storybook else provide the default initial state
@@ -44,17 +44,18 @@ class LoginForm extends Component {
     });
   };
 
+  userLoginHandler = () => {
+    this.props.loginUser(this.state.email, this.state.password)
+  }
+
+
   render() {
     let email_err = "";
     let password_err = "";
 
-    if (this.state.error) {
-      const err = this.state.error;
-
-      // as backend provided errors as list of string for each field
-      // we can join then with a ampersand for the case of multiple errors per field
-      email_err = err["email"] && err["email"].join(" & ");
-      password_err = err["password"] && err["password"].join(" & ");
+    if (this.props.error) {
+      email_err = this.props.error['email'];
+      password_err = this.props.error['password'];
     }
 
     return (
@@ -72,7 +73,7 @@ class LoginForm extends Component {
             value={this.state.email}
             disabled={this.state.loading}
             onChange={this.inputChangeHandler}
-            error={!(email_err === null)}
+            error={email_err ? true : false}
             helperText={email_err}
             variant="outlined"
           />
@@ -86,7 +87,7 @@ class LoginForm extends Component {
             disabled={this.state.loading}
             value={this.state.password}
             onChange={this.inputChangeHandler}
-            error={!(password_err === null)}
+            error={password_err ? true : false}
             helperText={password_err}
             variant="outlined"
           />
@@ -97,7 +98,7 @@ class LoginForm extends Component {
             variant="contained"
             style={classes.form_input}
             color="primary"
-            onClick={this.props.loginUser}
+            onClick={this.userLoginHandler}
           >
             <span style={this.state.loading ? classes.login_button_text : {}}>
               Login
@@ -116,6 +117,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   loginUser
-},dispatch)
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

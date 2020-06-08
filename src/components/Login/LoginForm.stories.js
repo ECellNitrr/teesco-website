@@ -1,7 +1,10 @@
 import React from 'react'
+import { Provider } from 'react-redux'
+import { store } from '../../createStore'
 
-import LoginForm, { initialStateData } from './LoginForm'
+import { initialStateData, LoginForm } from './LoginForm'
 import { withKnobs, object } from '@storybook/addon-knobs/react'
+
 
 // attaches component to the story book
 export default {
@@ -22,12 +25,8 @@ const beforeRequestStateData = {
 const errorStateData = {
     ...initialStateData,
     error: {
-        "email": [
-            "This field is required."
-        ],
-        "password": [
-            "This field is required."
-        ]
+        "email": "This field is required.",
+        "password": "This field is required."
     },
 }
 

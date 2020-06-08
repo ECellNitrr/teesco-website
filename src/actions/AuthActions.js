@@ -1,28 +1,30 @@
 import ApiClient from '../ApiClient'
+import { store } from '../createStore'
+import { push } from 'react-router-redux'
 
-import { LOGIN_USER_SUCCESS, LOGIN_USER_FAILURE } from '../ActionTypes'
+import { LOGIN_USER_INVALID_CREDENTIALS, LOGIN_USER_FAILURE } from '../ActionTypes'
 
-export const loginUser = () => dispatch => {
-    ApiClient.post('/users/login/')
+export const loginUser = (email, password) => dispatch => {
+    ApiClient.post('/users/login/', {
+        email, password
+    })
         .then(response => {
-            console.log(response)
-            dispatch({
-                type: LOGIN_USER_SUCCESS,
-                payload: { token: "awesome" }
-            })
+            console.log(response.data)
+            store.dispatch(push('/home'))
+
         }).catch(err => {
             const response = err.response.data;
             let errors = {}
 
+
             // convert err to required format
-            for(let key in response){
-                errors[key]=response[key].join('')
+            for (let key in response) {
+                errors[key] = response[key].join('')
             }
-            console.log(errors)
-            
+
             dispatch({
                 type: LOGIN_USER_FAILURE,
-                payload: { token: "eerrr" }
+                payload: errors
             })
         })
 }
