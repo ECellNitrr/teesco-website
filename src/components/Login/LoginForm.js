@@ -1,14 +1,17 @@
 import React, { Component } from "react";
+
 // redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { loginUser } from '../../actions/AuthActions'
+
 // ui
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Alert from "@material-ui/lab/Alert";
+
 
 // styles
 const classes = {
@@ -23,8 +26,7 @@ const classes = {
 // initial state
 const initialStateData = {
   email: '',
-  password: '',
-  loading: false
+  password: ''
 }
 
 export class LoginForm extends Component {
@@ -60,8 +62,8 @@ export class LoginForm extends Component {
 
     return (
       <Grid container direction="column" alignItems="center">
-        {this.state.edgeCaseErr ? (
-          <Alert severity="error">{this.state.edgeCaseErr}</Alert>
+        {this.props.specialError ? (
+          <Alert severity="error">{this.props.specialError}</Alert>
         ) : null}
 
         <Grid item style={classes.form_input}>
@@ -94,7 +96,7 @@ export class LoginForm extends Component {
         </Grid>
         <Grid item>
           <Button
-            disabled={this.state.loading}
+            disabled={this.props.loading}
             variant="contained"
             style={classes.form_input}
             color="primary"
@@ -103,7 +105,7 @@ export class LoginForm extends Component {
             <span style={this.state.loading ? classes.login_button_text : {}}>
               Login
             </span>
-            {this.state.loading ? <CircularProgress size={20} /> : null}
+            {this.props.loading ? <CircularProgress size={20} /> : null}
           </Button>
         </Grid>
       </Grid>
@@ -116,7 +118,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  loginUser
+  loginUser,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

@@ -4,17 +4,19 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { BrowserRouter } from 'react-router-dom'
+import { Router } from 'react-router-dom'
+import customHistory from './utils/CustomHistory'
 
 import { Provider } from 'react-redux';
-import { store } from './createStore';
+import { store } from './utils/CreateStore';
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <Router history={customHistory} >
         <App />
-      </BrowserRouter>
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

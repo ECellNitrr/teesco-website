@@ -17,4 +17,48 @@ function App() {
   );
 }
 
+// function PrivateRoute({ component, ...rest }) {
+//   return (
+//     <Route
+//       {...rest}
+//       render={props =>
+//         isAuthenticated ? (
+//           React.createElement(component, props)
+//         ) : (
+//             <Redirect
+//               to={{
+//                 pathname: "/login",
+//                 state: {
+//                   from: props.location,
+//                 },
+//               }}
+//             />
+//           )
+//       }
+//     />
+//   );
+// }
+
+// In case of user is logged in(token found) then the Public route will not let the user enter login or signup page 
+// function PublicRoute({ component, ...rest }) {
+//   return (
+//     <Route
+//       {...rest}
+//       render={props =>
+//         isAuthenticated ? (
+//           <Redirect
+//             to={{
+//               pathname: "/app/dashboard",
+//             }}
+//           />
+//         ) : (
+//             React.createElement(component, props)
+//           )
+//       }
+//     />
+//   );
+// }
+
+
+
 export default App;

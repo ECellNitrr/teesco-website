@@ -1,30 +1,84 @@
-import ApiClient from '../ApiClient'
-import { store } from '../createStore'
-import { push } from 'react-router-redux'
+import ApiClient from '../utils/ApiClient'
+import customHistory from '../utils/CustomHistory'
+import { makeErrorDict } from '../utils/APIUtils'
 
-import { LOGIN_USER_INVALID_CREDENTIALS, LOGIN_USER_FAILURE } from '../ActionTypes'
 
+// actions types
+export const LOGIN_USER_SPECIAL_ERROR = 'LOGIN_USER_SPECIAL_ERROR'
+export const LOGIN_USER_INPUT_ERROR = 'LOGIN_USER_INPUT_ERROR'
+export const LOGIN_FORM_SET_LOADING = 'LOGIN_FORM_SET_LOADING'
+export const LOGIN_FORM_STOP_LOADING = 'LOGIN_FORM_STOP_LOADING'
+
+
+// reducer
+const initialState = {
+    loading: false,
+    error: null,
+    specialError: null
+}
+
+export default (state = initialState, action) => {
+    switch (action.type) {
+
+        case LOGIN_USER_INPUT_ERROR:
+            return {
+                ...initialState,
+                error: action.payload,
+            }
+        case LOGIN_FORM_SET_LOADING:
+            return {
+                initialState,
+                loading: true
+            }
+        case LOGIN_FORM_STOP_LOADING:
+            return initialState
+        case LOGIN_USER_SPECIAL_ERROR:
+            return {
+                ...initialState,
+                specialError: action.payload
+            }
+        default:
+            return state
+    }
+}
+
+
+// actions
 export const loginUser = (email, password) => dispatch => {
+    dispatch({
+        type: LOGIN_FORM_SET_LOADING,
+    })
+
     ApiClient.post('/users/login/', {
         email, password
     })
         .then(response => {
-            console.log(response.data)
-            store.dispatch(push('/home'))
-
+            customHistory.push('/home')
+            dispatch({ type: LOGIN_FORM_STOP_LOADING })
         }).catch(err => {
-            const response = err.response.data;
-            let errors = {}
+            const { statusCode, errorDict } = makeErrorDict(err)
 
-
-            // convert err to required format
-            for (let key in response) {
-                errors[key] = response[key].join('')
+            switch (statusCode) {
+                case 421:
+                    alert("Please check your internet connection")
+                    dispatch({
+                        type: LOGIN_FORM_STOP_LOADING,
+                    })
+                    break
+                case 401:
+                case 404:
+                    dispatch({
+                        type: LOGIN_USER_SPECIAL_ERROR,
+                        payload: errorDict['detail']
+                    })
+                    break
+                case 400:
+                    dispatch({
+                        type: LOGIN_USER_INPUT_ERROR,
+                        payload: errorDict
+                    })
+                    break
             }
 
-            dispatch({
-                type: LOGIN_USER_FAILURE,
-                payload: errors
-            })
         })
 }
