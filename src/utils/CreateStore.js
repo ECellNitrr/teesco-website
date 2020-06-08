@@ -1,7 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import ReduxThunk from 'redux-thunk'
-import { routerMiddleware } from 'react-router-redux'
-import { browserHistory } from 'react-router-dom'
+import { persistStore } from 'redux-persist'
+
 
 // reducers
 import RootReducer from './RootReducer';
@@ -14,6 +14,4 @@ export const store = createStore(
     RootReducer,
     composeEnhancers(applyMiddleware(ReduxThunk))
 )
-
-// // Create an enhanced history that syncs navigation events with the store
-// export const enhancedHistory = syncHistoryWithStore(browserHistory, store)
+export const persistor = persistStore(store)

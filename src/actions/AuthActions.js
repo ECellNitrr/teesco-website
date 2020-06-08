@@ -7,7 +7,8 @@ import { makeErrorDict } from '../utils/APIUtils'
 export const LOGIN_USER_SPECIAL_ERROR = 'LOGIN_USER_SPECIAL_ERROR'
 export const LOGIN_USER_INPUT_ERROR = 'LOGIN_USER_INPUT_ERROR'
 export const LOGIN_FORM_SET_LOADING = 'LOGIN_FORM_SET_LOADING'
-export const LOGIN_FORM_STOP_LOADING = 'LOGIN_FORM_STOP_LOADING'
+export const LOGIN_FORM_LOGIN_SUCCESS = 'LOGIN_FORM_LOGIN_SUCCESS'
+export const LOGOUT_USER = 'LOGOUT_USER'
 
 
 // reducer
@@ -27,16 +28,21 @@ export default (state = initialState, action) => {
             }
         case LOGIN_FORM_SET_LOADING:
             return {
-                initialState,
+                ...initialState,
                 loading: true
             }
-        case LOGIN_FORM_STOP_LOADING:
-            return initialState
+        case LOGIN_FORM_LOGIN_SUCCESS:
+            return {
+                ...initialState,
+                token: action.payload
+            }
         case LOGIN_USER_SPECIAL_ERROR:
             return {
                 ...initialState,
                 specialError: action.payload
             }
+        case LOGOUT_USER:
+            return initialState
         default:
             return state
     }
@@ -53,8 +59,11 @@ export const loginUser = (email, password) => dispatch => {
         email, password
     })
         .then(response => {
-            customHistory.push('/home')
-            dispatch({ type: LOGIN_FORM_STOP_LOADING })
+            dispatch({
+                type: LOGIN_FORM_LOGIN_SUCCESS,
+                payload: response.data['token']
+            })
+            customHistory.push('/searchOrgs')
         }).catch(err => {
             const { statusCode, errorDict } = makeErrorDict(err)
 
@@ -62,7 +71,7 @@ export const loginUser = (email, password) => dispatch => {
                 case 421:
                     alert("Please check your internet connection")
                     dispatch({
-                        type: LOGIN_FORM_STOP_LOADING,
+                        type: LOGIN_FORM_LOGIN_SUCCESS,
                     })
                     break
                 case 401:
@@ -73,6 +82,7 @@ export const loginUser = (email, password) => dispatch => {
                     })
                     break
                 case 400:
+                default:
                     dispatch({
                         type: LOGIN_USER_INPUT_ERROR,
                         payload: errorDict
@@ -81,4 +91,11 @@ export const loginUser = (email, password) => dispatch => {
             }
 
         })
+}
+
+export const logoutUser = () => dispatch => {
+    dispatch({
+        type: LOGOUT_USER
+    })
+    customHistory.push('/login/')
 }
