@@ -51,24 +51,28 @@ function useUserDispatch() {
 
 export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
-async function loginUser(dispatch, login, password, history, setIsLoading, setError) {
+function loginUser(dispatch, login, password, history, setIsLoading, setError, setValidation) {
   setError(false);
   setIsLoading(true);
 
-  try{
-    const response = await axios.post(`${baseURL}users/login/`, { "email": login, "password": password });
-    console.log(response.data.token);
-    localStorage.setItem('id_token', response.data.token)
-    setError(null)
-    setIsLoading(false)
-    dispatch({ type: 'LOGIN_SUCCESS' })
-    history.push('/app/dashboard')
-  }
-  catch {
-    dispatch({ type: "LOGIN_FAILURE" });
-    setError(true);
-    setIsLoading(false);
-  }
+  axios.post(`${baseURL}api/users/login/`, {"email":login,"password":password })
+  .then(res => {
+    if(res.status===202) {
+      localStorage.setItem('id_token', res.data.token)
+      setError(null)
+      setValidation(null)
+      setIsLoading(false)
+      dispatch({ type: 'LOGIN_SUCCESS' })
+      history.push('/app/dashboard')
+    }
+  })
+  .catch(err => {
+    console.log(err.response);
+      dispatch({ type: "LOGIN_FAILURE" });
+      setError(err.response.data.message);
+      setIsLoading(false);
+      setValidation(err.response.data)
+  })
 
 }
 

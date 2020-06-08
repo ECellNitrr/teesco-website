@@ -2,12 +2,12 @@
 import React from 'react'
 import { useUserDispatch, signOut } from "../../actions/AuthActions";
 
-function Header() {
+function Header(props) {
     var userDispatch = useUserDispatch();
 
     return (
         <div>
-            <a class="dropdown-item" onClick={() => signOut(userDispatch, props.history)} style={{cursor:"default"}}><i class="fa fa-sign-out"/> Logout</a>            
+            <button onClick={() => signOut(userDispatch, props.history)}> Logout</button>            
         </div>
     )
 }

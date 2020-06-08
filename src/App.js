@@ -4,7 +4,7 @@ import Home from "./pages/Home/Home"
 import Error from "./pages/Error/Error"
 import Login from "./pages/Login/Login";
 import Layout from "./layout/layout"
-
+import Register from './pages/Register/Register';
 import { useUserState } from "./actions/AuthActions";
 
 export default function App() {
@@ -20,8 +20,8 @@ export default function App() {
         <Route exact path="/app" render={() => <Redirect to="/app/dashboard" />} />
         {/* considering entire app and all of its functionalities will be private and only login register and landing page will be public  */}
         <PrivateRoute path="/app" component={Layout} />
-        <PublicRoute path="/login" component={Login} />
-        <PublicRoute path="/register" component={Register} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/register" component={Register} />
         <Route component={Error} />
       </Switch>
     </HashRouter>
@@ -50,23 +50,4 @@ export default function App() {
     );
   }
 
-// In case of user is logged in(token found) then the Public route will redirect the user to app dashboard
-  function PublicRoute({ component, ...rest }) {
-    return (
-      <Route
-        {...rest}
-        render={props =>
-          isAuthenticated ? (
-            <Redirect
-              to={{
-                pathname: "/home",
-              }}
-            />
-          ) : (
-            React.createElement(component, props)
-          )
-        }
-      />
-    );
-  }
 }
