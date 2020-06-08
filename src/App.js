@@ -19,8 +19,8 @@ export default function App() {
         <Route exact path="/app" render={() => <Redirect to="/app/dashboard" />} />
         {/* considering entire app and all of its functionalities will be private and only login register and landing page will be public  */}
         <PrivateRoute path="/app" component={Layout} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
+        <PublicRoute exact path="/login" component={Login} />
+        <PublicRoute exact path="/register" component={Register} />
         <Route component={Error} />
       </Switch>
     </HashRouter>
@@ -43,6 +43,26 @@ export default function App() {
                 },
               }}
             />
+          )
+        }
+      />
+    );
+  }
+
+// In case of user is logged in(token found) then the Public route will not let the user enter login or signup page 
+  function PublicRoute({ component, ...rest }) {
+    return (
+      <Route
+        {...rest}
+        render={props =>
+          isAuthenticated ? (
+            <Redirect
+              to={{
+                pathname: "/app/dashboard",
+              }}
+            />
+          ) : (
+            React.createElement(component, props)
           )
         }
       />
