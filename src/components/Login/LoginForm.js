@@ -3,7 +3,7 @@ import React, { Component } from "react";
 // redux
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { loginUser } from '../../actions/AuthActions'
+import { loginUser } from '../../actions/LoginActions'
 
 // ui
 import TextField from "@material-ui/core/TextField";
@@ -46,7 +46,8 @@ export class LoginForm extends Component {
     });
   };
 
-  userLoginHandler = () => {
+  userLoginHandler = event => {
+    event.preventDefault()
     this.props.loginUser(this.state.email, this.state.password)
   }
 
@@ -117,7 +118,7 @@ export class LoginForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ...state.auth
+  ...state.login
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({

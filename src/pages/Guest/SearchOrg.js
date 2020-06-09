@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { logoutUser } from '../../actions/AuthActions'
+import { logoutUser } from '../../actions/LoginActions'
 import { bindActionCreators } from 'redux'
 import ApiClient from '../../utils/ApiClient'
 

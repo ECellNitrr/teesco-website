@@ -1,6 +1,6 @@
 import ApiClient from '../utils/ApiClient'
 import CustomHistory from '../utils/CustomHistory'
-import { storeToken, eraseToken, getToken } from '../utils/Token'
+import { storeToken, eraseToken } from '../utils/Token'
 import { makeErrorDict } from '../utils/APIUtils'
 
 
