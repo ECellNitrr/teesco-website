@@ -1,6 +1,10 @@
 * {
   font-weight: bold !important;
 }
+a {
+  text-decoration: none;
+  color: #000;
+}
 .card {
   height: 175px;
   display: flex;
@@ -80,9 +84,14 @@
 .boxes {
   width: 130px;
   height: 130px;
-  border: 2px solid red;
+
+  border-radius: 5px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+
+.boxes:hover {
+  background-color: #c6ceff;
 }

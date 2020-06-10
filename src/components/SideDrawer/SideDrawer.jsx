@@ -263,8 +263,10 @@ export default function PersistentDrawerLeft(props) {
                   <div className="box">
                     {orgs.map((el) => (
                       <div className="boxes">
-                        <img src={el.logo} width="55px" />
-                        {el.name}
+                        <a href="#">
+                          <img src={el.logo} width="86px" />
+                          <Typography>{el.name}</Typography>
+                        </a>
                       </div>
                     ))}
                   </div>
