@@ -1,18 +1,29 @@
 import React, { Component, Fragment } from 'react';
-
-import { Grid, TextField, Card, Typography } from '@material-ui/core';
+//Material UI imports
+import {
+	Grid,
+	TextField,
+	Card,
+	Typography,
+	InputAdornment,
+	IconButton,
+	Box,
+} from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
+import SearchIcon from '@material-ui/icons/Search';
 
+//Error Component
 import Error from '../Widgets/Error/Error';
 
 import { initialStateData } from './searchOrg.stories';
 
+//Basic styles
 const classes = {
 	root: {
 		margin: '10px 0px',
 	},
 	search_bar: {
-		width: '300px',
+		width: '400px',
 	},
 	card: {
 		margin: '10px',
@@ -20,7 +31,6 @@ const classes = {
 		padding: '10px',
 	},
 	circle: {
-		borderRadius: '30px 30px 30px 30px',
 		width: '50px',
 		height: '50px',
 	},
@@ -37,14 +47,19 @@ export default class SearchOrg extends Component {
 		this.setState({ [e.target.name]: e.target.value });
 	};
 
+	//Initial State UI which renders organisation or search results
 	initialStateUi = (organisations) => {
 		return (
 			<Fragment>
 				{organisations.map((org) => (
-					<Card style={classes.card}>
+					<Card style={classes.card} key={org.org_id}>
 						<Grid container direction='row' spacing={2}>
 							<Grid item>
-								<div style={classes.circle}></div>
+								<Box
+									bgcolor='text.disabled'
+									borderRadius='50%'
+									style={classes.circle}
+								/>
 							</Grid>
 							<Grid item>
 								<Grid container direction='column'>
@@ -65,6 +80,7 @@ export default class SearchOrg extends Component {
 		);
 	};
 
+	//Loading State UI with skeleton
 	loadingStateUi = () => {
 		return Array(6)
 			.fill(null)
@@ -80,22 +96,40 @@ export default class SearchOrg extends Component {
 
 	render() {
 		const { loading, organisations, search } = this.state;
-
+		//If no organisations was passed then render error component
 		if (organisations.length === 0 && !loading) {
-			return <Error />;
+			const stateData = {
+				error: 'No Organisation to display',
+				width: '50%',
+				direction: 'column',
+				iconSize: 40,
+			};
+			return <Error stateData={stateData} />;
 		}
 
 		return (
 			<Grid container direction='column' alignItems='center'>
+				<Grid item>
+					<Typography variant='h3'>Join an Organisation</Typography>
+				</Grid>
 				<Grid item style={classes.root}>
 					<TextField
-						label='Search'
+						label='Search Organisation'
 						type='text'
-						name='search'
+						name='search_bar'
 						onChange={this.inputChangeHandler}
 						value={this.state.search_value}
 						style={classes.search_bar}
 						variant='outlined'
+						InputProps={{
+							startAdornment: (
+								<InputAdornment>
+									<IconButton>
+										<SearchIcon />
+									</IconButton>
+								</InputAdornment>
+							),
+						}}
 					/>
 				</Grid>
 				<Grid item style={classes.root}>
