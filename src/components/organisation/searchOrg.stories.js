@@ -68,16 +68,16 @@ export const errorStateData = {
 export const searchStateData = {
 	...initialStateData,
 	search: [
-		// {
-		// 	org_id: 2,
-		// 	org_name: 'E-Cell NIT Raipur',
-		// 	org_desc: 'Leader Beyond Borders',
-		// },
-		// {
-		// 	org_id: 3,
-		// 	org_name: 'E-Cell NIT Raipur',
-		// 	org_desc: 'Leader Beyond Borders',
-		// },
+		{
+			org_id: 2,
+			org_name: 'E-Cell NIT Raipur',
+			org_desc: 'Leader Beyond Borders',
+		},
+		{
+			org_id: 3,
+			org_name: 'E-Cell NIT Raipur',
+			org_desc: 'Leader Beyond Borders',
+		},
 	],
 	search_value: 'E-Cell',
 	search_flag: true,
