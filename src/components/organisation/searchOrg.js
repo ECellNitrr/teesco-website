@@ -25,7 +25,7 @@ const classes = {
 		margin: '10px 0px',
 	},
 	search_bar: {
-		width: '400px',
+		width: '300px',
 	},
 	card: {
 		margin: '10px',
@@ -138,37 +138,44 @@ export default class SearchOrg extends Component {
 				</Grid>
 				{/*Search Bar*/}
 				<Grid item style={classes.root}>
-					<TextField
-						label='Search Organisation'
-						type='text'
-						name='search_value'
-						onChange={this.inputChangeHandler}
-						value={search_value}
-						style={classes.search_bar}
-						variant='outlined'
-						/*Search Icon*/
-						InputProps={{
-							startAdornment: (
-								<InputAdornment>
-									<IconButton>
-										<SearchIcon />
-									</IconButton>
-								</InputAdornment>
-							),
-						}}
-					/>
+					<Grid
+						container
+						direction='row'
+						alignItems='center'
+						spacing={2}>
+						<Grid item>
+							<TextField
+								label='Search Organisation'
+								type='text'
+								name='search_value'
+								onChange={this.inputChangeHandler}
+								value={search_value}
+								style={classes.search_bar}
+								variant='outlined'
+								/*Search Icon*/
+								InputProps={{
+									startAdornment: (
+										<InputAdornment>
+											<IconButton>
+												<SearchIcon />
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
+							/>
+						</Grid>
+						{/*Button*/}
+						<Grid item>
+							<Button
+								variant='contained'
+								color='primary'
+								size='small'
+								disabled={loading}>
+								{search_flag ? <p>Clear</p> : <p>Search</p>}
+							</Button>
+						</Grid>
+					</Grid>
 				</Grid>
-				{/*Button*/}
-				<Grid item>
-					<Button
-						variant='contained'
-						color='primary'
-						size='small'
-						disabled={loading}>
-						{search_flag ? <p>Clear</p> : <p>Search</p>}
-					</Button>
-				</Grid>
-
 				{/*Rendering the states => if loading then return loadingState else 
 				if search flag is set to true then if search is returned empty 
 				then return error component else render the search results if 
