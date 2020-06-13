@@ -15,7 +15,7 @@ import SearchIcon from '@material-ui/icons/Search';
 
 //Error Component
 import Error from '../Widgets/Error/Error';
-
+//Initial State Data from stories
 import { initialStateData } from './searchOrg.stories';
 
 //Basic styles
@@ -36,7 +36,7 @@ const classes = {
 		height: '50px',
 	},
 };
-
+//state Data for Error component
 const stateData = {
 	error: 'No Organisations Found',
 	width: '70%',
@@ -50,7 +50,7 @@ export default class SearchOrg extends Component {
 		// initial state comes from storybook else provide the default initial state
 		this.state = props.stateData ? props.stateData : initialStateData;
 	}
-
+	//Input Handler
 	inputChangeHandler = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
@@ -78,9 +78,17 @@ export default class SearchOrg extends Component {
 									</Grid>
 									<Grid item>
 										<Typography component='div'>
+											{/* this will truncate the description to 30 chars */}
 											<Box fontStyle='italic'>
 												{`"
-												${org.org_desc.length > 30 ? org.org_desc.substring(0, 30) : org.org_desc}"`}
+												${
+													org.org_desc.length > 27
+														? org.org_desc.substring(
+																0,
+																27
+														  ) + '...'
+														: org.org_desc
+												}"`}
 											</Box>
 										</Typography>
 									</Grid>
@@ -108,6 +116,7 @@ export default class SearchOrg extends Component {
 	};
 
 	render() {
+		//Destructuring the state
 		const {
 			loading,
 			organisations,
@@ -115,6 +124,7 @@ export default class SearchOrg extends Component {
 			search_value,
 			search_flag,
 		} = this.state;
+
 		//If no organisations was passed then render error component
 		if (organisations.length === 0 && !loading) {
 			return <Error stateData={stateData} />;
@@ -125,6 +135,7 @@ export default class SearchOrg extends Component {
 				<Grid item>
 					<Typography variant='h3'>Join an Organisation</Typography>
 				</Grid>
+				{/*Search Bar*/}
 				<Grid item style={classes.root}>
 					<TextField
 						label='Search Organisation'
@@ -134,7 +145,7 @@ export default class SearchOrg extends Component {
 						value={search_value}
 						style={classes.search_bar}
 						variant='outlined'
-						//Search Icon
+						/*Search Icon*/
 						InputProps={{
 							startAdornment: (
 								<InputAdornment>
@@ -146,6 +157,7 @@ export default class SearchOrg extends Component {
 						}}
 					/>
 				</Grid>
+				{/*Button*/}
 				<Grid item>
 					<Button
 						variant='contained'
@@ -155,6 +167,12 @@ export default class SearchOrg extends Component {
 						{search_flag ? <p>Clear</p> : <p>Search</p>}
 					</Button>
 				</Grid>
+
+				{/*Rendering the states => if loading return loadingState else 
+				if search flag is set to true then if search is returned empty 
+				then return error component else render the search results if 
+				search flag is false return the organisations*/}
+
 				<Grid item style={classes.root}>
 					{loading ? (
 						this.loadingStateUi()
