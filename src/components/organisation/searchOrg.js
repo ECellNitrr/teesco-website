@@ -8,6 +8,7 @@ import {
 	InputAdornment,
 	IconButton,
 	Box,
+	Button,
 } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import SearchIcon from '@material-ui/icons/Search';
@@ -34,6 +35,13 @@ const classes = {
 		width: '50px',
 		height: '50px',
 	},
+};
+
+const stateData = {
+	error: 'No Organisations Found',
+	width: '70%',
+	direction: 'column',
+	iconSize: 30,
 };
 
 export default class SearchOrg extends Component {
@@ -69,7 +77,12 @@ export default class SearchOrg extends Component {
 										</Typography>
 									</Grid>
 									<Grid item>
-										<Typography>{org.org_desc}</Typography>
+										<Typography component='div'>
+											<Box fontStyle='italic'>
+												{`"
+												${org.org_desc.length > 30 ? org.org_desc.substring(0, 30) : org.org_desc}"`}
+											</Box>
+										</Typography>
 									</Grid>
 								</Grid>
 							</Grid>
@@ -95,15 +108,15 @@ export default class SearchOrg extends Component {
 	};
 
 	render() {
-		const { loading, organisations, search } = this.state;
+		const {
+			loading,
+			organisations,
+			search,
+			search_value,
+			search_flag,
+		} = this.state;
 		//If no organisations was passed then render error component
 		if (organisations.length === 0 && !loading) {
-			const stateData = {
-				error: 'No Organisation to display',
-				width: '50%',
-				direction: 'column',
-				iconSize: 40,
-			};
 			return <Error stateData={stateData} />;
 		}
 
@@ -116,11 +129,12 @@ export default class SearchOrg extends Component {
 					<TextField
 						label='Search Organisation'
 						type='text'
-						name='search_bar'
+						name='search_value'
 						onChange={this.inputChangeHandler}
-						value={this.state.search_value}
+						value={search_value}
 						style={classes.search_bar}
 						variant='outlined'
+						//Search Icon
 						InputProps={{
 							startAdornment: (
 								<InputAdornment>
@@ -132,12 +146,27 @@ export default class SearchOrg extends Component {
 						}}
 					/>
 				</Grid>
+				<Grid item>
+					<Button
+						variant='contained'
+						color='primary'
+						size='small'
+						disabled={loading}>
+						{search_flag ? <p>Clear</p> : <p>Search</p>}
+					</Button>
+				</Grid>
 				<Grid item style={classes.root}>
-					{loading
-						? this.loadingStateUi()
-						: search.length === 0
-						? this.initialStateUi(organisations)
-						: this.initialStateUi(search)}
+					{loading ? (
+						this.loadingStateUi()
+					) : search_flag ? (
+						search.length > 0 ? (
+							this.initialStateUi(search)
+						) : (
+							<Error stateData={stateData} />
+						)
+					) : (
+						this.initialStateUi(organisations)
+					)}
 				</Grid>
 			</Grid>
 		);
