@@ -168,7 +168,7 @@ export default class SearchOrg extends Component {
 					</Button>
 				</Grid>
 
-				{/*Rendering the states => if loading return loadingState else 
+				{/*Rendering the states => if loading then return loadingState else 
 				if search flag is set to true then if search is returned empty 
 				then return error component else render the search results if 
 				search flag is false return the organisations*/}
