@@ -126,11 +126,6 @@ export default class SearchOrg extends Component {
 			search_flag,
 		} = this.state;
 
-		//If no organisations was passed then render error component
-		if (organisations.length === 0 && !loading) {
-			return <Error stateData={stateData} />;
-		}
-
 		return (
 			<Grid container direction='column' alignItems='center'>
 				<Grid item>
@@ -147,6 +142,7 @@ export default class SearchOrg extends Component {
 							<TextField
 								label='Search Organisation'
 								type='text'
+								size='small'
 								name='search_value'
 								onChange={this.inputChangeHandler}
 								value={search_value}
@@ -169,9 +165,13 @@ export default class SearchOrg extends Component {
 							<Button
 								variant='contained'
 								color='primary'
-								size='small'
+								size='normal'
 								disabled={loading}>
-								{search_flag ? <p>Clear</p> : <p>Search</p>}
+								{search_flag ? (
+									<Typography>Clear</Typography>
+								) : (
+									<Typography>Search</Typography>
+								)}
 							</Button>
 						</Grid>
 					</Grid>
@@ -190,8 +190,10 @@ export default class SearchOrg extends Component {
 						) : (
 							<Error stateData={stateData} />
 						)
-					) : (
+					) : organisations.length > 0 ? (
 						this.initialStateUi(organisations)
+					) : (
+						<Error stateData={stateData} />
 					)}
 				</Grid>
 			</Grid>

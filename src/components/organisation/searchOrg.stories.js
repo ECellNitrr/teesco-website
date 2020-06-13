@@ -83,6 +83,13 @@ export const searchStateData = {
 	search_flag: true,
 };
 
+export const noSearchStateData = {
+	...initialStateData,
+	search: [],
+	search_value: 'E-Cell',
+	search_flag: true,
+};
+
 export const initialState = () => (
 	<SearchOrg stateData={object('state', initialStateData)} />
 );
@@ -94,4 +101,7 @@ export const errorState = () => (
 );
 export const searchState = () => (
 	<SearchOrg stateData={object('state', searchStateData)} />
+);
+export const noSearchResultState = () => (
+	<SearchOrg stateData={object('state', noSearchStateData)} />
 );
