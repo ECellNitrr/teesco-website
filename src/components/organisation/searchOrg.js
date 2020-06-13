@@ -74,7 +74,7 @@ export default class SearchOrg extends Component {
 								<Grid container direction='column'>
 									<Grid item>
 										<Typography variant='h5'>
-											{org.org_name}
+											<strong>{org.org_name}</strong>
 										</Typography>
 									</Grid>
 									<Grid item>
