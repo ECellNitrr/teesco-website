@@ -19,12 +19,16 @@ const data = {
     { name: "Robotix", logo: ecell },
     { name: "Innovation Cell", logo: ecell },
   ],
-
+  menuItems: {
+    top: ["Dashboard", "Org Profile", "Statistics", "Leaderboard", "Queries"],
+    bottom: ["Certificates", "Settings", "Help"],
+  },
   org1: {
     info: {
       name: "E-Cell NITRR",
       tagline: "Leaders Beyond Borders",
       about: "Non-Profit Organisation",
+      role: "Head Coordinator",
     },
     groups: [
       {
@@ -37,7 +41,7 @@ const data = {
       },
       {
         name: "Task Regulators",
-        active: "true",
+        active: "false",
       },
       {
         name: "Executives",
@@ -45,7 +49,7 @@ const data = {
       },
       {
         name: "Managers",
-        active: "false",
+        active: "true",
       },
       {
         name: "Volunteers",

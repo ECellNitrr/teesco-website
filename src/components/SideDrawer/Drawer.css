@@ -1,5 +1,12 @@
-* {
+/* * {
   font-weight: bold !important;
+} */
+*::-webkit-scrollbar {
+  width: 6px !important;
+  background-color: #a5a5a5 !important;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: #000000;
 }
 a {
   text-decoration: none;

@@ -5,20 +5,13 @@ import "./default.css";
 import Grid from "@material-ui/core/Grid";
 
 import Typography from "@material-ui/core/Typography";
-import { Skeleton, Alert, AlertTitle } from "@material-ui/lab";
+import { Skeleton, Alert } from "@material-ui/lab";
 import { Button } from "@material-ui/core";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { CircularProgress } from "@material-ui/core";
-import { LinearProgress } from "@material-ui/core";
-import Select from "@material-ui/core/Select";
-
-import FormControl from "@material-ui/core/FormControl";
-
-import MenuItem from "@material-ui/core/MenuItem";
 
 import Checkbox from "@material-ui/core/Checkbox";
-import { AlteredPermissions } from "./PermissionsUI.stories";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,12 +51,10 @@ export default function PermissionsUI(props) {
     isAdmin,
     checkbox_name,
     permissionAltered,
-    userTypes,
-    editable,
   } = props.defaultData;
 
   const [state, setState] = useState(checkbox_name);
-  const [userType, setUserType] = useState("");
+  const [userType] = useState("");
 
   //push usertype from dropdown to coming state
 
@@ -72,9 +63,7 @@ export default function PermissionsUI(props) {
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
   };
-  // const handleDropdownChange = (event) => {
-  //   setUserType(event.target.value);
-  // };
+
   console.log(userType);
 
   return (

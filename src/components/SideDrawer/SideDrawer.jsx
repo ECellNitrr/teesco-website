@@ -31,7 +31,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import LabelIcon from "@material-ui/icons/Label";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Grid from "@material-ui/core/Grid";
 import Logo from "./logo-white.png";
 import LogoDark from "./logo.png";
@@ -42,7 +45,8 @@ import linkedin from "../../assets/icons/linkedin.png";
 import twitter from "../../assets/icons/twitter-1.png";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
-
+import StarIcon from "@material-ui/icons/Star";
+import LockOpenIcon from "@material-ui/icons/LockOpen";
 import "./Drawer.css";
 
 const drawerWidth = 330;
@@ -123,7 +127,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PersistentDrawerLeft(props) {
-  const { orgs, org1 } = props.defaultData;
+  const { orgs, org1, menuItems } = props.defaultData;
 
   let groups = org1.groups;
   console.log(groups);
@@ -155,7 +159,7 @@ export default function PersistentDrawerLeft(props) {
     logo.style.display = "block";
   };
 
-  return (
+  return org1.info.role ? (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
@@ -196,16 +200,18 @@ export default function PersistentDrawerLeft(props) {
       >
         <div className={classes.drawerHeader}>
           <Grid container spacing={3} justify="center">
-            <Grid item>
+            {/* <Grid item>
               <img
                 src={LogoDark}
                 width="55px"
                 alt="ecell logo"
                 style={{ padding: 0 }}
               />
-            </Grid>
+            </Grid> */}
+            <Grid item></Grid>
+            <Grid item></Grid>
             <Grid item>
-              <Typography align="center" variant="h5" style={{ marginTop: 12 }}>
+              <Typography align="center" variant="h5" style={{ marginTop: 0 }}>
                 teesco
               </Typography>
             </Grid>
@@ -220,62 +226,123 @@ export default function PersistentDrawerLeft(props) {
           </IconButton>
         </div>
         <Divider />
-        <Card className="card">
-          <CardContent className="center">
-            <img src={person} alt="person image" className="centerImage" />
-            <Typography
-              variant="h6"
-              style={{ textAlign: "center" }}
-              className={classes.title}
-              gutterBottom
-            >
-              {org1.info.name}
-            </Typography>
+        <List>
+          <Card className="card">
+            <CardContent className="center">
+              <img src={person} alt="person image" className="centerImage" />
+              <Typography
+                variant="h6"
+                style={{ textAlign: "center" }}
+                className={classes.title}
+                gutterBottom
+              >
+                {org1.info.name}
+              </Typography>
 
-            <Typography
-              style={{ textAlign: "center" }}
-              className={classes.pos}
-              color="textSecondary"
+              <Typography
+                style={{
+                  textAlign: "center",
+                  backgroundColor: "#7a7a7a",
+                  paddingLeft: "5px",
+                  paddingRight: "5px",
+                  color: "white",
+                  borderRadius: "5px",
+                }}
+                className={classes.pos}
+              >
+                {org1.info.role}
+              </Typography>
+            </CardContent>
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+              className="menu"
             >
-              <em>"{org1.info.about}"</em>
-            </Typography>
-          </CardContent>
-          <IconButton
-            aria-label="more"
-            aria-controls="long-menu"
-            aria-haspopup="true"
-            onClick={handleClick}
-            className="menu"
-          >
-            <MoreVertIcon />
-          </IconButton>
-          <Menu
-            id="long-menu"
-            anchorEl={anchorEl}
-            keepMounted
-            open={openMenu}
-            onClose={handleClose}
-          >
-            <Card className="menuCard">
-              <CardContent>
-                <Typography variant="h5">Switch Orgs</Typography>
-                <List>
-                  <div className="box">
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={openMenu}
+              onClose={handleClose}
+            >
+              <Card className="menuCard">
+                <CardContent>
+                  <Typography variant="h5">Switch Orgs</Typography>
+                  <List>
+                    {/* <div className="box"> */}
                     {orgs.map((el) => (
-                      <div className="boxes">
-                        <a href="#">
-                          <img src={el.logo} width="86px" />
-                          <Typography>{el.name}</Typography>
-                        </a>
-                      </div>
+                      // <div className="boxes">
+                      //   <a href="#">
+                      //     <img src={el.logo} width="86px" />
+                      //     <Typography>{el.name}</Typography>
+                      //   </a>
+                      // </div>
+
+                      <ListItem button>
+                        <ListItemText style={{ textAlign: "center" }}>
+                          <a href="#">{el.name}</a>
+                        </ListItemText>
+                      </ListItem>
                     ))}
-                  </div>
-                </List>
-                <Button className="createBtn">Create or Join orgs</Button>
-              </CardContent>
-            </Card>
-          </Menu>
-        </Card>
+                    {/* </div> */}
+                  </List>
+                  <Button className="createBtn">Create or Join orgs</Button>
+                </CardContent>
+              </Card>
+            </Menu>
+          </Card>
+        </List>
+        <List style={{ marginLeft: "10px" }}>
+          {menuItems.top.map((item) => (
+            <ListItem button id="groups">
+              <ListItemIcon>
+                {/* <StarIcon style={{ color: "#3f51b5" }} /> */}
+                {item == "Dashboard" ? (
+                  <Avatar
+                    className={classes.orange}
+                    style={{ width: "28px", height: "28px" }}
+                  >
+                    D
+                  </Avatar>
+                ) : item == "Org Profile" ? (
+                  <Avatar
+                    className={classes.orange}
+                    style={{ width: "28px", height: "28px" }}
+                  >
+                    O
+                  </Avatar>
+                ) : item == "Statistics" ? (
+                  <Avatar
+                    className={classes.orange}
+                    style={{ width: "28px", height: "28px" }}
+                  >
+                    S
+                  </Avatar>
+                ) : item == "Leaderboard" ? (
+                  <Avatar
+                    className={classes.orange}
+                    style={{ width: "28px", height: "28px" }}
+                  >
+                    L
+                  </Avatar>
+                ) : item == "Queries" ? (
+                  <Avatar
+                    className={classes.orange}
+                    style={{ width: "28px", height: "28px" }}
+                  >
+                    Q
+                  </Avatar>
+                ) : null}
+              </ListItemIcon>
+              <ListItemText primary={item} />
+            </ListItem>
+          ))}
+        </List>
+
         <div style={{ margin: 10 }}>
           <div className="groupHeader">
             <Typography variant="h6">GROUPS</Typography>
@@ -291,20 +358,53 @@ export default function PersistentDrawerLeft(props) {
                 id="groups"
               >
                 <ListItemIcon>
-                  <LabelIcon
-                    className={
-                      group.active == "true"
-                        ? classes.activeFlag
-                        : classes.disabledGroup
-                    }
-                  />
+                  {group.active == "true" ? (
+                    <LockOpenIcon
+                      className={
+                        group.active == "true"
+                          ? classes.activeFlag
+                          : classes.disabledGroup
+                      }
+                    />
+                  ) : null}
                 </ListItemIcon>
                 <ListItemText primary={group.name} />
               </ListItem>
             ))}
           </List>
+          <List style={{ marginLeft: "0px" }}>
+            {menuItems.bottom.map((item) => (
+              <ListItem button id="groups">
+                <ListItemIcon>
+                  {item == "Certificates" ? (
+                    <Avatar
+                      className={classes.orange}
+                      style={{ width: "28px", height: "28px" }}
+                    >
+                      C
+                    </Avatar>
+                  ) : item == "Settings" ? (
+                    <Avatar
+                      className={classes.orange}
+                      style={{ width: "28px", height: "28px" }}
+                    >
+                      S
+                    </Avatar>
+                  ) : item == "Help" ? (
+                    <Avatar
+                      className={classes.orange}
+                      style={{ width: "28px", height: "28px" }}
+                    >
+                      H
+                    </Avatar>
+                  ) : null}
+                </ListItemIcon>
+                <ListItemText primary={item} />
+              </ListItem>
+            ))}
+          </List>
         </div>
-        <Card className="card2">
+        {/* <Card className="card2">
           <CardContent>
             <Typography variant="h6" style={{ textAlign: "center" }}>
               INVITE PEOPLE
@@ -345,7 +445,7 @@ export default function PersistentDrawerLeft(props) {
               <Typography>teesco.org &copy; 2020</Typography>
             </footer>
           </CardContent>
-        </Card>
+        </Card> */}
       </Drawer>
 
       <main
@@ -356,5 +456,7 @@ export default function PersistentDrawerLeft(props) {
         <div className={classes.drawerHeader} />
       </main>
     </div>
+  ) : (
+    <h1>No Roles Display Only Main Page</h1>
   );
 }
