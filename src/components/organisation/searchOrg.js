@@ -9,6 +9,7 @@ import {
 	IconButton,
 	Box,
 	Button,
+	Divider,
 } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import SearchIcon from '@material-ui/icons/Search';
@@ -73,7 +74,7 @@ export default class SearchOrg extends Component {
 							<Grid item>
 								<Grid container direction='column'>
 									<Grid item>
-										<Typography variant='h5'>
+										<Typography variant='h6'>
 											<strong>{org.org_name}</strong>
 										</Typography>
 									</Grid>
@@ -129,7 +130,7 @@ export default class SearchOrg extends Component {
 		return (
 			<Grid container direction='column' alignItems='center'>
 				<Grid item>
-					<Typography variant='h3'>Join an Organisation</Typography>
+					<Typography variant='h4'>Join an Organisation</Typography>
 				</Grid>
 				{/*Search Bar*/}
 				<Grid item style={classes.root}>
@@ -190,11 +191,14 @@ export default class SearchOrg extends Component {
 						) : (
 							<Fragment>
 								<Error stateData={stateData} />
-								<Typography variant='h5' align='center'>
-									<Box m={3}>
+
+								<Typography component='div' align='left'>
+									<Box fontStyle='italic'>
 										Some Recomended Organisations
 									</Box>
+									<Divider variant='fullWidth' />
 								</Typography>
+
 								{this.initialStateUi(organisations)}
 							</Fragment>
 						)
