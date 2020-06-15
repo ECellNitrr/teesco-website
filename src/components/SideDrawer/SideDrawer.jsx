@@ -31,18 +31,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import LabelIcon from "@material-ui/icons/Label";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import Grid from "@material-ui/core/Grid";
-import Logo from "./logo-white.png";
-import LogoDark from "./logo.png";
-import person from "./person.png";
-import facebook from "../../assets/icons/facebook.png";
-import instagram from "../../assets/icons/instagram.png";
-import linkedin from "../../assets/icons/linkedin.png";
-import twitter from "../../assets/icons/twitter-1.png";
+import Logo from "../../assets/imgs/logo-white.png";
+import LogoDark from "../../assets/imgs/logo.png";
+import person from "../../assets/imgs/person.png";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import GroupAddIcon from "@material-ui/icons/GroupAdd";
 import StarIcon from "@material-ui/icons/Star";
@@ -200,14 +194,6 @@ export default function PersistentDrawerLeft(props) {
       >
         <div className={classes.drawerHeader}>
           <Grid container spacing={3} justify="center">
-            {/* <Grid item>
-              <img
-                src={LogoDark}
-                width="55px"
-                alt="ecell logo"
-                style={{ padding: 0 }}
-              />
-            </Grid> */}
             <Grid item></Grid>
             <Grid item></Grid>
             <Grid item>
@@ -215,14 +201,13 @@ export default function PersistentDrawerLeft(props) {
                 teesco
               </Typography>
             </Grid>
-            {/* <Grid item></Grid> */}
           </Grid>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
-              <ChevronRightIcon />
-            )}
+                <ChevronRightIcon />
+              )}
           </IconButton>
         </div>
         <Divider />
@@ -273,22 +258,13 @@ export default function PersistentDrawerLeft(props) {
                 <CardContent>
                   <Typography variant="h5">Switch Orgs</Typography>
                   <List>
-                    {/* <div className="box"> */}
                     {orgs.map((el) => (
-                      // <div className="boxes">
-                      //   <a href="#">
-                      //     <img src={el.logo} width="86px" />
-                      //     <Typography>{el.name}</Typography>
-                      //   </a>
-                      // </div>
-
                       <ListItem button>
                         <ListItemText style={{ textAlign: "center" }}>
                           <a href="#">{el.name}</a>
                         </ListItemText>
                       </ListItem>
                     ))}
-                    {/* </div> */}
                   </List>
                   <Button className="createBtn">Create or Join orgs</Button>
                 </CardContent>
@@ -404,48 +380,6 @@ export default function PersistentDrawerLeft(props) {
             ))}
           </List>
         </div>
-        {/* <Card className="card2">
-          <CardContent>
-            <Typography variant="h6" style={{ textAlign: "center" }}>
-              INVITE PEOPLE
-            </Typography>
-            <div style={{ marginLeft: "10px", marginTop: "10px" }}>
-              <img src={facebook} alt="facebook icon" className="icon" />
-              <img src={instagram} alt="facebook icon" className="icon" />
-              <img src={linkedin} alt="facebook icon" className="icon" />
-              <img src={twitter} alt="facebook icon" className="icon" />
-            </div>
-            <Typography variant="h6" style={{ textAlign: "center" }}>
-              OR
-            </Typography>
-            <div className="inviteBox">
-              <input
-                type="text"
-                style={{
-                  width: "100%",
-                  border: "1.5px solid #333",
-                  padding: "5px",
-                }}
-                placeholder="invite link"
-              />
-              <button
-                style={{ border: "1.5px solid #333", background: "none" }}
-              >
-                <FileCopyIcon />
-              </button>
-            </div>
-            <footer
-              style={{
-                textAlign: "center",
-                marginTop: "15px",
-                fontWeight: "bold",
-                color: "#333",
-              }}
-            >
-              <Typography>teesco.org &copy; 2020</Typography>
-            </footer>
-          </CardContent>
-        </Card> */}
       </Drawer>
 
       <main
@@ -457,6 +391,6 @@ export default function PersistentDrawerLeft(props) {
       </main>
     </div>
   ) : (
-    <h1>No Roles Display Only Main Page</h1>
-  );
+      <h1>No Roles Display Only Main Page</h1>
+    );
 }

@@ -1,5 +1,5 @@
 import React from "react";
-import ecell from "./logo.png";
+import ecell from "../../assets/imgs/logo.png";
 
 import PersistentDrawerLeft from "./SideDrawer";
 import { withKnobs, object } from "@storybook/addon-knobs/react";
