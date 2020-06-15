@@ -17,36 +17,43 @@ export const initialStateData = {
 			org_id: 1,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders, Who do everything they ca d',
+			org_profile: null,
 		},
 		{
 			org_id: 2,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 		{
 			org_id: 3,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 		{
 			org_id: 4,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 		{
 			org_id: 5,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 		{
 			org_id: 6,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 		{
 			org_id: 7,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 	],
 	loading: false,
@@ -56,8 +63,11 @@ export const initialStateData = {
 };
 
 export const loadingStateData = {
-	...initialStateData,
+	organisations: [],
+	search: [],
 	loading: true,
+	search_value: '',
+	search_flag: false,
 };
 
 export const errorStateData = {
@@ -72,11 +82,13 @@ export const searchStateData = {
 			org_id: 2,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 		{
 			org_id: 3,
 			org_name: 'E-Cell NIT Raipur',
 			org_desc: 'Leader Beyond Borders',
+			org_profile: null,
 		},
 	],
 	search_value: 'E-Cell',

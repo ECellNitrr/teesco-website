@@ -42,7 +42,7 @@ const stateData = {
 	error: 'No Organisations Found',
 	width: '70%',
 	direction: 'column',
-	iconSize: 30,
+	iconSize: 40,
 };
 
 export default class SearchOrg extends Component {
@@ -188,7 +188,15 @@ export default class SearchOrg extends Component {
 						search.length > 0 ? (
 							this.initialStateUi(search)
 						) : (
-							<Error stateData={stateData} />
+							<Fragment>
+								<Error stateData={stateData} />
+								<Typography variant='h5' align='center'>
+									<Box m={3}>
+										Some Recomended Organisations
+									</Box>
+								</Typography>
+								{this.initialStateUi(organisations)}
+							</Fragment>
 						)
 					) : organisations.length > 0 ? (
 						this.initialStateUi(organisations)
