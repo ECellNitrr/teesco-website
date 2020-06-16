@@ -146,16 +146,15 @@ export default class SearchOrg extends Component {
 								size='small'
 								name='search_value'
 								onChange={this.inputChangeHandler}
-								value={search_value}
+								value={loading ? 'Loading' : search_value}
 								style={classes.search_bar}
 								variant='outlined'
+								disabled={loading}
 								/*Search Icon*/
 								InputProps={{
 									startAdornment: (
 										<InputAdornment>
-											<IconButton>
-												<SearchIcon />
-											</IconButton>
+											<SearchIcon />
 										</InputAdornment>
 									),
 								}}
