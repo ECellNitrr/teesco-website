@@ -146,7 +146,7 @@ export default class SearchOrg extends Component {
 								size='small'
 								name='search_value'
 								onChange={this.inputChangeHandler}
-								value={loading ? 'Loading' : search_value}
+								value={search_value}
 								style={classes.search_bar}
 								variant='outlined'
 								disabled={loading}
@@ -167,11 +167,7 @@ export default class SearchOrg extends Component {
 								color='primary'
 								size='normal'
 								disabled={loading}>
-								{search_flag ? (
-									<Typography>Clear</Typography>
-								) : (
-									<Typography>Search</Typography>
-								)}
+								<Typography>Search</Typography>
 							</Button>
 						</Grid>
 					</Grid>
