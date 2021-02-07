@@ -9,15 +9,18 @@ import { Router } from 'react-router-dom'
 import customHistory from './utils/CustomHistory'
 
 import { Provider } from 'react-redux';
-import { store } from './utils/CreateStore';
+import { store, persistedStore } from './utils/CreateStore';
+import { PersistGate } from "redux-persist/lib/integration/react";
 
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router history={customHistory} >
-        <App />
-      </Router>
+      <PersistGate loading={<div>Loading cache...</div>} persistor={persistedStore}>
+        <Router history={customHistory} >
+          <App />
+        </Router>
+      </PersistGate>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

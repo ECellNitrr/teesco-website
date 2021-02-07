@@ -30,11 +30,10 @@ const LoginForm = ({ username, password, loading, updateInputFieldHandler, login
                         <label>Password:</label>
                         <input
                             onChange={e => updateInputFieldHandler('password', e.target.value)}
-                            type="text" value={password}
+                            type="password" value={password}
                             className="form-control"
                             placeholder="bitcoin2021" />
                     </div>
-                    <FaSpinner className='spinner' />
                     <div className="mt-3 d-flex justify-content-center">
                         <button
                             disabled={loading}

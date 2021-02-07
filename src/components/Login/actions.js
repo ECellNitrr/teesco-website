@@ -1,6 +1,6 @@
 import ApiClient from '../../utils/ApiClient'
 import CustomHistory from '../../utils/CustomHistory'
-import { storeToken, eraseToken } from '../../utils/Token'
+import { setUserToken } from '../../utils/UserActions'
 
 
 // actions
@@ -32,10 +32,8 @@ export const getLoading = (state) => state.login.loading
 
 // reducer
 const initialState = {
-    input: {
-        username: '',
-        password: '',
-    },
+    username: '',
+    password: '',
     loading: false,
     error: null,
     specialError: null
@@ -73,12 +71,7 @@ export const loginHandler = (e) => (dispatch, getState) => {
         email, password
     })
         .then(response => {
-            console.log(response)
-            storeToken(response.data['token'])
-            dispatch({
-                type: LOGIN_FORM_LOGIN_SUCCESS,
-            })
-            CustomHistory.push('/searchOrgs')
+            dispatch(setUserToken(response.data.token))
         }).catch(err => {
             // TODO: handle error cases
 
