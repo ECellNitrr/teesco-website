@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getUserLoggedIn } from './actions'
+import { isUserLoggedIn } from './actions'
 import { Redirect, Route } from 'react-router-dom'
 
 
 
-export const index = ({ userLoggedIn, path, component }) => {
+export const index = ({ path, component }) => {
   const Component = component;
 
-  if (!userLoggedIn) {
+  if (!isUserLoggedIn()) {
     return (<Redirect to='/login' />)
   }
 
@@ -18,7 +18,7 @@ export const index = ({ userLoggedIn, path, component }) => {
 }
 
 const mapStateToProps = (state) => ({
-  userLoggedIn: getUserLoggedIn(state)
+
 })
 
 const mapDispatchToProps = {

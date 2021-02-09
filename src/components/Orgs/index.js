@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { fetchUserOrgsHandler } from './actions'
 
-export const index = (props) => {
+export const Index = ({ fetchUserOrgsHandler }) => {
+    useEffect(() => {
+        fetchUserOrgsHandler()
+    }, [])
+
     return (
         <div>
             orgs
@@ -14,7 +19,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+    fetchUserOrgsHandler
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(index)
+export default connect(mapStateToProps, mapDispatchToProps)(Index)

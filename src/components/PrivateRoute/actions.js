@@ -1,45 +1,43 @@
 
 
+export const setUserToken = (token) => {
+    sessionStorage.setItem('token', token);
+}
+
+export const getUserToken = (token) => {
+    return sessionStorage.getItem('token')
+}
+
+export const isUserLoggedIn = () => {
+    return sessionStorage.getItem('token') ? true : false
+}
+
+
 // actions
-export const SET_USER_TOKEN = 'SET_USER_TOKEN'
-export const setUserToken = (token) => ({
-    type: SET_USER_TOKEN,
-    payload: { token },
-});
-
-
-export const REMOVE_USER_TOKEN = 'REMOVE_USER_TOKEN'
-export const removeUserToken = () => ({
-    type: REMOVE_USER_TOKEN,
-    payload: {},
+export const SET_USER_ORGS = 'SET_USER_ORGS'
+export const setUserOrgs = (orgs) => ({
+    type: SET_USER_ORGS,
+    payload: { orgs },
 });
 
 
 // selector
 export const getFetchedUserOrgs = (state) => state.user.fetchedUserOrgs;
 export const getUserOrgs = (state) => state.user.userOrg;
-export const getToken = (state) => state.user.token;
-export const getUserLoggedIn = (state) => state.user.token ? true : false;
 
 
 // reducer
 const initialState = {
-    token: false,
     fetchedUserOrgs: false,
     userOrgs: []
 }
 
-export const UserGaurdReducer = (state = initialState, { type, payload }) => {
+export const UserReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-        case SET_USER_TOKEN:
+        case SET_USER_ORGS:
             return {
                 ...state,
-                token: payload.token
-            }
-        case REMOVE_USER_TOKEN:
-            return {
-                ...state,
-                token: false
+                orgs: payload.orgs
             }
         default:
             return state

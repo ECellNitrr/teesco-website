@@ -58,7 +58,7 @@ export const LoginReducer = (state = initialState, { type, payload }) => {
 }
 
 
-// actions
+// thunks
 export const loginHandler = (e) => (dispatch, getState) => {
     e.preventDefault()
     dispatch(setLoading(true))
@@ -71,7 +71,7 @@ export const loginHandler = (e) => (dispatch, getState) => {
         email, password
     })
         .then(response => {
-            dispatch(setUserToken(response.data.token))
+            setUserToken(response.data.token)
             CustomHistory.push('/orgs')
         }).catch(err => {
             // TODO: handle error cases
