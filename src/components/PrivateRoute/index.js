@@ -1,19 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getUserLoggedIn } from './actions'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 
 
 
-export const index = ({ userLoggedIn, children }) => {
+export const index = ({ userLoggedIn, path, component }) => {
+  const Component = component;
+
   if (!userLoggedIn) {
     return (<Redirect to='/login' />)
   }
 
   return (
-    <div>
-      {children}
-    </div>
+    <Route path component={() => <Component />} />
   )
 }
 
