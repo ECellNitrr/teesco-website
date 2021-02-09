@@ -3,21 +3,22 @@ import ReduxThunk from 'redux-thunk'
 import { combineReducers } from 'redux';
 
 import { persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from "redux-persist/lib/storage/session";
 import autoMergeLevel1 from "redux-persist/lib/stateReconciler/autoMergeLevel1";
 import { persistStore } from "redux-persist";
 
 import { LoginReducer } from '../components/Login/actions'
-import { UserReducer } from './UserActions'
+import { UserGaurdReducer } from '../components/UserGaurd/actions'
 
 const userPersistConfig = {
     key: "root",
     storage,
     stateReconciler: autoMergeLevel1,
+    whitelist: ['token'],
 };
 
 const RootReducer = combineReducers({
-    user: persistReducer(userPersistConfig, UserReducer),
+    user: persistReducer(userPersistConfig, UserGaurdReducer),
     login: LoginReducer,
 })
 

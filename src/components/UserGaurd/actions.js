@@ -17,10 +17,12 @@ export const removeUserToken = () => ({
 
 // reducer
 const initialState = {
-    token: false
+    token: false,
+    fetchedUserOrgs: false,
+    userOrgs: []
 }
 
-export const UserReducer = (state = initialState, { type, payload }) => {
+export const UserGaurdReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case SET_USER_TOKEN:
             return {

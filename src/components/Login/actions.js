@@ -1,6 +1,6 @@
 import ApiClient from '../../utils/ApiClient'
 import CustomHistory from '../../utils/CustomHistory'
-import { setUserToken } from '../../utils/UserActions'
+import { setUserToken } from '../UserGaurd/actions'
 
 
 // actions
