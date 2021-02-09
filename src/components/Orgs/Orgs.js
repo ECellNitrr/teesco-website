@@ -2,14 +2,15 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { fetchUserOrgsHandler } from './actions'
 
-export const Index = ({ fetchUserOrgsHandler }) => {
+export const Orgs = ({ fetchUserOrgsHandler }) => {
     useEffect(() => {
         fetchUserOrgsHandler()
-    }, [])
+    }, [fetchUserOrgsHandler])
 
     return (
         <div>
-            orgs
+            fetching the orgs which user was a part of 
+            loading will go here
         </div>
     )
 }
@@ -22,4 +23,4 @@ const mapDispatchToProps = {
     fetchUserOrgsHandler
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index)
+export default connect(mapStateToProps, mapDispatchToProps)(Orgs)

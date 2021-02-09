@@ -5,7 +5,7 @@ import { Redirect, Route } from 'react-router-dom'
 
 
 
-export const index = ({ path, component }) => {
+export const PrivateRoute = ({ path, component }) => {
   const Component = component;
 
   if (!isUserLoggedIn()) {
@@ -13,7 +13,7 @@ export const index = ({ path, component }) => {
   }
 
   return (
-    <Route path component={() => <Component />} />
+    <Route path={path} component={() => <Component />} />
   )
 }
 
@@ -25,4 +25,4 @@ const mapDispatchToProps = {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(index)
+export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute)

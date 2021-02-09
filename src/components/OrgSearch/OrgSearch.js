@@ -1,20 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-export const index = (props) => {
+export const OrgSearch = (props) => {
     return (
         <div>
-            Dashboard
+            OrgSearch
         </div>
     )
 }
 
 const mapStateToProps = (state) => ({
-
+    
 })
 
 const mapDispatchToProps = {
-
+    
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(index)
+export default connect(mapStateToProps, mapDispatchToProps)(OrgSearch)
