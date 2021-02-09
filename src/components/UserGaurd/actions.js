@@ -15,6 +15,13 @@ export const removeUserToken = () => ({
 });
 
 
+// selector
+export const getFetchedUserOrgs = (state) => state.user.fetchedUserOrgs;
+export const getUserOrgs = (state) => state.user.userOrg;
+export const getToken = (state) => state.user.token;
+export const getUserLoggedIn = (state) => state.user.token ? true : false;
+
+
 // reducer
 const initialState = {
     token: false,

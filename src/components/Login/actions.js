@@ -72,6 +72,7 @@ export const loginHandler = (e) => (dispatch, getState) => {
     })
         .then(response => {
             dispatch(setUserToken(response.data.token))
+            CustomHistory.push('/orgs')
         }).catch(err => {
             // TODO: handle error cases
 
