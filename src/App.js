@@ -1,66 +1,24 @@
-import React, { Component } from 'react';
-
-import { isAuthenticated } from './utils/Token'
+import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import LoginPage from './pages/Auth/Login'
-import SearchOrgPage from './pages/Guest/SearchOrg'
-import HomePage from './pages/Guest/Home'
+import Login from './components/Login/Login'
+import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import Orgs from './components/Orgs/Orgs'
+import OrgSearch from './components/OrgSearch/OrgSearch'
+import DashBoard from './components/Dashbard/Dashboard'
+import NotFound from './components/NotFound/NotFound'
 
-
-class App extends Component {
-  // In case of user is not logged in(token not found) then the Private route will redirect the user to the login page 
-  PrivateRoute = ({ component, ...rest }) => {
-    let ResultComponent = component
-    ResultComponent = <ResultComponent />
-
-    if (!isAuthenticated()) {
-      ResultComponent = <Redirect to={{
-        pathname: "/login/",
-      }} />
-    }
-
-    return (
-      <Route
-        {...rest}
-        render={props => ResultComponent}
-      />
-    );
-  }
-
-  // In case of user is logged in(token found) then the Public route will not let the user enter login or signup page 
-  PublicRoute = ({ component, ...rest }) => {
-    let ResultComponent = component
-    ResultComponent = <ResultComponent />
-
-    if (isAuthenticated()) {
-      ResultComponent = <Redirect to={{
-        pathname: "/searchOrgs/",
-      }} />
-    }
-
-    return (
-      <Route
-        {...rest}
-        render={props => ResultComponent}
-      />
-    );
-  }
-
-
-  render() {
-    return (
-      <div className="App">
-        {this.props.token}
-        <Switch>
-          <this.PrivateRoute exact path="/searchOrgs/" component={SearchOrgPage} />
-          <this.PublicRoute exact path="/login/" component={LoginPage} />
-          <Route exact path='/' component={HomePage} />
-        </Switch>
-      </div>
-    );
-  }
+export default function App() {
+  return (
+    <div>
+      <Switch>
+        <Route exact path='/login' component={Login} />
+        <PrivateRoute exact path='/orgs/:orgID/dashboard' component={DashBoard} />
+        <PrivateRoute exact path='/orgs/search' component={OrgSearch} />
+        <PrivateRoute exact path='/orgs' component={Orgs} />
+        <Route path='/' exact component={() => <Redirect to='/orgs' />} />
+        <Route path='' component={NotFound} />
+      </Switch>
+    </div>
+  )
 }
-
-
-export default App
