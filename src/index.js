@@ -10,6 +10,7 @@ import customHistory from './utils/CustomHistory'
 import { Provider } from 'react-redux'
 import { store } from './utils/CreateStore'
 
+import './theme.css';
 
 
 ReactDOM.render(
