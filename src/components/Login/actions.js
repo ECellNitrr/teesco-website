@@ -41,12 +41,6 @@ const initialState = {
 
 export const LoginReducer = (state = initialState, { type, payload }) => {
     switch (type) {
-
-        case UPDATE_INPUT_FIELD:
-            return {
-                ...state,
-                [payload.fieldName]: payload.value
-            }
         case SET_LOADING:
             return {
                 ...state,
@@ -59,18 +53,14 @@ export const LoginReducer = (state = initialState, { type, payload }) => {
 
 
 // thunks
-export const loginHandler = (e) => (dispatch, getState) => {
-    e.preventDefault()
+export const loginHandler = (email, password) => (dispatch) => {
     dispatch(setLoading(true))
-
-    const state = getState()
-    const email = getUsername(state)
-    const password = getPassword(state)
 
     ApiClient().post('/users/login/', {
         email, password
     })
         .then(response => {
+            console.log(response.data)
             storeUserToken(response.data.token)
             CustomHistory.push('/orgs')
         }).catch(err => {
@@ -80,7 +70,3 @@ export const loginHandler = (e) => (dispatch, getState) => {
             dispatch(setLoading(false))
         })
 }
-
-export const updateInputFieldHandler = (fieldName, value) => (dispatch) => {
-    dispatch(updateInputField(fieldName, value))
-};
