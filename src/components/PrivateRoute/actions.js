@@ -1,18 +1,3 @@
-
-
-export const setUserToken = (token) => {
-    sessionStorage.setItem('token', token);
-}
-
-export const getUserToken = (token) => {
-    return sessionStorage.getItem('token')
-}
-
-export const isUserLoggedIn = () => {
-    return sessionStorage.getItem('token') ? true : false
-}
-
-
 // actions
 export const SET_USER_ORGS = 'SET_USER_ORGS'
 export const setUserOrgs = (orgs) => ({

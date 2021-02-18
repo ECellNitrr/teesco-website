@@ -1,6 +1,6 @@
 import ApiClient from '../../utils/ApiClient'
 import CustomHistory from '../../utils/CustomHistory'
-import { setUserToken } from '../PrivateRoute/actions'
+import { storeUserToken } from '../../utils/Token'
 
 
 // actions
@@ -71,7 +71,7 @@ export const loginHandler = (e) => (dispatch, getState) => {
         email, password
     })
         .then(response => {
-            setUserToken(response.data.token)
+            storeUserToken(response.data.token)
             CustomHistory.push('/orgs')
         }).catch(err => {
             // TODO: handle error cases

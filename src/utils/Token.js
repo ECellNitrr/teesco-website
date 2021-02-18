@@ -1,14 +1,14 @@
 export const TOKEN = "TOKEN"
 
-export const storeToken = token => {
+export const storeUserToken = token => {
     return localStorage.setItem(TOKEN, token)
 }
 
-export const eraseToken = () => {
+export const eraseUserToken = () => {
     return localStorage.removeItem(TOKEN)
 }
 
-export const getToken = () => {
+export const getUserToken = () => {
     return localStorage.getItem(TOKEN)
 }
 
