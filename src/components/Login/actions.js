@@ -83,10 +83,10 @@ export const loginHandler = (email, password) => (dispatch) => {
             storeUserToken(response.data.token)
             CustomHistory.push('/orgs')
         }).catch(err => {
-            //Create a error then remove after 5 seconds
+            //Create a error then remove after 3 seconds
             const error = makeErrorDict(err);
             dispatch(setLoginError(error))
-            setTimeout(() => dispatch(clearLoginError(null)), 5000)
+            setTimeout(() => dispatch(clearLoginError(null)), 3000)
         }).finally(() => {
             dispatch(setLoading(false))
         })

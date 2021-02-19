@@ -7,11 +7,14 @@ import { emailValidator } from '../../utils/Validator'
 
 
 const LoginForm = ({ loading, loginHandler, error }) => {
+  
+  //State of inputs
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
+  //Errors
   const [formError, setFormError] = useState({
     msg: "",
     type: ""
@@ -28,7 +31,8 @@ const LoginForm = ({ loading, loginHandler, error }) => {
   //Submit Handler
   const onSubmit = async (e) => {
     e.preventDefault();
-    //Validate User Input
+
+    //Validate user input and set error if validation fails and remove it after 3 secs
     if(email.length < 1){
       setFormError({ msg: "This Field Cannot be Empty", type : "email" });
       setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
@@ -44,9 +48,11 @@ const LoginForm = ({ loading, loginHandler, error }) => {
       setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
       return;
     }
+
     loginHandler(email, password);
   };
 
+  //Display in form errors
   const errorDisplay = (errMsg) => <span className="text-danger">{errMsg}</span>
    
   return (
