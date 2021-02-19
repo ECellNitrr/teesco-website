@@ -1,14 +1,20 @@
-import ApiClient from '../../utils/ApiClient'
-import CustomHistory from '../../utils/CustomHistory'
-import { storeUserToken } from '../../utils/Token'
+import ApiClient from '../../utils/ApiClient';
+import CustomHistory from '../../utils/CustomHistory';
+import { storeUserToken } from '../../utils/Token';
 
+//actions
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const setLoginError = (error) => ({
+    type: LOGIN_ERROR,
+    payload: { error }
+})
 
-// actions
-export const UPDATE_INPUT_FIELD = 'UPDATE_INPUT_FIELD'
-export const updateInputField = (fieldName, value) => ({
-    type: UPDATE_INPUT_FIELD,
-    payload: { fieldName, value },
-});
+export const CLEAR_LOGIN_ERROR = 'CLEAR_LOGIN_ERROR';
+export const clearLoginError = (error) => ({
+    type: CLEAR_LOGIN_ERROR,
+    payload: { error }
+})
+
 
 export const SET_LOADING = 'SET_LOADING'
 export const setLoading = (loading) => ({
@@ -46,6 +52,16 @@ export const LoginReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 loading: payload.loading
             }
+        case LOGIN_ERROR:
+            return {
+                ...state,
+                error: payload.error
+            }
+        case CLEAR_LOGIN_ERROR:
+            return {
+                ...state,
+                error: null,
+            }
         default:
             return state
     }
@@ -60,12 +76,12 @@ export const loginHandler = (email, password) => (dispatch) => {
         email, password
     })
         .then(response => {
-            console.log(response.data)
             storeUserToken(response.data.token)
             CustomHistory.push('/orgs')
         }).catch(err => {
-            // TODO: handle error cases
-
+            //Create a error then remove after 5 seconds
+            dispatch(setLoginError(err.response.data))
+            setTimeout(() => dispatch(clearLoginError(null)), 5000)
         }).finally(() => {
             dispatch(setLoading(false))
         })
