@@ -34,6 +34,8 @@ export const userLogin = () => ({
 export const getUsername = (state) => state.login.username
 export const getPassword = (state) => state.login.password
 export const getLoading = (state) => state.login.loading
+export const getError = (state) => state.login.error
+ 
 
 
 // reducer
@@ -66,6 +68,7 @@ export const LoginReducer = (state = initialState, { type, payload }) => {
             return state
     }
 }
+
 
 
 // thunks
