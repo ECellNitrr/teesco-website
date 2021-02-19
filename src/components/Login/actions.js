@@ -1,4 +1,5 @@
 import ApiClient from '../../utils/ApiClient';
+import { makeErrorDict } from '../../utils/ApiUtils';
 import CustomHistory from '../../utils/CustomHistory';
 import { storeUserToken } from '../../utils/Token';
 
@@ -83,7 +84,8 @@ export const loginHandler = (email, password) => (dispatch) => {
             CustomHistory.push('/orgs')
         }).catch(err => {
             //Create a error then remove after 5 seconds
-            dispatch(setLoginError(err.response.data))
+            const error = makeErrorDict(err);
+            dispatch(setLoginError(error))
             setTimeout(() => dispatch(clearLoginError(null)), 5000)
         }).finally(() => {
             dispatch(setLoading(false))

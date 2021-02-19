@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getLoading, loginHandler } from "./actions";
+import { getLoading, loginHandler, getError } from "./actions";
 import { FaSpinner } from "react-icons/fa";
 
-const LoginForm = ({ loading, loginHandler }) => {
+const LoginForm = ({ loading, loginHandler, error }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,6 +24,9 @@ const LoginForm = ({ loading, loginHandler }) => {
   return (
     <div className="card">
       <div className="card-body">
+        {error && error.errorDict["detail"] && <div className="alert alert-danger" role="alert">
+              {error.errorDict["detail"]}
+          </div>}
         <form onSubmit={(e) => onSubmit(e)}>
           <h4 className="card-title text-center my-3">Teesco login</h4>
           <div className="form-group">
@@ -37,6 +40,7 @@ const LoginForm = ({ loading, loginHandler }) => {
               placeholder="wallstreet@example.com"
               required
             />
+            {error && error.errorDict["email"] && <span className="text-danger">{error.errorDict["email"]}</span>}
           </div>
           <div className="form-group">
             <label>Password:</label>
@@ -49,6 +53,7 @@ const LoginForm = ({ loading, loginHandler }) => {
               placeholder="bitcoin2021"
               required
             />
+            {error && error.errorDict["password"] && <span className="text-danger">{error.errorDict["password"]}</span>}
           </div>
           <div className="mt-3 d-flex justify-content-center">
             <button
@@ -68,6 +73,7 @@ const LoginForm = ({ loading, loginHandler }) => {
 
 const mapStateToProps = (state) => ({
   loading: getLoading(state),
+  error: getError(state)
 });
 
 const mapDispatchToProps = (dispatch) =>
