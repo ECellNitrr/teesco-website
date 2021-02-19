@@ -17,7 +17,7 @@ const LoginForm = ({ loading, loginHandler }) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
+    
     loginHandler(email, password);
   };
 
@@ -35,6 +35,7 @@ const LoginForm = ({ loading, loginHandler }) => {
               value={email}
               className="form-control"
               placeholder="wallstreet@example.com"
+              required
             />
           </div>
           <div className="form-group">
@@ -46,6 +47,7 @@ const LoginForm = ({ loading, loginHandler }) => {
               value={password}
               className="form-control"
               placeholder="bitcoin2021"
+              required
             />
           </div>
           <div className="mt-3 d-flex justify-content-center">
