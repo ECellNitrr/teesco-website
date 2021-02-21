@@ -84,6 +84,7 @@ export const loginHandler = (email, password) => (dispatch) => {
             CustomHistory.push('/orgs')
         }).catch(err => {
             //Create a error then remove after 3 seconds
+            const error = makeErrorDict(err);
             dispatch(setLoginError(makeErrorDict(err)));
             setTimeout(() => dispatch(clearLoginError(null)), 3000)
         }).finally(() => {
