@@ -43,6 +43,7 @@ const LoginForm = ({ username, password, loading, updateInputFieldHandler, login
                             <FaSpinner className={loading ? 'ml-2 spinner' : 'd-none'} />
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>
