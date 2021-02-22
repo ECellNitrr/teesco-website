@@ -3,7 +3,7 @@ import * as authTypes from "../../actions/Auth/types";
 const initialState = {
     isAuthenticated: null,
     loading: false,
-    error: null,
+    error: [],
 };
 
 export default function (state = initialState,  action) {
@@ -31,14 +31,13 @@ export default function (state = initialState,  action) {
         case authTypes.SET_AUTH_ERROR:
             return {
                 ...state,
-                error: payload,
+                error: [...state.error, payload],
             }
         case authTypes.REMOVE_AUTH_ERROR:
             return {
                 ...state,
-                error: null,
+                error: state.error.filter((error) => error.id !== payload)
             }
-        
         default:
             return state;
     }

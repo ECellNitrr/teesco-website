@@ -17,9 +17,13 @@ export const setLoadingAction = (loading) => (dispatch) => {
 
 //Set and clear error
 export const setErrorAlert = (errors, timeout=3000) => (dispatch) => {
+  //Generate random number for error tracking and removing
+  const id = Math.floor((Math.random() * 10000000) + 1);
+  //Make Error Object
+  const error  = { ...errors, ...id };
   dispatch({
     type: authTypes.SET_AUTH_ERROR,
-    payload: errors,
+    payload: error
   })
   //Clear error after timeout provided
   setTimeout(() => dispatch({ type: authTypes.REMOVE_AUTH_ERROR }), timeout)
