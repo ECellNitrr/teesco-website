@@ -7,9 +7,6 @@ import { storeUserToken } from "../../utils/Token";
 //Types
 import * as authTypes from "./types";
 
-//Alerts
-import { setAlert } from '../Alert'
-
 //SetLoading state
 export const setLoadingAction = (loading) => (dispatch) => {
   dispatch({
@@ -18,8 +15,18 @@ export const setLoadingAction = (loading) => (dispatch) => {
   });
 };
 
+//Set and clear error
+export const setErrorAlert = (errors, timeout=3000) => (dispatch) => {
+  dispatch({
+    type: authTypes.SET_AUTH_ERROR,
+    payload: errors,
+  })
+  //Clear error after timeout provided
+  setTimeout(() => dispatch({ type: authTypes.REMOVE_AUTH_ERROR }), timeout)
+}
+
 //Login User
-export const loginAction = (email, password) => (dispatch) => {
+export const loginAction = (email, password) => (dispatch) => {// import rootReducer from "../reducers";
   dispatch(setLoadingAction(true));
   ApiClient()
     .post("/users/login/", {
@@ -31,8 +38,8 @@ export const loginAction = (email, password) => (dispatch) => {
       CustomHistory.push("/orgs");
     })
     .catch((err) => {
-      const errors = makeErrorDict(err);
-      //@ToDo Error Handling in new reducer
+      dispatch(setErrorAlert(makeErrorDict(err)));
+      dispatch({ type: authTypes.LOGIN_ERROR });
     })
     .finally(() => {
       dispatch(setLoadingAction(false));

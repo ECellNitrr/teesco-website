@@ -1,36 +1,45 @@
-import {
-    SET_LOADING,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL
-} from "../../actions/Auth/types";
+import * as authTypes from "../../actions/Auth/types";
 
 const initialState = {
     isAuthenticated: null,
     loading: false,
-    user: null,
+    error: null,
 };
 
-export default (state = initialState,  action) => {
+export default function (state = initialState,  action) {
     const { type, payload } = action;
     switch(type){
-        case SET_LOADING:
+        case authTypes.SET_LOADING:
             return {
                 ...state,
-                loading: true,
+                loading: payload,
             }
-        case LOGIN_SUCCESS:
+        case authTypes.LOGIN_SUCCESS:
             return {
                 ...state,
                 ...payload,
                 isAuthenticated: true,
                 loading: false
             }
-        case LOGIN_FAIL:
+        case authTypes.LOGIN_ERROR:
             return {
                 ...state,
                 isAuthenticated: false,
                 loading: false,
-                user: null,
-            } 
+            }
+
+        case authTypes.SET_AUTH_ERROR:
+            return {
+                ...state,
+                error: payload,
+            }
+        case authTypes.REMOVE_AUTH_ERROR:
+            return {
+                ...state,
+                error: null,
+            }
+        
+        default:
+            return state;
     }
 }

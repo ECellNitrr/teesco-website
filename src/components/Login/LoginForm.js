@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getLoading, loginHandler, getError } from "./actions";
 import { FaSpinner } from "react-icons/fa";
-import { emailValidator } from '../../utils/Validator'
+import { createStructuredSelector } from 'reselect';
+//Action
+import { loginAction } from '../../actions/Auth'
+//Selectors
+import { makeSelectLoading, makeSelectErrors } from '../../selectors/Auth';
+//Utility Function
+import { emailValidator } from '../../utils/Validator';
 
-
-const LoginForm = ({ loading, loginHandler, error }) => {
+const LoginForm = ({ loading, loginAction, error }) => {
   
   //State of inputs
   const [formData, setFormData] = useState({
@@ -14,7 +18,7 @@ const LoginForm = ({ loading, loginHandler, error }) => {
     password: "",
   });
 
-  //Errors
+  //FrontEnd form validation error
   const [formError, setFormError] = useState({
     msg: "",
     type: ""
@@ -49,12 +53,12 @@ const LoginForm = ({ loading, loginHandler, error }) => {
       return;
     }
 
-    loginHandler(email, password);
+    loginAction(email, password);
   };
 
   //Display in form errors
   const errorDisplay = (errMsg) => <span className="text-danger">{errMsg}</span>
-   
+
   return (
     <div className="card">
       <div className="card-body">
@@ -106,18 +110,11 @@ const LoginForm = ({ loading, loginHandler, error }) => {
   );
 };
 
+const mapStateToProps = createStructuredSelector({
+  loading: makeSelectLoading(),
+  error: makeSelectErrors()
+})
 
-const mapStateToProps = (state) => ({
-  loading: getLoading(state),
-  error: getError(state)
-});
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      loginHandler,
-    },
-    dispatch
-  );
+const mapDispatchToProps = (dispatch) => bindActionCreators({ loginAction }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
