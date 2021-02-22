@@ -39,6 +39,7 @@ export const loginAction = (email, password) => (dispatch) => {// import rootRed
     })
     .then((response) => {
       storeUserToken(response.data.token);
+      dispatch(loadUserAction())
       CustomHistory.push("/orgs");
     })
     .catch((err) => {
@@ -49,3 +50,23 @@ export const loginAction = (email, password) => (dispatch) => {// import rootRed
       dispatch(setLoadingAction(false));
     });
 };
+
+
+export const loadUserAction = () => dispatch => {
+  dispatch(setLoadingAction(true));
+  ApiClient()
+      .get('/users/')
+      .then((response) => {
+        dispatch({
+          type: authTypes.LOAD_USER,
+          payload: response.data,
+        })
+      })
+      .catch((err) => {
+        dispatch(setErrorAlert(makeErrorDict(err)));
+        dispatch({ type: authTypes.LOAD_USER_ERROR });
+      })
+      .finally(() => {
+        dispatch(setLoadingAction(false));
+      })
+} 
