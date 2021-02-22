@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 
-import {connect} from 'react-redux'
-import { bindActionCreators } from 'redux'
+// import {connect} from 'react-redux'
+// import { bindActionCreators } from 'redux'
 
 import {FiEyeOff, FiEye} from 'react-icons/fi';
 import InputField from '../BasicComponents/InputField/input_field';
 import { FaSpinner } from 'react-icons/fa';
+import FormError from '../BasicComponents/FormError/form_error';
 
 const SignUpForm=()=>{
     const [firstName, setFirstName] = useState("")
@@ -14,6 +15,7 @@ const SignUpForm=()=>{
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [phoneNumber, setPhoneNumber]=useState("")
+    const [toShowError, setToShowError]=useState(false)
     const [isTermsAgreed, setIsTermsAgreed]=useState(true)
     const [isLoading, setIsLoding]=useState(false)
     const [isPasswordHidden, setIsPasswordHidden]=useState(true)
@@ -53,6 +55,7 @@ const SignUpForm=()=>{
                             label={"*Email"}
                             onChange={e => setEmail(e.target.value)}
                         />
+                        <FormError></FormError>
                     </div>
                     <div className="form-group">
                         <InputField 
