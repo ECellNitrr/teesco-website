@@ -5,6 +5,7 @@ class InputField extends Component{
     constructor(props){
         super(props)
         this.onChange=this.onChange.bind(this);
+        this.onInput=this.onInput.bind(this);
     }
 
     componentDidMount(){
@@ -12,6 +13,12 @@ class InputField extends Component{
 
     onChange(event){
         this.props.onChange(event);
+    }
+
+    onInput(e){
+        if(this.props.type==="number"){
+            e.target.value = e.target.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')
+        }
     }
     render(){
         let inputClass="form-control";
@@ -24,19 +31,23 @@ class InputField extends Component{
         else if(this.props.suffix){
             inputClass+=" input-paddingforRight";
         }
+
+        let finalInputType="text";
+        if(this.props.type==="password"){
+            finalInputType=this.props.type;
+        }
+
         return (
             <div className="input-field_wrapper">
                 {((this.props.label)&&(this.props.label.length>0)) ? 
-                <label>{this.props.label}</label>
+                <label className="input_label">{this.props.label}</label>
                 : <div></div>}
                 <div className="input_wrapper">
                     <div className="input-cover">
-                        <input type="text"
+                        <input
                             onChange={e => this.onChange(e)}
-                            type={
-                                (this.props.type) ? this.props.type : 
-                                "text"
-                            }
+                            type={finalInputType}
+                            onInput={this.onInput}
                             pattern={this.props.pattern}
                             value={this.props.value}
                             className={inputClass}

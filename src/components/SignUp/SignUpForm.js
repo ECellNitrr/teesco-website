@@ -19,10 +19,10 @@ const SignUpForm=()=>{
     const [isPasswordHidden, setIsPasswordHidden]=useState(true)
     
     return (
-        <div className="card pl-3 pr-3">
-            <div className="card-body p-5">
+        <div className="card px-3">
+            <div className="card-body py-2 px-5 my-4 mx-3">
                 <form>
-                    <h2 className="card-title text-center p-2">
+                    <h2 className="card-title text-center pt-2">
                         Welcome
                     </h2>
                     <div className="row">
@@ -86,18 +86,19 @@ const SignUpForm=()=>{
                             prefix={
                                 <strong>+91</strong>
                             }
+                            type="number"
                             onChange={e => setPhoneNumber(e.target.value)}
                         />
                     </div>
 
-                    <div className="form-check mt-4 mb-4">
+                    <div className="form-check mb-3">
                         <input className="form-check-input" type="checkbox" value={isTermsAgreed} onChange={(e)=> setIsTermsAgreed(e.target.value)} id="flexCheckDefault" />
-                        <label className="form-check-label fntSz-14" for="flexCheckDefault">
+                        <label className="form-check-label fntSz-13" for="flexCheckDefault">
                             I agree to terms and conditions of Teesco and E-Cell NITRR Open Source.
                         </label>
                     </div>
 
-                    <div className="mt-4 d-flex justify-content-end">
+                    <div className="d-flex justify-content-end">
                         <button
                             disabled={isLoading}
                             className="btn btn-primary">
