@@ -24,7 +24,7 @@ export const setErrorAlert = (errors, timeout=3000) => (dispatch) => {
   dispatch({
     type: authTypes.SET_AUTH_ERROR,
     payload: error
-  })
+  });
   //Clear error after timeout provided
   setTimeout(() => dispatch({ type: authTypes.REMOVE_AUTH_ERROR }), timeout)
 }
@@ -39,7 +39,8 @@ export const loginAction = (email, password) => (dispatch) => {// import rootRed
     })
     .then((response) => {
       storeUserToken(response.data.token);
-      dispatch(loadUserAction())
+      dispatch(loadUserAction());
+      dispatch(getUserOrganisationsAction());
       CustomHistory.push("/orgs");
     })
     .catch((err) => {
@@ -51,7 +52,7 @@ export const loginAction = (email, password) => (dispatch) => {// import rootRed
     });
 };
 
-
+//Get Basic user info
 export const loadUserAction = () => dispatch => {
   dispatch(setLoadingAction(true));
   ApiClient()
@@ -69,4 +70,24 @@ export const loadUserAction = () => dispatch => {
       .finally(() => {
         dispatch(setLoadingAction(false));
       })
-} 
+}
+
+//Get all organisation user is associated with
+export const getUserOrganisationsAction = () => dispatch => {
+  dispatch(setLoadingAction(true));
+  ApiClient()
+      .get('/users/org/')
+      .then((response) => {
+        dispatch({
+          type: authTypes.LOAD_USER_ORGS,
+          payload: response.data
+        })
+      })
+      .catch((err) => {
+        dispatch(setErrorAlert(makeErrorDict(err)));
+        dispatch({ type: authTypes.LOAD_USER_ORGS_ERROR });
+      })
+      .finally(() => {
+        dispatch(setLoadingAction(false));
+      })
+}

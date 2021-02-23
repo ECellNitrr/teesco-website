@@ -4,7 +4,8 @@ const initialState = {
     isAuthenticated: null,
     loading: false,
     error: [],
-    user: null
+    userInfo: null,
+    userOrgs: [],
 };
 
 export default function (state = initialState,  action) {
@@ -22,20 +23,24 @@ export default function (state = initialState,  action) {
                 isAuthenticated: true,
                 loading: false
             }
-        
         case authTypes.LOAD_USER:
             return {
                 ...state,
-                user: payload
+                userInfo: payload
             }
-        
+        case authTypes.LOAD_USER_ORGS:
+            return {
+                ...state,
+                userOrgs: payload
+            }
+
         case authTypes.LOGIN_ERROR:
         case authTypes.LOAD_USER_ERROR:
             return {
                 ...state,
                 isAuthenticated: false,
                 loading: false,
-                user: null,
+                userInfo: null,
             }
                 
         case authTypes.SET_AUTH_ERROR:
