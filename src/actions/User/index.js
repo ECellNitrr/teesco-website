@@ -4,8 +4,12 @@ import { makeErrorDict } from "../../utils/ApiUtils";
 import CustomHistory from "../../utils/CustomHistory";
 import { storeUserToken } from "../../utils/Token";
 
+//Alert Action
+import { setErrorAlert } from '../Alerts';
+
 //Types
 import * as authTypes from "./types";
+import * as appConstants from "../../utils/constants";
 
 //SetLoading state
 export const setLoadingAction = (loading) => (dispatch) => {
@@ -15,19 +19,6 @@ export const setLoadingAction = (loading) => (dispatch) => {
   });
 };
 
-//Set and clear error
-export const setErrorAlert = (errors, timeout=3000) => (dispatch) => {
-  //Generate random number for error tracking and removing
-  const id = Math.floor((Math.random() * 10000000) + 1);
-  //Make Error Object
-  const error  = { ...errors, ...id };
-  dispatch({
-    type: authTypes.SET_AUTH_ERROR,
-    payload: error
-  });
-  //Clear error after timeout provided
-  setTimeout(() => dispatch({ type: authTypes.REMOVE_AUTH_ERROR }), timeout)
-}
 
 //Login User
 export const loginAction = (email, password) => (dispatch) => {// import rootReducer from "../reducers";
@@ -44,7 +35,7 @@ export const loginAction = (email, password) => (dispatch) => {// import rootRed
       CustomHistory.push("/orgs");
     })
     .catch((err) => {
-      dispatch(setErrorAlert(makeErrorDict(err)));
+      dispatch(setErrorAlert(makeErrorDict(err), appConstants.ALERT_USER_LOGIN_ERR));
       dispatch({ type: authTypes.LOGIN_ERROR });
     })
     .finally(() => {
@@ -64,7 +55,7 @@ export const loadUserAction = () => dispatch => {
         })
       })
       .catch((err) => {
-        dispatch(setErrorAlert(makeErrorDict(err)));
+        dispatch(setErrorAlert(makeErrorDict(err), appConstants.ALERT_LOAD_USER_ERR));
         dispatch({ type: authTypes.LOAD_USER_ERROR });
       })
       .finally(() => {
@@ -84,7 +75,7 @@ export const getUserOrganisationsAction = () => dispatch => {
         })
       })
       .catch((err) => {
-        dispatch(setErrorAlert(makeErrorDict(err)));
+        dispatch(setErrorAlert(makeErrorDict(err), appConstants.ALERT_LOAD_USER_ORGS_ERR));
         dispatch({ type: authTypes.LOAD_USER_ORGS_ERROR });
       })
       .finally(() => {

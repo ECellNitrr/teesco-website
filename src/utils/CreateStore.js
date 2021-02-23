@@ -3,10 +3,11 @@ import ReduxThunk from 'redux-thunk'
 import { combineReducers } from 'redux';
 
 import UserReducer from '../reducers/User';
-// import { UserReducer } from '../components/PrivateRoute/actions'
+import AlertReducer from '../reducers/Alerts'
 
 const RootReducer = combineReducers({
     user: UserReducer,
+    alert: AlertReducer
 })
 
 const initialState = {};

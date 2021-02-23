@@ -6,7 +6,8 @@ import { createStructuredSelector } from 'reselect';
 //Action
 import { loginAction } from '../../actions/User'
 //Selectors
-import { makeSelectLoading, makeSelectErrors } from '../../selectors/User';
+import { makeSelectLoading } from '../../selectors/User';
+import { makeSelectLoginError } from '../../selectors/Alerts';
 //Utility Function
 import { emailValidator } from '../../utils/Validator';
 
@@ -36,22 +37,22 @@ const LoginForm = ({ loading, loginAction, error }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    //Validate user input and set error if validation fails and remove it after 3 secs
-    if(email.length < 1){
-      setFormError({ msg: "This Field Cannot be Empty", type : "email" });
-      setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
-      return;
-    }
-    if(!emailValidator(email)){
-      setFormError({ msg: "Please Enter a valid email", type : "email" });
-      setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
-      return;
-    }
-    if(password.length < 1){
-      setFormError( { msg: "This Field Cannot be Empty", type : "password" } );
-      setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
-      return;
-    }
+    // //Validate user input and set error if validation fails and remove it after 3 secs
+    // if(email.length < 1){
+    //   setFormError({ msg: "This Field Cannot be Empty", type : "email" });
+    //   setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
+    //   return;
+    // }
+    // if(!emailValidator(email)){
+    //   setFormError({ msg: "Please Enter a valid email", type : "email" });
+    //   setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
+    //   return;
+    // }
+    // if(password.length < 1){
+    //   setFormError( { msg: "This Field Cannot be Empty", type : "password" } );
+    //   setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
+    //   return;
+    // }
 
     loginAction(email, password);
   };
@@ -62,8 +63,11 @@ const LoginForm = ({ loading, loginAction, error }) => {
   return (
     <div className="card">
       <div className="card-body">
-        {error && error.errorDict.detail && <div className="alert alert-danger" role="alert">
-              {error.errorDict.detail}
+        {
+          error.map(err => console.log(err))
+        }
+        {error && error[0] && error[0].errorDict.detail && <div className="alert alert-danger" role="alert">
+              {error[0].errorDict.detail}
           </div>}
         <form onSubmit={(e) => onSubmit(e)}>
           <h4 className="card-title text-center my-3">Teesco login</h4>
@@ -76,9 +80,9 @@ const LoginForm = ({ loading, loginAction, error }) => {
               value={email}
               className="form-control"
               placeholder="wallstreet@example.com"
-              required
+              // required
             />
-            {formError.type ? (formError.type === "email" && errorDisplay(formError.msg)) : error && error.errorDict.email && errorDisplay(error.errorDict.email)}
+            {formError.type ? (formError.type === "email" && errorDisplay(formError.msg)) : error && error[0] && error[0].errorDict.email && errorDisplay(error[0].errorDict.email)}
           </div>
           <div className="form-group">
             <label>Password:</label>
@@ -89,10 +93,10 @@ const LoginForm = ({ loading, loginAction, error }) => {
               value={password}
               className="form-control"
               placeholder="bitcoin2021"
-              required
+              // required
               minLength="8"
             />
-            {formError.type ? (formError.type === "password" && errorDisplay(formError.msg)) : error && error.errorDict.password && errorDisplay(error.errorDict.password)}
+            {formError.type ? (formError.type === "password" && errorDisplay(formError.msg)) : error && error[0] && error[0].errorDict.password && errorDisplay(error[0].errorDict.password)}
           </div>
           <div className="mt-3 d-flex justify-content-center">
             <button
@@ -112,7 +116,7 @@ const LoginForm = ({ loading, loginAction, error }) => {
 
 const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
-  error: makeSelectErrors()
+  error: makeSelectLoginError()
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ loginAction }, dispatch);
