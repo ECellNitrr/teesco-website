@@ -11,7 +11,7 @@ import { makeSelectLoginError } from '../../selectors/Alerts';
 //Utility Function
 import { emailValidator } from '../../utils/Validator';
 
-const LoginForm = ({ loading, loginAction, error }) => {
+const LoginForm = ({ loading, loginAction, error: { errorDict } }) => {
   
   //State of inputs
   const [formData, setFormData] = useState({
@@ -37,7 +37,7 @@ const LoginForm = ({ loading, loginAction, error }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    //Validate user input and set error if validation fails and remove it after 3 secs
+    // Validate user input and set error if validation fails and remove it after 3 secs
     if(email.length < 1){
       setFormError({ msg: "This Field Cannot be Empty", type : "email" });
       setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
@@ -63,8 +63,8 @@ const LoginForm = ({ loading, loginAction, error }) => {
   return (
     <div className="card">
       <div className="card-body">
-        {error && error[0] && error[0].errorDict.detail && <div className="alert alert-danger" role="alert">
-              {error[0].errorDict.detail}
+        {errorDict && errorDict.detail && <div className="alert alert-danger" role="alert">
+              {errorDict.detail}
           </div>}
         <form onSubmit={(e) => onSubmit(e)}>
           <h4 className="card-title text-center my-3">Teesco login</h4>
@@ -79,7 +79,7 @@ const LoginForm = ({ loading, loginAction, error }) => {
               placeholder="wallstreet@example.com"
               required
             />
-            {formError.type ? (formError.type === "email" && errorDisplay(formError.msg)) : error && error[0] && error[0].errorDict.email && errorDisplay(error[0].errorDict.email)}
+            {formError.type ? (formError.type === "email" && errorDisplay(formError.msg)) : errorDict && errorDict.email && errorDisplay(errorDict.email)}
           </div>
           <div className="form-group">
             <label>Password:</label>
@@ -93,7 +93,7 @@ const LoginForm = ({ loading, loginAction, error }) => {
               required
               minLength="8"
             />
-            {formError.type ? (formError.type === "password" && errorDisplay(formError.msg)) : error && error[0] && error[0].errorDict.password && errorDisplay(error[0].errorDict.password)}
+            {formError.type ? (formError.type === "password" && errorDisplay(formError.msg)) : errorDict && errorDict.password && errorDisplay(errorDict.password)}
           </div>
           <div className="mt-3 d-flex justify-content-center">
             <button

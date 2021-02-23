@@ -17,17 +17,28 @@ export const makeSelectErrors = () => createSelector(
     alertState => alertState.errorAlerts
 )
 
-//Returns an array with all the match errors
+//Returns an object with the matched error
 export const makeSelectLoginError = () => createSelector(
     makeSelectErrors(), //Since this returns all errorAlerts 
-    errorAlerts => errorAlerts.filter((error) => { return error.errType === appConstants.ALERT_USER_LOGIN_ERR })
+    errorAlerts => {
+        let error = {};
+        for(let item in errorAlerts){
+            if(errorAlerts[item].errType === appConstants.ALERT_USER_LOGIN_ERR){
+                error = errorAlerts[item];
+                break;
+            }
+        }
+        return error;
+    }
 )
 
+//Returns an array with all the matched errTypes
 export const makeSelectUserInfoError = () => createSelector(
     makeSelectErrors(), //Since this returns all errorAlerts
     errorAlerts => errorAlerts.filter((error) => { return error.errType === appConstants.ALERT_LOAD_USER_ERR })
 )
 
+//Returns an array with all the matched errTypes
 export const makeSelectUserOrgsError = () => createSelector(
     makeSelectErrors(), //Since this returns all errorAlerts
     errorAlerts => errorAlerts.filter((error) => { return error.errType === appConstants.ALERT_LOAD_USER_ORGS_ERR })
