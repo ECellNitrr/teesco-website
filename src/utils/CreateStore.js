@@ -2,12 +2,11 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import ReduxThunk from 'redux-thunk'
 import { combineReducers } from 'redux';
 
-import AuthReducer from '../reducers/Auth';
-import { UserReducer } from '../components/PrivateRoute/actions'
+import UserReducer from '../reducers/User';
+// import { UserReducer } from '../components/PrivateRoute/actions'
 
 const RootReducer = combineReducers({
     user: UserReducer,
-    auth: AuthReducer
 })
 
 const initialState = {};

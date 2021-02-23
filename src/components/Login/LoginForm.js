@@ -4,9 +4,9 @@ import { bindActionCreators } from "redux";
 import { FaSpinner } from "react-icons/fa";
 import { createStructuredSelector } from 'reselect';
 //Action
-import { loginAction } from '../../actions/Auth'
+import { loginAction } from '../../actions/User'
 //Selectors
-import { makeSelectLoading, makeSelectErrors } from '../../selectors/Auth';
+import { makeSelectLoading, makeSelectErrors } from '../../selectors/User';
 //Utility Function
 import { emailValidator } from '../../utils/Validator';
 
