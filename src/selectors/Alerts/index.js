@@ -28,7 +28,7 @@ export const makeSelectUserInfoError = () => createSelector(
     errorAlerts => errorAlerts.filter((error) => { return error.errType === appConstants.ALERT_LOAD_USER_ERR })
 )
 
-export const makeSelectUserInfoError = () => createSelector(
+export const makeSelectUserOrgsError = () => createSelector(
     makeSelectErrors(), //Since this returns all errorAlerts
     errorAlerts => errorAlerts.filter((error) => { return error.errType === appConstants.ALERT_LOAD_USER_ORGS_ERR })
 )

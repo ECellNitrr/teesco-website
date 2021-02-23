@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { fetchUserOrgsHandler } from './actions'
+import { getUserOrganisationsAction } from '../../actions/User'
 
-export const Orgs = ({ fetchUserOrgsHandler }) => {
+export const Orgs = ({ getUserOrganisationsAction }) => {
     useEffect(() => {
-        fetchUserOrgsHandler()
-    }, [fetchUserOrgsHandler])
+        getUserOrganisationsAction()
+    }, [getUserOrganisationsAction])
 
     return (
         <div>
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    fetchUserOrgsHandler
+    getUserOrganisationsAction
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Orgs)

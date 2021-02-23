@@ -31,7 +31,6 @@ export const loginAction = (email, password) => (dispatch) => {// import rootRed
     .then((response) => {
       storeUserToken(response.data.token);
       dispatch(loadUserAction());
-      dispatch(getUserOrganisationsAction());
       CustomHistory.push("/orgs");
     })
     .catch((err) => {

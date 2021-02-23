@@ -63,9 +63,6 @@ const LoginForm = ({ loading, loginAction, error }) => {
   return (
     <div className="card">
       <div className="card-body">
-        {
-          error.map(err => console.log(err))
-        }
         {error && error[0] && error[0].errorDict.detail && <div className="alert alert-danger" role="alert">
               {error[0].errorDict.detail}
           </div>}
