@@ -1,5 +1,12 @@
 import * as alertTypes from '../../actions/Alerts/types';
 
+/**
+ * Alerts can be of three types
+ * 1)Notification Messages
+ * 2)Success Messages
+ * 3)Error Messages
+ */
+
 const initialState = {
     errorAlerts: [],
     notifAlerts: [],

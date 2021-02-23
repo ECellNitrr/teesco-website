@@ -13,8 +13,3 @@ export const makeSelectLoading = () => createSelector(
     selectUser,
     userState => userState.loading
 )
-
-export const makeSelectErrors = () => createSelector(
-    selectUser,
-    userState => userState.error[0]
-)

@@ -37,22 +37,22 @@ const LoginForm = ({ loading, loginAction, error }) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // //Validate user input and set error if validation fails and remove it after 3 secs
-    // if(email.length < 1){
-    //   setFormError({ msg: "This Field Cannot be Empty", type : "email" });
-    //   setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
-    //   return;
-    // }
-    // if(!emailValidator(email)){
-    //   setFormError({ msg: "Please Enter a valid email", type : "email" });
-    //   setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
-    //   return;
-    // }
-    // if(password.length < 1){
-    //   setFormError( { msg: "This Field Cannot be Empty", type : "password" } );
-    //   setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
-    //   return;
-    // }
+    //Validate user input and set error if validation fails and remove it after 3 secs
+    if(email.length < 1){
+      setFormError({ msg: "This Field Cannot be Empty", type : "email" });
+      setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
+      return;
+    }
+    if(!emailValidator(email)){
+      setFormError({ msg: "Please Enter a valid email", type : "email" });
+      setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
+      return;
+    }
+    if(password.length < 1){
+      setFormError( { msg: "This Field Cannot be Empty", type : "password" } );
+      setTimeout(() => setFormError({ msg: "", type: "" }), 3000);
+      return;
+    }
 
     loginAction(email, password);
   };
@@ -80,7 +80,7 @@ const LoginForm = ({ loading, loginAction, error }) => {
               value={email}
               className="form-control"
               placeholder="wallstreet@example.com"
-              // required
+              required
             />
             {formError.type ? (formError.type === "email" && errorDisplay(formError.msg)) : error && error[0] && error[0].errorDict.email && errorDisplay(error[0].errorDict.email)}
           </div>
@@ -93,7 +93,7 @@ const LoginForm = ({ loading, loginAction, error }) => {
               value={password}
               className="form-control"
               placeholder="bitcoin2021"
-              // required
+              required
               minLength="8"
             />
             {formError.type ? (formError.type === "password" && errorDisplay(formError.msg)) : error && error[0] && error[0].errorDict.password && errorDisplay(error[0].errorDict.password)}
