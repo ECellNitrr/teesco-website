@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getUserToken } from '../components/PrivateRoute/actions'
+import { getUserToken } from './Token'
 
 export default () => {
   return axios.create({

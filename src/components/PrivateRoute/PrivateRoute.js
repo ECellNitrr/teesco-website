@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { isUserLoggedIn } from './actions'
+import { isAuthenticated } from '../../utils/Token'
 import { Redirect, Route } from 'react-router-dom'
 
 
@@ -8,7 +8,7 @@ import { Redirect, Route } from 'react-router-dom'
 export const PrivateRoute = ({ path, component }) => {
   const Component = component;
 
-  if (!isUserLoggedIn()) {
+  if (!isAuthenticated()) {
     return (<Redirect to='/login' />)
   }
 
