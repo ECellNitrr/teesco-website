@@ -1,26 +1,21 @@
-import React, { useEffect } from 'react'
-import { connect } from 'react-redux'
-import { fetchUserOrgsHandler } from './actions'
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchUserOrgsHandler } from './actions';
 
 export const Orgs = ({ fetchUserOrgsHandler }) => {
-    useEffect(() => {
-        fetchUserOrgsHandler()
-    }, [fetchUserOrgsHandler])
+  useEffect(() => {
+    fetchUserOrgsHandler();
+  }, [fetchUserOrgsHandler]);
 
-    return (
-        <div>
-            fetching the orgs which user was a part of 
-            loading will go here
-        </div>
-    )
-}
+  return (
+    <div>fetching the orgs which user was a part of loading will go here</div>
+  );
+};
 
-const mapStateToProps = (state) => ({
-
-})
+const mapStateToProps = (state) => ({});
 
 const mapDispatchToProps = {
-    fetchUserOrgsHandler
-}
+  fetchUserOrgsHandler,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Orgs)
+export default connect(mapStateToProps, mapDispatchToProps)(Orgs);

@@ -1,24 +1,18 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import { connect } from 'react-redux'
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 export const Dashboard = (props) => {
-    const params = useParams()
-    console.log(params)
+  const params = useParams();
 
-    return (
-        <div>
-            Dashboard
-        </div>
-    )
-}
+  const userOrgs = useSelector((state) => state.user);
 
-const mapStateToProps = (state) => ({
+  return <div>Dashboard</div>;
+};
 
-})
+const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {
+const mapDispatchToProps = {};
 
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

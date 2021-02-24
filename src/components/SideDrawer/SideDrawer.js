@@ -1,7 +1,6 @@
 import React from 'react';
+
 import './drawer.css';
-import { Link, NavLink } from 'react-router-dom';
-import './drawer.css'
 
 const SideDrawer = (props) => {
   const data = {
@@ -39,6 +38,7 @@ const SideDrawer = (props) => {
   const { org1, org2 } = data;
   const default_org = org1;
   const default_group = org1.groups[1];
+
   const GroupItem = ({ group }) => {
     return (
       <div className="groupItem pt-2">
@@ -68,12 +68,12 @@ const SideDrawer = (props) => {
   return (
     <div>
       <div id="nav-container">
-        <div class="bg"></div>
+        <div className="bg"></div>
 
-        <div class="button" tabIndex="0">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
+        <div className="button" tabIndex="0">
+          <span className="icon-bar"></span>
+          <span className="icon-bar"></span>
+          <span className="icon-bar"></span>
         </div>
 
         <div id="nav-content" tabIndex="0">
