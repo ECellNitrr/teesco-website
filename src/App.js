@@ -1,7 +1,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-import Login from './components/Login/Login'
+import Login from './pages/Auth/LoginPage';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import Orgs from './components/Orgs/Orgs'
 import OrgSearch from './components/OrgSearch/OrgSearch'
