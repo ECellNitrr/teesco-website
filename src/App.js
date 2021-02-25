@@ -1,7 +1,7 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Login from './components/Login/Login';
+import LoginPage from './components/Login/LoginForm';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Orgs from './components/Orgs/Orgs';
 import OrgSearch from './components/OrgSearch/OrgSearch';
@@ -13,7 +13,7 @@ export default function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/login" component={LoginPage} />
         <PrivateRoute
           exact
           path="/orgs/:orgID/dashboard"

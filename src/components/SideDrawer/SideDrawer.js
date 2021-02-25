@@ -1,50 +1,40 @@
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import './drawer.css';
+import { getUserOrganisationsAction } from '../../actions/User';
+import { getOrgGroupsAction } from '../../actions/Organisation';
 
-const SideDrawer = (props) => {
-  const data = {
-    org1: {
-      info: {
-        name: 'E-Cell NITRR',
-        tagline: 'Non-Profit Organization',
-        about: '',
-      },
-      groups: [
-        'Admins',
-        'Public Relations',
-        'Task Regulators',
-        'Executives',
-        'Managers',
-        'Volunteers',
-      ],
-      user_permissions: {
-        canCreate: true,
-      },
-    },
-    org2: {
-      info: {
-        name: 'i-Cell NITRR',
-        tagline: 'lorem epsum sit dolor',
-        about: '',
-      },
-      groups: ['Public Relations', 'Executives', 'Volunteers'],
-      user_permissions: {
-        canCreate: false,
-      },
-    },
-  };
+const SideDrawer = () => {
+  const [modal, setModal] = useState(false);
 
-  const { org1, org2 } = data;
-  const default_org = org1;
-  const default_group = org1.groups[1];
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.user);
+  const orgGroups = useSelector((state) => state.orgGroups);
+
+  const { userOrgs, loading } = userData;
+  const { groups } = orgGroups;
+
+  // for defaultData
+  const [orgID, setOrgID] = useState(0);
+  const [grpID, setGrpID] = useState(0);
+
+  const defaultOrg = userOrgs[orgID];
+  const default_group = groups[grpID];
+
+  useEffect(() => {
+    dispatch(getUserOrganisationsAction());
+  }, [dispatch]);
+
+  useEffect(() => {
+    defaultOrg && dispatch(getOrgGroupsAction(defaultOrg.id));
+  }, [defaultOrg]);
 
   const GroupItem = ({ group }) => {
     return (
       <div className="groupItem pt-2">
         <div>
           <i className="fas fa-user"></i>
-          {group === default_group ? (
+          {group === default_group.name ? (
             <>
               <p>{group}</p>
               <span className="pl-3" style={{ marginTop: '-2px' }}>
@@ -65,8 +55,22 @@ const SideDrawer = (props) => {
       </div>
     );
   };
+  const SwitchModal = ({ orgs }) => {
+    const orgSwitchHandler = (id) => {
+      setOrgID(id - 1); // array index not org_id
+      setModal(false);
+    };
+    return (
+      <div className="insideModal">
+        <h5 className="text-center text-light">Switch Organisation</h5>
+        {orgs.map((el) => (
+          <button onClick={() => orgSwitchHandler(el.id)}>{el.org_name}</button>
+        ))}
+      </div>
+    );
+  };
   return (
-    <div>
+    <>
       <div id="nav-container">
         <div className="bg"></div>
 
@@ -77,29 +81,51 @@ const SideDrawer = (props) => {
         </div>
 
         <div id="nav-content" tabIndex="0">
+          {modal && (
+            <div className="switchModal">
+              <SwitchModal orgs={userOrgs} />
+            </div>
+          )}
           <div className="orgCard flex-c">
             <div className="all">
-              <i className="fas fa-border-all"></i>
+              <button
+                onClick={() => setModal((v) => !v)}
+                style={{ border: 'none', outline: 'none' }}
+              >
+                <i className="fas fa-border-all"></i>
+              </button>
             </div>
             <div className="orgIcon">
-              <img src="https://placekitten.com/200/300" alt="orgIcon" />
+              {defaultOrg ? (
+                <img src={defaultOrg.profile_pic} alt="orgIcon" />
+              ) : (
+                <div className="spinner-border" role="status"></div>
+              )}
             </div>
             <div className="org">
-              <h4>{org1.info.name}</h4>
-              <p>
-                <em>"{org1.info.tagline}"</em>
-              </p>
+              {defaultOrg ? <h4>{defaultOrg.org_name}</h4> : <p>no org name</p>}
+              {defaultOrg ? (
+                <p>
+                  <em>"{defaultOrg.tagline}"</em>
+                </p>
+              ) : (
+                <p>no tagline</p>
+              )}
             </div>
           </div>
           <div className="groups">
             <div className="g_head">
               <h5>GROUPS</h5>
-              <i className="fas fa-user-plus"></i>
+              <button style={{ border: 'none', outline: 'none' }}>
+                <i className="fas fa-user-plus"></i>
+              </button>
             </div>
-            <div className="groupContainer pt-4">
-              {org1.groups.map((el) => (
-                <GroupItem group={el} />
-              ))}
+            <div className="groupContainer pt-3">
+              {!loading ? (
+                groups.map((el) => <GroupItem key={el.id} group={el.name} />)
+              ) : (
+                <div className="spinner-border" role="status"></div>
+              )}
             </div>
           </div>
 
@@ -129,7 +155,7 @@ const SideDrawer = (props) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

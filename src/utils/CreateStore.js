@@ -1,14 +1,16 @@
-import { createStore, applyMiddleware, compose } from 'redux'
-import ReduxThunk from 'redux-thunk'
+import { createStore, applyMiddleware, compose } from 'redux';
+import ReduxThunk from 'redux-thunk';
 import { combineReducers } from 'redux';
 
 import UserReducer from '../reducers/User';
-import AlertReducer from '../reducers/Alerts'
+import AlertReducer from '../reducers/Alerts';
+import OrgGroupsReducer from '../reducers/Organisation';
 
 const RootReducer = combineReducers({
-    user: UserReducer,
-    alert: AlertReducer
-})
+  user: UserReducer,
+  alert: AlertReducer,
+  orgGroups: OrgGroupsReducer,
+});
 
 const initialState = {};
 
@@ -17,8 +19,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 // create the store
 export const store = createStore(
-    RootReducer,
-    initialState,
-    composeEnhancers(applyMiddleware(ReduxThunk))
-)
-
+  RootReducer,
+  initialState,
+  composeEnhancers(applyMiddleware(ReduxThunk))
+);
