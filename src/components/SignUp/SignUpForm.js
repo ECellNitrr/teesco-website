@@ -144,6 +144,7 @@ const SignUpForm=({ loading, signupAction, error:{ errorDict } })=>{
         if(password.length>0){
             // Numeric Digit.
             if(!containsNumericDigit(password)){
+                hasError=true;
                 validationError.password={
                     msg:"Must contains a numeric digit.",
                     toShow:true
@@ -152,6 +153,7 @@ const SignUpForm=({ loading, signupAction, error:{ errorDict } })=>{
 
             // Upper Case Letter.
             if(!containsUpperCase(password)){
+                hasError=true;
                 validationError.password={
                     msg:"Must contains a Upper case letter.",
                     toShow:true
@@ -160,6 +162,7 @@ const SignUpForm=({ loading, signupAction, error:{ errorDict } })=>{
 
             // Lower Case Letter.
             if(!containsLowerCase(password)){
+                hasError=true;
                 validationError.password={
                     msg:"Must contains a Lower case letter.",
                     toShow:true
@@ -168,6 +171,7 @@ const SignUpForm=({ loading, signupAction, error:{ errorDict } })=>{
             
             // Length atleast 8
             if(password.length<8){
+                hasError=true;
                 validationError.password={
                     msg:"Must contains alteast 8 characters",
                     toShow:true
