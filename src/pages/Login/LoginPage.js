@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginForm from '../../components/Login/LoginForm';
-import '../../components/Login/index.scss'
+import './index.scss'
 
 export default function Login() {
   return (

@@ -32,6 +32,21 @@ export const makeSelectLoginError = () => createSelector(
     }
 )
 
+//Returns an object with the matched error
+export const makeSelectSignUpError = () => createSelector(
+    makeSelectErrors(), //Since this returns all errorAlerts 
+    errorAlerts => {
+        let error = {};
+        for(let item in errorAlerts){
+            if(errorAlerts[item].errType === appConstants.ALERT_USER_SIGNUP_ERR){
+                error = errorAlerts[item];
+                break;
+            }
+        }
+        return error;
+    }
+)
+
 //Returns an array with all the matched errTypes
 export const makeSelectUserInfoError = () => createSelector(
     makeSelectErrors(), //Since this returns all errorAlerts

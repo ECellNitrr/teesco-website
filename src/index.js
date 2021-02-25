@@ -12,7 +12,6 @@ import { store } from './utils/CreateStore'
 
 import './theme.css';
 
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

@@ -1,0 +1,16 @@
+.signup-wrapper{
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
+    width: 100%;
+    height: auto;
+    background-color: #f5f5f5;
+    min-height: 100%;
+    
+    .card{
+        max-width: 475px;
+        width: 100%;
+    }
+}
