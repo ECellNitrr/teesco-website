@@ -180,7 +180,7 @@ const SignUpForm=({ loading, signupAction, error:{ errorDict } })=>{
 
         // Confirm Password
         if(confirmPassword.length>0){
-            if(confirmPassword!=password){
+            if(confirmPassword!==password){
                 hasError=true;
                 validationError.confirmPassword={
                     msg:"Password does not match.",
@@ -206,7 +206,7 @@ const SignUpForm=({ loading, signupAction, error:{ errorDict } })=>{
             allFilled=false;
         }
 
-        if(institutionName.length==0){
+        if(institutionName.length===0){
             allFilled=false;
         }
 
