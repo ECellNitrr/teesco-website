@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import './drawer.css';
+import './drawer.scss';
 import { getUserOrganisationsAction } from '../../actions/User';
 import { getOrgGroupsAction } from '../../actions/Organisation';
 
