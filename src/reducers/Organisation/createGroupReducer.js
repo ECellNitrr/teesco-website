@@ -1,32 +1,30 @@
-//Organisation Reducers
-
 import {
-  FETCH_ORG_GROUPS,
-  SET_ORG_GROUPS,
-  ORG_GROUPS_ERROR,
+  CREATE_ORG_GROUP_REQUEST,
+  CREATE_ORG_GROUP_SUCCESS,
+  CREATE_ORG_GROUP_FAIL,
 } from '../../actions/Organisation/types';
 
 const initialState = {
   loading: false,
-  groups: [],
+  data: '',
   error: null,
 };
 
-const OrgGroupsReducer = (state = initialState, action) => {
+const CreateOrgGroupReducer = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case FETCH_ORG_GROUPS:
+    case CREATE_ORG_GROUP_REQUEST:
       return {
         ...state,
         loading: true,
       };
-    case SET_ORG_GROUPS:
+    case CREATE_ORG_GROUP_SUCCESS:
       return {
         ...state,
-        loading: false,
-        groups: payload,
+        loading: true,
+        data: payload,
       };
-    case ORG_GROUPS_ERROR:
+    case CREATE_ORG_GROUP_FAIL:
       return {
         ...state,
         loading: false,
@@ -37,4 +35,4 @@ const OrgGroupsReducer = (state = initialState, action) => {
   }
 };
 
-export default OrgGroupsReducer;
+export default CreateOrgGroupReducer;
