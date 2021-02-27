@@ -2,14 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './drawer.scss';
 import { getUserOrganisationsAction } from '../../actions/User';
-import { getOrgGroupsAction } from '../../actions/Organisation';
+import { getOrgGroupsAction, createOrgGroup } from '../../actions/Organisation';
 
 const SideDrawer = () => {
   const [modal, setModal] = useState(false);
+  const [display, setDisplay] = useState(true);
+  const [formData, setFormData] = useState({
+    name: '',
+    role: '',
+    permissions_array: [0],
+  });
+  const { name, role, permissions_array } = formData;
+
+  const d = display ? '' : 'none';
 
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.user);
   const orgGroups = useSelector((state) => state.orgGroups);
+  const createGroup = useSelector((state) => state.createOrgGrp);
+
+  console.log(createGroup);
 
   const { userOrgs, loading } = userData;
   const { groups } = orgGroups;
@@ -28,6 +40,15 @@ const SideDrawer = () => {
   useEffect(() => {
     defaultOrg && dispatch(getOrgGroupsAction(defaultOrg.id));
   }, [defaultOrg]);
+
+  const submitHandler = () => {
+    dispatch(createOrgGroup(orgID + 1, name, role, permissions_array));
+    !(name && role) ? setDisplay(true) : setDisplay(false);
+    setFormData({ name: '', role: '', permissions_array: [] });
+  };
+  useEffect(() => {
+    dispatch(getOrgGroupsAction(orgID + 1));
+  }, [display]);
 
   const GroupItem = ({ group }) => {
     return (
@@ -113,23 +134,78 @@ const SideDrawer = () => {
               )}
             </div>
           </div>
+
           <div className="groups">
             <div className="g_head">
-              <h5>GROUPS</h5>
-              <button style={{ border: 'none', outline: 'none' }}>
-                <i className="fas fa-user-plus"></i>
+              {!display ? <h5>GROUPS</h5> : <h5>CREATE A NEW GROUP</h5>}
+              <button
+                disabled={
+                  userOrgs.filter((el) => el.user_role === 'Admin').length > 0
+                    ? false
+                    : true
+                }
+                style={{ border: 'none', outline: 'none' }}
+                onClick={() => setDisplay((v) => !v)}
+              >
+                {display ? (
+                  <i
+                    style={{ fontSize: 30, marginRight: 5 }}
+                    class="fas fa-times"
+                  ></i>
+                ) : (
+                  <i className="fas fa-user-plus"></i>
+                )}
               </button>
             </div>
-            <div className="groupContainer pt-3">
+            <div
+              style={{ display: display && 'none' }}
+              className="groupContainer pt-3"
+            >
               {!loading ? (
                 groups.map((el) => <GroupItem key={el.id} group={el.name} />)
               ) : (
                 <div className="spinner-border" role="status"></div>
               )}
             </div>
+            {/* dynamic rendering of component */}
+            <div style={{ display: d }} className="pt-3">
+              <form className="needs-validation" novalidate>
+                <input
+                  name="name"
+                  value={name}
+                  type="text"
+                  placeholder="Enter group name"
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="form-control"
+                  required
+                />
+                <input
+                  name="role"
+                  value={role}
+                  type="text"
+                  placeholder="Enter role"
+                  onChange={(e) =>
+                    setFormData({ ...formData, role: e.target.value })
+                  }
+                  className="form-control mt-2"
+                  required
+                />
+                <button
+                  className="btn btn-dark form-control mt-2"
+                  onClick={submitHandler}
+                >
+                  Create
+                </button>
+              </form>
+            </div>
           </div>
 
-          <div className="inviteSection flex-c">
+          <div
+            style={{ display: display && 'none' }}
+            className="inviteSection flex-c"
+          >
             <h4>INVITE PEOPLE</h4>
             <div className="socialLinks pb-2 pt-3">
               <i className="fab fa-facebook"></i>
