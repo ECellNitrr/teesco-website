@@ -6,7 +6,7 @@ import { getOrgGroupsAction, createOrgGroup } from '../../actions/Organisation';
 
 const SideDrawer = () => {
   const [modal, setModal] = useState(false);
-  const [display, setDisplay] = useState(true);
+  const [display, setDisplay] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     role: '',
@@ -21,10 +21,9 @@ const SideDrawer = () => {
   const orgGroups = useSelector((state) => state.orgGroups);
   const createGroup = useSelector((state) => state.createOrgGrp);
 
-  console.log(createGroup);
-
   const { userOrgs, loading } = userData;
   const { groups } = orgGroups;
+  console.log(groups);
 
   // for defaultData
   const [orgID, setOrgID] = useState(0);
@@ -50,14 +49,19 @@ const SideDrawer = () => {
     dispatch(getOrgGroupsAction(orgID + 1));
   }, [display]);
 
-  const GroupItem = ({ group }) => {
+  const groupSwitcher = (id) => {
+    const _id = groups.map((el) => el.id).indexOf(id);
+    setGrpID(_id);
+  };
+
+  const GroupItem = ({ group, id }) => {
     return (
       <div className="groupItem pt-2">
         <div>
           <i className="fas fa-user"></i>
-          {group === default_group.name ? (
+          {id === default_group.id ? (
             <>
-              <p>{group}</p>
+              <p className="selectGrpItem">{group}</p>
               <span className="pl-3" style={{ marginTop: '-2px' }}>
                 <i
                   className="fas fa-circle"
@@ -69,7 +73,9 @@ const SideDrawer = () => {
               </span>
             </>
           ) : (
-            <p>{group}</p>
+            <p onClick={() => groupSwitcher(id)} className="selectGrpItem">
+              {group}
+            </p>
           )}
         </div>
         <i className="fas fa-chevron-right" id="rightIcon"></i>
@@ -116,23 +122,33 @@ const SideDrawer = () => {
                 <i className="fas fa-border-all"></i>
               </button>
             </div>
-            <div className="orgIcon">
-              {defaultOrg ? (
-                <img src={defaultOrg.profile_pic} alt="orgIcon" />
-              ) : (
-                <div className="spinner-border" role="status"></div>
-              )}
-            </div>
-            <div className="org">
-              {defaultOrg ? <h4>{defaultOrg.org_name}</h4> : <p>no org name</p>}
-              {defaultOrg ? (
-                <p>
-                  <em>"{defaultOrg.tagline}"</em>
-                </p>
-              ) : (
-                <p>no tagline</p>
-              )}
-            </div>
+            {userOrgs.length ? (
+              <>
+                <div className="orgIcon">
+                  {defaultOrg ? (
+                    <img src={defaultOrg.profile_pic} alt="orgIcon" />
+                  ) : (
+                    <div className="spinner-border" role="status"></div>
+                  )}
+                </div>
+                <div className="org">
+                  {defaultOrg ? (
+                    <h4>{defaultOrg.org_name}</h4>
+                  ) : (
+                    <p>no org name</p>
+                  )}
+                  {defaultOrg ? (
+                    <p>
+                      <em>"{defaultOrg.tagline}"</em>
+                    </p>
+                  ) : (
+                    <p>no tagline</p>
+                  )}
+                </div>
+              </>
+            ) : (
+              <p>no org found</p>
+            )}
           </div>
 
           <div className="groups">
@@ -157,16 +173,25 @@ const SideDrawer = () => {
                 )}
               </button>
             </div>
-            <div
-              style={{ display: display && 'none' }}
-              className="groupContainer pt-3"
-            >
-              {!loading ? (
-                groups.map((el) => <GroupItem key={el.id} group={el.name} />)
-              ) : (
-                <div className="spinner-border" role="status"></div>
-              )}
-            </div>
+            {groups.length ? (
+              <>
+                <div
+                  style={{ display: display && 'none' }}
+                  className="groupContainer pt-3"
+                >
+                  {!loading ? (
+                    groups.map((el) => (
+                      <GroupItem key={el.id} group={el.name} id={el.id} />
+                    ))
+                  ) : (
+                    <div className="spinner-border" role="status"></div>
+                  )}
+                </div>
+              </>
+            ) : (
+              <p>no groups found</p>
+            )}
+
             {/* dynamic rendering of component */}
             <div style={{ display: d }} className="pt-3">
               <form className="needs-validation" novalidate>
