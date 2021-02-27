@@ -19,6 +19,27 @@ export const setLoadingAction = (loading) => (dispatch) => {
   });
 };
 
+export const signupAction=(email, password, firstName, lastName, institution, country_code, phone)=> (dispatch)=>{
+  dispatch(setLoadingAction(true));
+  let name=firstName+" "+lastName;
+  ApiClient().post("/users/register/", {
+    email:email,
+    password:password,
+    name:name,
+    institution:institution,
+    country_code:country_code,
+    phone:phone
+  }).then((response)=>{
+    dispatch(loginAction(email, password));
+  })
+  .catch((err) => {
+    dispatch(setErrorAlert(makeErrorDict(err), appConstants.ALERT_USER_SIGNUP_ERR), 10000);
+    dispatch({ type: authTypes.SIGNUP_ERROR });
+  })
+  .finally(() => {
+    dispatch(setLoadingAction(false));
+  });
+}
 
 //Login User
 export const loginAction = (email, password) => (dispatch) => {// import rootReducer from "../reducers";

@@ -7154,3 +7154,21 @@ a.text-dark:hover, a.text-dark:focus {
   .table .thead-dark th {
     color: inherit;
     border-color: #dee2e6; } }
+
+
+  /* Custom CSS */
+  .cursor-pointer{
+    cursor: pointer;
+  }
+
+  .fntSz-14{
+    font-size: 14px;
+  }
+
+  .fntSz-13{
+    font-size: 13px;
+  }
+
+  .fntSz-12{
+    font-size: 12px;
+  }
